@@ -1,6 +1,6 @@
 package Characters;
 
-import Characters.*;
+
 import Combat.*;
 import GameMap.*;
 import Misc.*;
