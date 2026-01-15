@@ -127,27 +127,6 @@ public class Personaje {
         }
     }
 
-    // region Subir Nivel
-    // Preguntar a Ivan como implementar esto pq no tiene sentido como está explicado.
-    // Es decir, se decide en un 50% cada cosa o solo aumenta una aleatoria pero todas con la misma probabilidad
-    // Anterior implementación:
-    public void subirNivel() {
-        Random r = new Random();
-        int x = r.nextInt(3);
-        nivel += 1;
-        switch (x) {
-            case 0:
-                setPv(pv++);
-                break;
-            case 1:
-                setAtq(atq++);
-                break;
-            case 2:
-                setArm(arm++);
-                break;
-        }
-    }
-    // Cada estadística tiene un 50% de probabilidades de ser aumentada por separado:
     public void subirNivel1() {
         Random r = new Random();
         if (r.nextInt(2) == 0) setPv(pv++);
@@ -157,30 +136,6 @@ public class Personaje {
         if (r.nextInt(2) == 0)setPv(vel++);
         nivel++;
     }
-    // Se aumenta una característica aleatoria (todas con la misma probabilidad):
-    public void subirNivel2() {
-        Random r = new Random();
-        int x = r.nextInt(5);
-        nivel ++;
-        switch (x) {
-            case 0:
-                setPv(pv++);
-                break;
-            case 1:
-                setAtq(atq++);
-                break;
-            case 2:
-                setArm(arm++);
-                break;
-            case 3:
-                setRes(res++);
-                break;
-            case 4:
-                setVel(vel++);
-                break;
-        }
-    }
-    //endregion
 
     public boolean estaMuerto() {
         return pv <= 0;
