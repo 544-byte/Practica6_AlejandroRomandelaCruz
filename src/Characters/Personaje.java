@@ -141,6 +141,7 @@ public class Personaje {
         return pv <= 0;
     }
 
+
     public void caerTrampa(Trampa t) {
         String trampaCategoria = t.getCategoria();
         if (t.activaTrampa() != 0) {
