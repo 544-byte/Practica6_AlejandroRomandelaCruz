@@ -127,7 +127,7 @@ public class Personaje {
         }
     }
 
-    public void subirNivel1() {
+    public void subirNivel() {
         Random r = new Random();
         if (r.nextInt(2) == 0) setPv(pv++);
         if (r.nextInt(2) == 0) setPv(atq++);
