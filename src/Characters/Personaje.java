@@ -1,16 +1,18 @@
 package Characters;
 
 
-import Combat.*;
 import GameMap.*;
-import Misc.*;
 
 import java.util.Random;
 import java.util.Scanner;
 
 public class Personaje {
     private String nombre;
-    private int nivel, pv, atq,   arm, res, vel;
+    private int nivel;
+    private double pv, atq, vel, arm, res;
+    private boolean esJugador;
+    private int turno;
+    private boolean defiende;
 
     //region Constructores
     public Personaje() {
@@ -21,6 +23,8 @@ public class Personaje {
         res = 10;
         vel = 10;
         nivel = 0;
+        esJugador = false;
+        turno = 0;
     }
 
     public Personaje(String nombre) {
@@ -31,6 +35,8 @@ public class Personaje {
         arm = 10;
         res = 10;
         vel = 10;
+        esJugador = false;
+        turno = 0;
     }
 
     public Personaje(String nombre, int nivel) {
@@ -41,12 +47,14 @@ public class Personaje {
         arm = 10;
         res = 10;
         vel = 10;
+        esJugador = false;
+        turno = 0;
         for (int i = 0; i < this.nivel; i++) {
             subirNivel();
         }
     }
 
-    public Personaje(String nombre, int nivel, int pv, int atq, int arm, int res, int vel) {
+    public Personaje(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
         setNombre(nombre);
         setNivel(nivel);
         setPv(pv);
@@ -54,6 +62,8 @@ public class Personaje {
         setArm(arm);
         setRes(res);
         setVel(vel);
+        esJugador = false;
+        turno = 0;
     }
 
     public Personaje(Personaje p) {
@@ -64,22 +74,85 @@ public class Personaje {
         setNivel(p.getNivel());
         setRes(p.getRes());
         setVel(p.getVel());
+        esJugador = false;
+        turno = 0;
     }
-
     //endregion
-    public Personaje inicializa(String n, int lvl, int pv, int atq, int arm, int res, int vel) {
+    public Personaje inicializa(String n, int lvl, double pv, double atq, double arm, double res, double vel) {
         return new Personaje(n, lvl, pv, atq, arm, res, vel);
     }
 
-    public void realizarTurno(){
-        Scanner scan = new Scanner(System.in);
+    public void realizarTurno(Personaje enemigo){
+        if (!this.getEsJugador()){
+            this.ataca(enemigo);
+        } else {
+            int opt = 0;
+            Scanner scan = new Scanner(System.in);
+            System.out.println(
+                "¡Es tu turno!\n" +
+                "Elige una de las siguientes opciones:\n" +
+                "\t· 1- Atacar\n" +
+                "\t· 2- " + Guerrero.GetAccionEspecial() + "\n" +
+                "\t· 3- Defender\n" +
+                "\t· 4- Pasar turno"
+            );
+            do {
+                System.out.print("Opción: ");
+                opt = scan.nextInt();
+                if (opt < 1 | opt > 4){
+                    System.err.println("Opción incorrecta, ingresela de nuevo.");
+                }
+            } while (opt < 1 | opt > 4);
+
+            switch (opt){
+                case 1 -> {
+                    this.ataca(enemigo);
+                }
+                case 2 -> {
+                    this.accionEspecial();
+                }
+                case 3 -> {
+                    this.setDefiende(true);
+                    this.setArm(this.getArm() * 1.2);
+                    this.setArm(this.getRes() *1.2);
+                }
+                case 4 -> {
+                    System.out.println(this.getNombre() + " ha decidido no hacer absolutamente nada, let him cook.");
+                }
+            }
+        }
+
+        if (this.getVel() > enemigo.getVel()*2 && enemigo.getPv() != 0 && !this.getEsJugador()){
+            turno ++;
+            if (turno < 2) {
+                realizarTurno(enemigo);
+            } else {
+                turno = 0;
+            }
+        }
     }
 
-    public int atacar() {
-        return getAtq();
+
+
+    public void ataca(Personaje enemigo) {
+        if (atq - enemigo.getArm() <= 0) {
+            System.out.println(enemigo.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar su armadura.");
+        } else {
+            if (enemigo.getPv() - (atq - enemigo.getArm()) <= 0) {
+                enemigo.setPv(0);
+                System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.\n¡" + enemigo.getNombre() + " ha muerto!");
+            } else {
+                enemigo.setPv(enemigo.getPv() - (atq - enemigo.getArm()));
+                System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
+            }
+        }
+        if (enemigo.getDefiende()){
+            enemigo.setDefiende(false);
+            enemigo.setArm(enemigo.getArm() * 0.8);
+        }
     }
 
-    public int defender(int atq, char tipoDaño) {
+    public double defender(double atq, boolean dañoMagico) {
         if ((atq - arm) < 0)
             return 0;
         else
@@ -99,21 +172,6 @@ public class Personaje {
         setArm(stats[2]);
     }
 
-    public void ataca(Personaje p) {
-        if (atq - p.getArm() <= 0) {
-            System.out.println(p.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar su armensa.");
-        } else {
-            if (p.getPv() - (atq - p.getArm()) <= 0) {
-                p.setPv(0);
-                System.out.println("¡" + p.getNombre() + " ha muerto!");
-            } else {
-                p.setPv(p.getPv() - p.getArm());
-                System.out.println(nombre + " ha inflingido " + (atq - p.getArm()) + " puntos de daño a " + p.getNombre() + " dejándolo con " + p.getPv() + " puntos de vida.");
-            }
-        }
-
-    }
-
     public void beberPocion(int pocion) {
         if (pv <= 30) {
             pv += pocion;
@@ -123,7 +181,7 @@ public class Personaje {
     public void inspirar(int cantidad, String tipo) {
         if (tipo.equals("ataque")) {
             atq += cantidad;
-        } else if (tipo.equals("armensa")) {
+        } else if (tipo.equals("armadura")) {
             arm += cantidad;
         } else if (tipo.equals("vida")) {
             System.err.println("Para eso usa la poción papanatas.");
@@ -170,7 +228,7 @@ public class Personaje {
                     pv += t.getPerjuicio();
                     break;
                 case "Brea":
-                    System.out.println("Aceite viscoso cae de pronto justo delante de " + nombre + " esta suerte le da tanto alivio que aumenta su armensa en " + t.getPerjuicio() + " puntos.");
+                    System.out.println("Aceite viscoso cae de pronto justo delante de " + nombre + " esta suerte le da tanto alivio que aumenta su armadura en " + t.getPerjuicio() + " puntos.");
                     arm += t.getPerjuicio();
                     break;
                 case "Serpientes":
@@ -179,6 +237,22 @@ public class Personaje {
                     break;
                         }
         }
+    }
+
+
+    /**
+     * Debería de incluir esto como setter o no pq realmente no es un setter
+     * ya que no recibe nada por parametro pero setea que es el jugador asiq...
+     */
+    public void setEsJugador(){
+        esJugador = true;
+    }
+
+    private void accionEspecial() {
+    }
+
+    public double atacar() {
+        return getAtq();
     }
 
     //region Setters
@@ -190,7 +264,7 @@ public class Personaje {
         }
     }
 
-    public void setPv(int pv) {
+    public void setPv(double pv) {
         if (pv < 0) {
             System.err.println("Los puntos de vida de " + nombre + " no pueden ser menor de 0");
         } else {
@@ -198,7 +272,7 @@ public class Personaje {
         }
     }
 
-    public void setAtq(int atq) {
+    public void setAtq(double atq) {
         if (atq < 0) {
             System.err.println("Los puntos de ataque de " + nombre + " no pueden ser menor de 0");
         } else {
@@ -206,7 +280,7 @@ public class Personaje {
         }
     }
 
-    public void setArm(int arm) {
+    public void setArm(double arm) {
         if (arm < 0) {
             System.err.println("Los puntos de armadura de " + nombre + " no pueden ser menor de 0");
         } else {
@@ -222,7 +296,7 @@ public class Personaje {
         }
     }
 
-    public void setRes(int res) {
+    public void setRes(double res) {
         if (res < 0) {
             System.err.println("Los puntos de resistencia mágica de " + nombre + " no pueden ser menor de 0");
         } else {
@@ -230,12 +304,16 @@ public class Personaje {
         }
     }
 
-    public void setVel(int vel) {
+    public void setVel(double vel) {
         if (vel < 0) {
             System.err.println("Los puntos de velocidad de " + nombre + " no pueden ser menor de 0");
         } else {
             this.vel = vel;
         }
+    }
+
+    public void setDefiende(boolean defiende) {
+        this.defiende = defiende;
     }
     //endregion
     //region Getters
@@ -247,35 +325,36 @@ public class Personaje {
         return nivel;
     }
 
-    public int getPv() {
+    public double getPv() {
         return pv;
     }
 
-    public int getAtq() {
+    public double getAtq() {
         return atq;
     }
 
-    public int getArm() {
+    public double getArm() {
         return arm;
     }
 
-    public int getRes() {
+    public double getRes() {
         return res;
     }
 
-    public int getVel() {
+    public double getVel() {
         return vel;
+    }
+
+    public boolean getEsJugador(){
+        return esJugador;
+    }
+    public boolean getDefiende() {
+        return defiende;
     }
     //endregion
     // region Overrides
     public Personaje clone() {
-        Personaje clon = new Personaje();
-        clon.setNombre(getNombre());
-        clon.setPv(getPv());
-        clon.setAtq(getAtq());
-        clon.setArm(getArm());
-        clon.setNivel(getNivel());
-        return clon;
+        return new Personaje(getNombre(),getNivel(),getPv(),getAtq(),getArm(),getRes(),getVel());
     }
 
     public boolean equals(Personaje p) {
@@ -283,15 +362,20 @@ public class Personaje {
                 getPv() == p.getPv() &&
                 getAtq() == p.getAtq() &&
                 getArm() == p.getArm() &&
+                getVel() == p.getVel() &&
+                getRes() == p.getRes() &&
                 getNivel() == p.getNivel();
     }
 
     public String toString() {
         return ("Nombre: " + getNombre() + "\n" +
-                "Pv: " + getPv() + "\n" +
-                "Atq: " + getAtq() + "\n" +
-                "arm: " + getArm() + "\n" +
-                "Nivel: " + getNivel()
+                "Puntos de vida: " + getPv() + "\n" +
+                "Ataque: " + getAtq() + "\n" +
+                "Armadura: " + getArm() + "\n" +
+                "Resistencia: " + getRes() + "\n" +
+                "Velocidad: " + getVel() + "\n" +
+                "Nivel: " + getNivel() + "\n" +
+                "¿Es jugador?" + getEsJugador() + "\n"
         );
     }
     // endregion
