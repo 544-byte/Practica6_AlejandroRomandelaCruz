@@ -6,10 +6,11 @@ import GameMap.*;
 import Misc.*;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Personaje {
     private String nombre;
-    private int nivel, pv, atq, arm, res, vel;
+    private int nivel, pv, atq,   arm, res, vel;
 
     //region Constructores
     public Personaje() {
@@ -70,11 +71,15 @@ public class Personaje {
         return new Personaje(n, lvl, pv, atq, arm, res, vel);
     }
 
+    public void realizarTurno(){
+        Scanner scan = new Scanner(System.in);
+    }
+
     public int atacar() {
         return getAtq();
     }
 
-    public int defender(int atq) {
+    public int defender(int atq, char tipoDaño) {
         if ((atq - arm) < 0)
             return 0;
         else
@@ -172,7 +177,7 @@ public class Personaje {
                     System.out.println("Un nido de víboras y culebras aparece frente a " + nombre + ". Por suerte quieren ayudarle y recorren sus brazos para hacer " + t.getPerjuicio() + " puntos de daño extra.");
                     atq += t.getPerjuicio();
                     break;
-            }
+                        }
         }
     }
 
@@ -233,7 +238,6 @@ public class Personaje {
         }
     }
     //endregion
-
     //region Getters
     public String getNombre() {
         return nombre;
@@ -263,7 +267,7 @@ public class Personaje {
         return vel;
     }
     //endregion
-
+    // region Overrides
     public Personaje clone() {
         Personaje clon = new Personaje();
         clon.setNombre(getNombre());
@@ -290,4 +294,5 @@ public class Personaje {
                 "Nivel: " + getNivel()
         );
     }
+    // endregion
 }
