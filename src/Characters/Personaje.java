@@ -86,48 +86,74 @@ public class Personaje {
         if (!this.getEsJugador()){
             this.ataca(enemigo);
         } else {
-            int opt = 0;
-            Scanner scan = new Scanner(System.in);
-            System.out.println(
-                "¡Es tu turno!\n" +
-                "Elige una de las siguientes opciones:\n" +
-                "\t· 1- Atacar\n" +
-                "\t· 2- " + Guerrero.GetAccionEspecial() + "\n" +
-                "\t· 3- Defender\n" +
-                "\t· 4- Pasar turno"
-            );
-            do {
-                System.out.print("Opción: ");
-                opt = scan.nextInt();
-                if (opt < 1 | opt > 4){
-                    System.err.println("Opción incorrecta, ingresela de nuevo.");
-                }
-            } while (opt < 1 | opt > 4);
-
-            switch (opt){
-                case 1 -> {
-                    this.ataca(enemigo);
-                }
-                case 2 -> {
-                    this.accionEspecial();
-                }
-                case 3 -> {
-                    this.setDefiende(true);
-                    this.setArm(this.getArm() * 1.2);
-                    this.setArm(this.getRes() *1.2);
-                }
-                case 4 -> {
-                    System.out.println(this.getNombre() + " ha decidido no hacer absolutamente nada, let him cook.");
-                }
-            }
+            System.out.println("¡Es tu turno!");
+            realizarTurnoJugador(enemigo);
         }
-
         if (this.getVel() > enemigo.getVel()*2 && enemigo.getPv() != 0 && !this.getEsJugador()){
             turno ++;
             if (turno < 2) {
                 realizarTurno(enemigo);
             } else {
                 turno = 0;
+            }
+        }
+    }
+
+    public void realizarTurnoJugador(Personaje enemigo){
+        int opt = 0;
+        Scanner scan = new Scanner(System.in);
+        System.out.println(
+                "Elige una de las siguientes opciones:\n" +
+                        "\t· 1- Atacar\n" +
+                        "\t· 2- " + getAccionEspecial() + "\n" +
+                        "\t· 3- Defender\n" +
+                        "\t· 4- Pasar turno\n" +
+                        "\t· 5- Observar"
+        );
+        do {
+            System.out.print("Opción: ");
+            opt = scan.nextInt();
+            if (opt < 1 | opt > 5){
+                System.err.println("Opción incorrecta, ingresela de nuevo.");
+            }
+        } while (opt < 1 | opt > 5);
+
+        switch (opt){
+            case 1 -> {
+                this.ataca(enemigo);
+            }
+            case 2 -> {
+                this.accionEspecial(enemigo);
+            }
+            case 3 -> {
+                this.setDefiende(true);
+                this.setArm(this.getArm() * 1.2);
+                this.setArm(this.getRes() *1.2);
+            }
+            case 4 -> {
+                System.out.println(this.getNombre() + " ha decidido no hacer absolutamente nada, let him cook.");
+            }
+            case 5 ->{
+                System.out.println(
+                        "\t · 1- Observar enemigo \n" +
+                        "\t · 2- Observarte"
+                );
+                System.out.print("Opción: ");
+                opt = scan.nextInt();
+                switch (opt){
+                    case 1 -> {
+                        System.out.println("⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
+                        System.out.println(enemigo.toString());
+                        System.out.println("⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
+                        realizarTurnoJugador(enemigo);
+                    }
+                    case 2 -> {
+                        System.out.println("⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
+                        System.out.println(this.toString());
+                        System.out.println("⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
+                        realizarTurnoJugador(enemigo);
+                    }
+                }
             }
         }
     }
@@ -148,7 +174,8 @@ public class Personaje {
         }
         if (enemigo.getDefiende()){
             enemigo.setDefiende(false);
-            enemigo.setArm(enemigo.getArm() * 0.8);
+            enemigo.setArm(enemigo.getArm() / 1.2);
+            enemigo.setRes(enemigo.getRes() / 1.2);
         }
     }
 
@@ -192,12 +219,12 @@ public class Personaje {
 
     public void subirNivel() {
         Random r = new Random();
-        if (r.nextInt(2) == 0) setPv(pv++);
-        if (r.nextInt(2) == 0) setPv(atq++);
-        if (r.nextInt(2) == 0) setPv(arm++);
-        if (r.nextInt(2) == 0) setPv(res++);
-        if (r.nextInt(2) == 0)setPv(vel++);
-        nivel++;
+        if (r.nextInt(2) == 0) setPv(getPv()+1);
+        if (r.nextInt(2) == 0) setAtq(getAtq()+1);
+        if (r.nextInt(2) == 0) setArm(getArm()+1);
+        if (r.nextInt(2) == 0) setRes(getRes()+1);
+        if (r.nextInt(2) == 0)setVel(getVel()+1);
+        setNivel(getNivel()+1);
     }
 
     public boolean estaMuerto() {
@@ -239,6 +266,9 @@ public class Personaje {
         }
     }
 
+    public String getAccionEspecial(){
+        return "Acción especial";
+    }
 
     /**
      * Debería de incluir esto como setter o no pq realmente no es un setter
@@ -248,7 +278,7 @@ public class Personaje {
         esJugador = true;
     }
 
-    private void accionEspecial() {
+    public void accionEspecial(Personaje enemigo) {
     }
 
     public double atacar() {
@@ -375,7 +405,7 @@ public class Personaje {
                 "Resistencia: " + getRes() + "\n" +
                 "Velocidad: " + getVel() + "\n" +
                 "Nivel: " + getNivel() + "\n" +
-                "¿Es jugador?" + getEsJugador() + "\n"
+                "¿Es jugador?" + getEsJugador()
         );
     }
     // endregion

@@ -25,6 +25,7 @@ public class Combate {
         }
         do {
             primero.realizarTurno(segundo);
+
             if (!segundo.estaMuerto()) {
                 segundo.realizarTurno(primero);
             }

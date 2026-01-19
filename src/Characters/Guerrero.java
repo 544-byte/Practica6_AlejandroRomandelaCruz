@@ -54,6 +54,40 @@ public class Guerrero extends Personaje{
         if (furia) setFuria(false);
         else setFuria(true);
     }
+
+    public void accionEspecial(Personaje enemigo){
+        Scanner scan = new Scanner(System.in);
+        if (getFuria()){
+            System.out.println("Desactivar Furia: \n" +
+                    "Desactivar Furia te calma y vuelve tus estadísitcas a su estado anterior \n" +
+                    "Actualmente: Ataque: " + getAtq() + "\tArmadura: " + getArm() + "\n" +
+                    "Despues: Ataque: " + getAtq()/2 + "\tArmadura: " + getArm()*2 + "\n" +
+                    "¿Estás seguro de tu acción? s/n");
+        } else {
+            System.out.println("Furia: \n" +
+                    "Furia aumenta tu poder de ataque el doble a cambio de reducir a la mitad tu armadura \n" +
+                    "Actualmente: Ataque: " + getAtq() + "\tArmadura: " + getArm() + "\n" +
+                    "Despues: Ataque: " + getAtq()*2 + "\tArmadura: " + getArm()/2 + "\n" +
+                    "¿Estás seguro de tu acción? s/n");
+        }
+
+        char opt = scan.nextLine().toLowerCase().charAt(0);
+        switch (opt){
+            case 's' -> {
+                if (getFuria()){
+                    System.out.println("Te calmas un poco, menos mal...");
+                } else {
+                    System.out.println("¡Furia activada!");
+                }
+                modificarFuria();
+            }
+            case 'n' -> {
+                this.realizarTurnoJugador(enemigo);
+            }
+        }
+
+    }
+
     // region Setters & Getters
     public boolean getFuria() {
         return furia;
@@ -71,37 +105,16 @@ public class Guerrero extends Personaje{
 
     }
 
-    public void accionEspecial(){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Furia: \n" +
-                "Furia aumenta tu poder de ataque el doble a cambio de reducir a la mitad tu armadura \n" +
-                "¿Estás seguro de tu acción? s/n");
-        char opt = scan.nextLine().toLowerCase().charAt(0);
-        switch (opt){
-            case 's' -> {
-                modificarFuria();
-                System.out.println("¡Furia activada!");
-                // po aqui voyyy
-
-
-
-
-
-
-
-
-
-
-            }
+    public String getAccionEspecial(){
+        if (getFuria()){
+            return "Desactivar Furia";
+        } else {
+            return "Furia";
         }
-
     }
 
-    public static String GetAccionEspecial(){
-        return "Furia";
-    }
+
     // endregion
-
 
     // region Overrides
     public Guerrero clone() {
