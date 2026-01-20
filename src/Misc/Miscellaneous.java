@@ -1,11 +1,30 @@
 package Misc;
-
+import Characters.*;
 public class Miscellaneous {
     private static String conjunto = "";
     private static String espaciado="";
 
     public static String opcionesJugador(String body){
-        conjunto = " ┌────────────────────♥────────────────────┐ ";
+        conjunto = " ───────────═≡✦✧ ▾ ✧✦≡═─────────── ";
+        String[] lineas = body.split("\n");
+        String cuerpo = "";
+
+        for (int i = 0 ; i < lineas.length ; i++){
+            cuerpo = cuerpo + "✦✧"
+                    + calcEspaciado(lineas[i].trim())
+                    + lineas[i].trim()
+                    + calcEspaciado(lineas[i].trim())
+                    + calcImpar(lineas[i].trim())
+                    + "✧✦\n";
+        }
+        conjunto = conjunto + "\n" + cuerpo + " ───────────═≡✦✧ ▾ ✧✦≡═─────────── ";
+
+        return conjunto;
+
+    }
+
+    public static String estadisticasJugador(String body){
+        conjunto = " ┌────────────────────©────────────────────┐ ";
         String[] lineas = body.split("\n");
         String cuerpo = "";
 
@@ -38,4 +57,6 @@ public class Miscellaneous {
             return  "";
         }
     }
+
+
 }

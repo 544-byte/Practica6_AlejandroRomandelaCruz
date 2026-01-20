@@ -1,6 +1,7 @@
 package Characters;
 
 
+import Misc.Alianza;
 import GameMap.*;
 import Misc.Miscellaneous;
 
@@ -14,6 +15,7 @@ public class Personaje {
     private boolean esJugador;
     private int turno;
     private boolean defiende;
+    private Alianza alianza;
 
     //region Constructores
     public Personaje() {
@@ -67,6 +69,19 @@ public class Personaje {
         turno = 0;
     }
 
+    public Personaje(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, Alianza alianza) {
+        setNombre(nombre);
+        setNivel(nivel);
+        setPv(pv);
+        setAtq(atq);
+        setArm(arm);
+        setRes(res);
+        setVel(vel);
+        esJugador = false;
+        turno = 0;
+        setAlianza(alianza);
+    }
+
     public Personaje(Personaje p) {
         setNombre(p.getNombre());
         setPv(p.getPv());
@@ -85,7 +100,7 @@ public class Personaje {
 
     public void realizarTurno(Personaje enemigo){
         if (!this.getEsJugador()){
-            this.ataca(enemigo);
+            this.ataca(getAtq(),enemigo,false);
         } else {
             System.out.println("¡Es tu turno!");
             realizarTurnoJugador(enemigo);
@@ -121,7 +136,7 @@ public class Personaje {
 
         switch (opt){
             case 1 -> {
-                this.ataca(enemigo);
+                this.ataca(getAtq(),enemigo,false);
             }
             case 2 -> {
                 this.accionEspecial(enemigo);
@@ -136,19 +151,23 @@ public class Personaje {
             }
             case 5 ->{
                 System.out.println(
-                        "\t · 1- Observar enemigo \n" +
-                        "\t · 2- Observarte"
+                        "\t· 1- Observar enemigo \n" +
+                        "\t· 2- Observarte"  +
+                        "\t· 3- Ver aliados"
                 );
                 System.out.print("Opción: ");
                 opt = scan.nextInt();
                 switch (opt){
                     case 1 -> {
-                        System.out.println(Miscellaneous.opcionesJugador(enemigo.toString()));
+                        System.out.println(Miscellaneous.estadisticasJugador(enemigo.toString()));
                         realizarTurnoJugador(enemigo);
                     }
                     case 2 -> {
-                        System.out.println(Miscellaneous.opcionesJugador(this.toString()));
+                        System.out.println(Miscellaneous.estadisticasJugador(this.toString()));
                         realizarTurnoJugador(enemigo);
+                    }
+                    case 3 ->{
+                        System.out.println(alianza.toString());
                     }
                 }
             }
@@ -157,8 +176,8 @@ public class Personaje {
 
 
 
-    public void ataca(Personaje enemigo) {
-        if (atq - enemigo.getArm() <= 0) {
+    public void ataca(double atq,Personaje enemigo,boolean dañoMagico) {
+        if (enemigo.defender(atq,dañoMagico) <= 0) {
             System.out.println(enemigo.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar su armadura.");
         } else {
             if (enemigo.getPv() - (atq - enemigo.getArm()) <= 0) {
@@ -177,10 +196,17 @@ public class Personaje {
     }
 
     public double defender(double atq, boolean dañoMagico) {
-        if ((atq - arm) < 0)
-            return 0;
-        else
-            return (atq - arm);
+        if (dañoMagico){
+            if ((atq - getRes()) < 0)
+                return 0;
+            else
+                return (atq - getRes());
+        } else {
+            if ((atq - getArm()) < 0)
+                return 0;
+            else
+                return (atq - getArm());
+        }
     }
 
     public void randomStats() {
@@ -273,6 +299,8 @@ public class Personaje {
      */
     public void setEsJugador(){
         esJugador = true;
+        alianza = new Alianza(0);
+        alianza.addAliado(this);
     }
 
     public void accionEspecial(Personaje enemigo) {
@@ -342,6 +370,11 @@ public class Personaje {
     public void setDefiende(boolean defiende) {
         this.defiende = defiende;
     }
+
+    public void setAlianza(Alianza alianza){
+        this.alianza = alianza;
+        alianza.addAliado(this);
+    }
     //endregion
     //region Getters
     public String getNombre() {
@@ -375,8 +408,13 @@ public class Personaje {
     public boolean getEsJugador(){
         return esJugador;
     }
+
     public boolean getDefiende() {
         return defiende;
+    }
+
+    public Alianza getAlianza(){
+        return alianza;
     }
     //endregion
     // region Overrides

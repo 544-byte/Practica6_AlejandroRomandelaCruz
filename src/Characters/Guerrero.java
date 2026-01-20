@@ -1,5 +1,8 @@
 package Characters;
 
+import Misc.Alianza;
+import Misc.Miscellaneous;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,6 +18,21 @@ public class Guerrero extends Personaje{
     public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, boolean furia) {
         super(nombre, nivel, pv, atq, arm, res, vel);
         setFuria(furia);
+    }
+
+    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
+        super(nombre, nivel, pv, atq, arm, res, vel);
+        setFuria(false);
+    }
+
+    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, boolean furia, Alianza alianza) {
+        super(nombre, nivel, pv, atq, arm, res, vel,alianza);
+        setFuria(furia);
+    }
+
+    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, Alianza alianza) {
+        super(nombre, nivel, pv, atq, arm, res, vel,alianza);
+        setFuria(false);
     }
 
     public Guerrero(String nombre, boolean furia) {
