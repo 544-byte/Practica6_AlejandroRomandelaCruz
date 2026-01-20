@@ -2,6 +2,7 @@ package Characters;
 
 
 import GameMap.*;
+import Misc.Miscellaneous;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -142,15 +143,11 @@ public class Personaje {
                 opt = scan.nextInt();
                 switch (opt){
                     case 1 -> {
-                        System.out.println("⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
-                        System.out.println(enemigo.toString());
-                        System.out.println("⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
+                        System.out.println(Miscellaneous.opcionesJugador(enemigo.toString()));
                         realizarTurnoJugador(enemigo);
                     }
                     case 2 -> {
-                        System.out.println("⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
-                        System.out.println(this.toString());
-                        System.out.println("⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
+                        System.out.println(Miscellaneous.opcionesJugador(this.toString()));
                         realizarTurnoJugador(enemigo);
                     }
                 }
@@ -399,7 +396,7 @@ public class Personaje {
 
     public String toString() {
         return ("Nombre: " + getNombre() + "\n" +
-                "Puntos de vida: " + getPv() + "\n" +
+                "Puntos de vida: " + getPv()  + "\n" +
                 "Ataque: " + getAtq() + "\n" +
                 "Armadura: " + getArm() + "\n" +
                 "Resistencia: " + getRes() + "\n" +

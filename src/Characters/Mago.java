@@ -50,7 +50,8 @@ public class Mago extends Personaje{
 
     public void lanzarConjuro(Personaje enemigo){
         Scanner scan = new Scanner(System.in);
-        System.out.println("───═≡✦✧ ▾ ✧✦≡═───\n");
+        System.out.println("───═≡✦✧ ▾ ✧✦≡═───\n" +
+                "Escoge");
         int opt = scan.nextInt();
     }
 
