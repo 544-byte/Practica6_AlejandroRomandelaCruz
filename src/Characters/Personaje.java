@@ -102,6 +102,17 @@ public abstract class Personaje {
         añadirPersonaje(this);
     }
     //endregion
+
+    public void subirNivel() {
+        Random r = new Random();
+        if (r.nextInt(2) == 0) setPv(getPv()+1);
+        if (r.nextInt(2) == 0) setAtq(getAtq()+1);
+        if (r.nextInt(2) == 0) setArm(getArm()+1);
+        if (r.nextInt(2) == 0) setRes(getRes()+1);
+        if (r.nextInt(2) == 0)setVel(getVel()+1);
+        setNivel(getNivel()+1);
+    }
+
     public void realizarTurno(Personaje enemigo){
         if (!this.getEsJugador()){
             this.ataca(getAtq(),enemigo,false);
@@ -187,8 +198,6 @@ public abstract class Personaje {
         }
     }
 
-
-
     public void ataca(double atq,Personaje enemigo,boolean dañoMagico) {
         if (enemigo.defender(atq,dañoMagico) <= 0) {
             System.out.println(enemigo.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar su armadura.");
@@ -222,19 +231,6 @@ public abstract class Personaje {
         }
     }
 
-    public void randomStats() {
-        int stats[] = new int[3];
-        do {
-            Random r = new Random();
-            stats[0] = r.nextInt(0, 100 + 1);
-            stats[1] = r.nextInt(0, 100 - stats[0] + 1);
-            stats[2] = r.nextInt(0, 100 - stats[0] - stats[1] + 1);
-        } while ((stats[0] + stats[1] + stats[2]) > 100);
-        setPv(stats[0]);
-        setAtq(stats[1]);
-        setArm(stats[2]);
-    }
-
     public void beberPocion(int pocion) {
         if (pv <= 30) {
             pv += pocion;
@@ -251,16 +247,6 @@ public abstract class Personaje {
         } else {
             System.err.println("Introduce un tipo válido");
         }
-    }
-
-    public void subirNivel() {
-        Random r = new Random();
-        if (r.nextInt(2) == 0) setPv(getPv()+1);
-        if (r.nextInt(2) == 0) setAtq(getAtq()+1);
-        if (r.nextInt(2) == 0) setArm(getArm()+1);
-        if (r.nextInt(2) == 0) setRes(getRes()+1);
-        if (r.nextInt(2) == 0)setVel(getVel()+1);
-        setNivel(getNivel()+1);
     }
 
     public boolean estaMuerto() {
