@@ -1,6 +1,5 @@
 package Characters;
 
-import Misc.Alianza;
 import Misc.Miscellaneous;
 
 import java.util.Random;
@@ -25,12 +24,12 @@ public class Mago extends Personaje{
         setMagia(10);
     }
 
-    public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double magia, Alianza alianza) {
+    public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double magia, int alianza) {
         super(nombre, nivel, pv, atq, arm, res, vel,alianza);
         setMagia(magia);
     }
 
-    public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, Alianza alianza) {
+    public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza) {
         super(nombre, nivel, pv, atq, arm, res, vel,alianza);
         setMagia(10);
     }
@@ -42,11 +41,6 @@ public class Mago extends Personaje{
 
     public Mago(String nombre, int nivel, double magia) {
         super(nombre, nivel);
-        setMagia(magia);
-    }
-
-    public Mago(Personaje p, double magia) {
-        super(p);
         setMagia(magia);
     }
     // endregion
@@ -80,40 +74,67 @@ public class Mago extends Personaje{
         int opt = scan.nextInt();
         switch (opt){
             case 1 -> {
+                System.out.println("¡Bola de fuego va!");
                 ataca(getAtq()*0.7,enemigo,true);
             }
             case 2 -> {
                 System.out.println("Invocas un hechizo arcano, ¿pero a quien protejes? \n"
-                        +"\t· 1-Protegerte"
+                        +"\t· 1-Protegerte\n"
                         +"\t· 2-Proteger aliado");
                 System.out.print("Proteges a: ");
                 opt = scan.nextInt();
                 switch (opt){
                     case 1 -> {
+                        System.out.println("Aplicas el escudo arcano sobre ti");
                         escudoArcano(this);
                     }
-                    /*case 2 -> {
-                        escudoArcano();
-                    }*/
+                    case 2 -> {
+                        System.out.println("Selecciona un aliado:");
+                        System.out.println(this.getAliados());
+                        System.out.print("Opción: ");
+                        opt = scan.nextInt();
+                        System.out.println("Aplicas el escudo arcano a tu aliado " + aliados[opt-1].getNombre());
+                        escudoArcano(aliados[opt-1]);
+                    }
                 }
 
             }
             case 3 -> {
-
+                System.out.println("Céfiro: Una fuerte ventisca afecta a los enemigos");
+                ataca(getAtq()*0.3,enemigo,true);
             }
             case 4 -> {
-
+                System.out.println("¿A quién quieres aplicar con Presteza mental? \n"
+                        +"\t· 1-Aplicarte Presteza mental\n"
+                        +"\t· 2-Aplicar Presteza mental a un aliado");
+                System.out.print("Aplicar a: ");
+                opt = scan.nextInt();
+                switch (opt){
+                    case 1 -> {
+                        System.out.println("Aumenta tu agilidad en " + getMagia() + " puntos");
+                        this.setVel(this.getVel()+this.getMagia());
+                    }
+                    case 2 -> {
+                        System.out.println("Selecciona un aliado:");
+                        System.out.println(this.getAliados());
+                        System.out.print("Opción: ");
+                        opt = scan.nextInt();
+                        System.out.println("Aplicas el escudo arcano a tu aliado " + aliados[opt-1].getNombre());
+                        aliados[opt-1].setVel(aliados[opt-1].getVel()+this.getMagia());
+                    }
+                }
             }
             case 5 -> {
                 System.out.println("Cambias de opinión y decides hacer otra cosa...");
                 realizarTurnoJugador(enemigo);
             }
         }
+
     }
 
     public void escudoArcano(Personaje afectado){
-        afectado.setArm(this.getMagia()*0.5);
-        afectado.setRes(this.getMagia()*0.5);
+        afectado.setArm(getArm() + this.getMagia()*0.5);
+        afectado.setRes(getRes() + this.getMagia()*0.5);
     }
 
     // region Setters & Getters
@@ -134,7 +155,7 @@ public class Mago extends Personaje{
 
     // region Overrides
     public Mago clone() {
-        return new Mago(super.clone(), this.getMagia());
+        return new Mago(getNombre(),getNivel(),getPv(),getAtq(),getArm(),getRes(),getVel(),this.getMagia());
     }
 
     public boolean equals(Mago magia) {

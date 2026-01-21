@@ -1,8 +1,5 @@
 package Characters;
 
-import Misc.Alianza;
-import Misc.Miscellaneous;
-
 import java.util.Random;
 import java.util.Scanner;
 
@@ -25,12 +22,12 @@ public class Guerrero extends Personaje{
         setFuria(false);
     }
 
-    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, boolean furia, Alianza alianza) {
+    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, boolean furia, int alianza) {
         super(nombre, nivel, pv, atq, arm, res, vel,alianza);
         setFuria(furia);
     }
 
-    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, Alianza alianza) {
+    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza) {
         super(nombre, nivel, pv, atq, arm, res, vel,alianza);
         setFuria(false);
     }
@@ -42,11 +39,6 @@ public class Guerrero extends Personaje{
 
     public Guerrero(String nombre, int nivel, boolean furia) {
         super(nombre, nivel);
-        setFuria(furia);
-    }
-
-    public Guerrero(Personaje p, boolean furia) {
-        super(p);
         setFuria(furia);
     }
     // endregion
@@ -136,7 +128,7 @@ public class Guerrero extends Personaje{
 
     // region Overrides
     public Guerrero clone() {
-        return new Guerrero(super.clone(), this.getFuria());
+        return new Guerrero(getNombre(),getNivel(),getPv(),getAtq(),getArm(),getRes(),getVel(),this.getFuria());
     }
 
     public boolean equals(Guerrero g) {
