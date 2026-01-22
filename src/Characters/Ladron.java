@@ -29,16 +29,16 @@ public class Ladron extends Personaje {
 
     public void subirNivel() {
         Random r = new Random();
-        if (r.nextInt(2) == 0) setPv(getPv()+1);
-        if (r.nextInt(2) == 0) setAtq(getAtq()+1);
-        if (r.nextInt(2) == 0) setArm(getArm()+1);
-        if (r.nextInt(2) == 0) setRes(getRes()+1);
-        if (r.nextInt(2) == 0)setVel(getVel()+1);
+        if (r.nextInt(100) < 40) setPv(getPv()+1);
+        if (r.nextInt(100) < 60) setAtq(getAtq()+1);
+        if (r.nextInt(100) < 40) setArm(getArm()+1);
+        if (r.nextInt(100) < 40) setRes(getRes()+1);
+        if (r.nextInt(100) < 85)setVel(getVel()+2);
         setNivel(getNivel()+1);
     }
 
     public void accionEspecial(Personaje enemigo){
-        Scanner scan = new Scanner(System.in);
+        ataca(getVel(),enemigo,false);
     }
 
     // region Setters & Getters
