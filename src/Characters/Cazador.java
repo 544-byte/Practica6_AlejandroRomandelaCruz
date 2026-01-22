@@ -27,7 +27,6 @@ public class Cazador extends Personaje {
                 case 3 -> {
                     setAtributos(pv*0.05,atq*0.15,arm*0.05,res*0.25,vel*0.35);
                 }
-
             }
         }
         // endregion
