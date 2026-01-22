@@ -33,7 +33,7 @@ public class Ladron extends Personaje {
         if (r.nextInt(100) < 60) setAtq(getAtq()+1);
         if (r.nextInt(100) < 40) setArm(getArm()+1);
         if (r.nextInt(100) < 40) setRes(getRes()+1);
-        if (r.nextInt(100) < 85)setVel(getVel()+2);
+        if (r.nextInt(100) < 85) setVel(getVel()+2);
         setNivel(getNivel()+1);
     }
 

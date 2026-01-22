@@ -57,6 +57,7 @@ public class Guerrero extends Personaje{
             setAtq(getAtq()/2);
         } else if (r.nextInt(100) < 75) setArm(getArm() +1);
         if (r.nextInt(100) < 20) setRes(getRes() +1);
+        if (r.nextInt(100) < 50) setVel(getVel()+1);
         this.setNivel(getNivel() +1);
     }
 
