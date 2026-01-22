@@ -62,6 +62,18 @@ public abstract class Personaje {
         añadirPersonaje(this);
     }
 
+    public Personaje(String nombre, int nivel, int alianza) {
+        setNombre(nombre);
+        setNivel(nivel);
+        esJugador = false;
+        turno = 0;
+        for (int i = 1; i < nivel; i++) {
+            subirNivel();
+        }
+        setAlianza(alianza);
+        añadirPersonaje(this);
+    }
+
     public Personaje(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
         setNombre(nombre);
         setNivel(nivel);
@@ -109,7 +121,7 @@ public abstract class Personaje {
         if (r.nextInt(2) == 0) setAtq(getAtq()+1);
         if (r.nextInt(2) == 0) setArm(getArm()+1);
         if (r.nextInt(2) == 0) setRes(getRes()+1);
-        if (r.nextInt(2) == 0)setVel(getVel()+1);
+        if (r.nextInt(2) == 0) setVel(getVel()+1);
         setNivel(getNivel()+1);
     }
 
@@ -153,7 +165,7 @@ public abstract class Personaje {
 
         switch (opt){
             case 1 -> {
-                this.ataca(getAtq(),enemigo,false);
+                ataca(getAtq(),enemigo,false);
             }
             case 2 -> {
                 this.accionEspecial(enemigo);
@@ -200,13 +212,14 @@ public abstract class Personaje {
 
     public void ataca(double atq,Personaje enemigo,boolean dañoMagico) {
         if (enemigo.defender(atq,dañoMagico) <= 0) {
-            System.out.println(enemigo.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar su armadura.");
+            System.out.println(enemigo.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar sus defensas.");
+            atacar(enemigo,dañoMagico);
         } else {
             if (enemigo.getPv() - (atq - enemigo.getArm()) <= 0) {
-                enemigo.setPv(0);
+                atacar(enemigo,dañoMagico);
                 System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.\n¡" + enemigo.getNombre() + " ha muerto!");
             } else {
-                enemigo.setPv(enemigo.getPv() - (atq - enemigo.getArm()));
+                atacar(enemigo,dañoMagico);
                 System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
             }
         }
@@ -215,6 +228,10 @@ public abstract class Personaje {
             enemigo.setArm(enemigo.getArm() / 1.2);
             enemigo.setRes(enemigo.getRes() / 1.2);
         }
+    }
+
+    public void atacar(Personaje enemigo,boolean dañoMagico) {
+        enemigo.setPv(getPv()-enemigo.defender(this.getAtq(),dañoMagico));
     }
 
     public double defender(double atq, boolean dañoMagico) {
@@ -304,10 +321,6 @@ public abstract class Personaje {
     public void accionEspecial(Personaje enemigo) {
     }
 
-    public double atacar() {
-        return getAtq();
-    }
-
     public boolean esAliado(Personaje personaje){
         if (this.getAlianza() == personaje.getAlianza()) return true;
         else return false;
@@ -351,6 +364,14 @@ public abstract class Personaje {
         }
     }
 
+    public void setAtributos(double pv, double atq, double arm, double res, double vel){
+        setPv(pv);
+        setAtq(atq);
+        setArm(arm);
+        setRes(res);
+        setVel(vel);
+    }
+
     public void setPv(double pv) {
         if (pv < 0) {
             System.err.println("Los puntos de vida de " + nombre + " no pueden ser menor de 0");
@@ -377,7 +398,7 @@ public abstract class Personaje {
 
     public void setNivel(int lvl) {
         if (lvl < 1 || lvl > 100) {
-            System.err.println("Introduce un nivel válido para" + nombre);
+            System.err.println("Introduce un nivel válido para " + nombre + "\tInput: " + lvl);
         } else {
             nivel = lvl;
         }

@@ -11,7 +11,7 @@ import GameMap.Trampa;
 import java.util.Random;
 
 public class Combate {
-
+    // el combate va a pasar de ser un personaje vs un personaje a ser un array de personajes vs un array de personajes
     public static void combatir(Personaje jugador, Personaje enemigo) {
         jugador.setEsJugador();
         Personaje primero;
