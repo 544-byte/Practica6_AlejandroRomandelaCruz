@@ -1,7 +1,5 @@
 package Characters;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.Random;
 
 public class Cazador extends Personaje {
@@ -29,10 +27,6 @@ public class Cazador extends Personaje {
                 case 3 -> {
                     setAtributos(pv*0.05,atq*0.15,arm*0.05,res*0.25,vel*0.35);
                 }
-                default -> {
-                    System.out.println("how the fuck did you came here nigga");
-                }
-
             }
         }
         // endregion
@@ -41,15 +35,15 @@ public class Cazador extends Personaje {
             switch (getRaza()){
                 case 1 -> {
                     setAtributos(pv*0.2,atq*0.2,arm*0.2,res*0.2,vel*0.2);
+                    setNivel(Cazador.this.getNivel());
                 }
                 case 2 -> {
                     setAtributos(pv*0.15,atq*0.3,arm*0.15,res*0.15,vel*0.3);
+                    setNivel(Cazador.this.getNivel());
                 }
                 case 3 -> {
                     setAtributos(pv*0.05,atq*0.15,arm*0.05,res*0.25,vel*0.35);
-                }
-                default -> {
-                    System.out.println("how the fuck did you came here nigga");
+                    setNivel(Cazador.this.getNivel());
                 }
             }
             setNivel(getNivel()+1);
@@ -125,7 +119,6 @@ public class Cazador extends Personaje {
     // endregion
 
 
-    // Preguntar a ivan si aqui el unico posible subida de nivel es al velocidad o el resto a 50 o a 0
     public void subirNivel() {
         Random r = new Random();
         if (r.nextInt(100) < 50) setPv(getPv()+1);

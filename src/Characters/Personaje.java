@@ -231,7 +231,7 @@ public abstract class Personaje {
     }
 
     public void atacar(Personaje enemigo,boolean dañoMagico) {
-        enemigo.setPv(getPv()-enemigo.defender(this.getAtq(),dañoMagico));
+        enemigo.setPv(enemigo.getPv()-enemigo.defender(this.getAtq(),dañoMagico));
     }
 
     public double defender(double atq, boolean dañoMagico) {
