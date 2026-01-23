@@ -532,7 +532,6 @@ public abstract class Personaje {
      */
     public void setPv(double pv) {
         if (pv < 0) {
-            System.err.println("Los puntos de vida de " + nombre + " no pueden ser menor de 0");
             this.pv = 0;
         } else {
             this.pv = pv;
@@ -547,7 +546,6 @@ public abstract class Personaje {
      */
     public void setAtq(double atq) {
         if (atq < 0) {
-            System.err.println("Los puntos de ataque de " + nombre + " no pueden ser menor de 0");
             this.atq = 0;
         } else {
             this.atq = atq;
@@ -562,7 +560,6 @@ public abstract class Personaje {
      */
     public void setArm(double arm) {
         if (arm < 0) {
-            System.err.println("Los puntos de armadura de " + nombre + " no pueden ser menor de 0");
             this.arm = 0;
         } else {
             this.arm = arm;
@@ -591,7 +588,6 @@ public abstract class Personaje {
      */
     public void setRes(double res) {
         if (res < 0) {
-            System.err.println("Los puntos de resistencia mágica de " + nombre + " no pueden ser menor de 0");
             this.res = 0;
         } else {
             this.res = res;

@@ -37,6 +37,6 @@ public class Main {
         Personaje clerigo = new Clerigo("Clerigo",1,100,19,15,35,6,0,30);
 
         Personaje enemigo = new Monstruo("Orco",1,140,26,25,10,5,3);
-        Combate.combatir(guerrero,enemigo);
+        Combate.combatir(ladron,enemigo);
     }
 }
