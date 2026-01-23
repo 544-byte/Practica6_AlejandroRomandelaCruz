@@ -30,7 +30,7 @@ public class Combate {
                 segundo.realizarTurno(primero);
             }
         } while (!primero.estaMuerto() && !segundo.estaMuerto());
-        if ( segundo.estaMuerto()) imprimirGanador(primero);
+        if (segundo.estaMuerto()) imprimirGanador(primero);
         else imprimirGanador(segundo);
     }
 

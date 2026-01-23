@@ -19,13 +19,13 @@ public class Area {
         nivel = 1;
     }
 
-    public Area(String name , String bioma) {
+    public Area(String name, String bioma) {
         setName(name);
         setBioma(bioma);
         randomNivel();
     }
 
-    public Area(Area area){
+    public Area(Area area) {
         this.setName(area.getName());
         this.setBioma(area.getBioma());
         this.setNivel(area.getNivel());
@@ -43,7 +43,7 @@ public class Area {
         return bioma;
     }
 
-    public void randomNivel(){
+    public void randomNivel() {
         Random r = new Random();
         switch (bioma) {
             case "Pradera" -> nivel = r.nextInt(1, 10 + 1);
@@ -51,7 +51,8 @@ public class Area {
             case "Desierto" -> nivel = r.nextInt(31, 60 + 1);
             case "Montaña" -> nivel = r.nextInt(61, 90 + 1);
             case "Mazmorra" -> nivel = r.nextInt(91, 105 + 1);
-            default -> System.err.println("No se ha establecido un nivel aleatorio para el área " + name + " porque tiene un nombre de bioma incorrecto \"" + bioma + "\"");
+            default ->
+                    System.err.println("No se ha establecido un nivel aleatorio para el área " + name + " porque tiene un nombre de bioma incorrecto \"" + bioma + "\"");
 
         }
     }
@@ -59,10 +60,18 @@ public class Area {
     public void setNivel(int nivel) {
         if (!(nivel < 1 || nivel > 105)) {
             switch (bioma) {
-                case "Pradera" -> {if (nivel <= 10) this.nivel = nivel;}
-                case "Jungla" -> {if (nivel <= 30) this.nivel = nivel;}
-                case "Desierto" -> {if (nivel <= 60) this.nivel = nivel;}
-                case "Montaña" -> {if (nivel <= 90) this.nivel = nivel;}
+                case "Pradera" -> {
+                    if (nivel <= 10) this.nivel = nivel;
+                }
+                case "Jungla" -> {
+                    if (nivel <= 30) this.nivel = nivel;
+                }
+                case "Desierto" -> {
+                    if (nivel <= 60) this.nivel = nivel;
+                }
+                case "Montaña" -> {
+                    if (nivel <= 90) this.nivel = nivel;
+                }
                 case "Mazmorra" -> this.nivel = nivel;
                 default -> System.err.println("No hay un nombre de bioma adecuado: " + bioma);
             }
@@ -100,8 +109,7 @@ public class Area {
                 return 30;
             case "Mazmorra":
                 int percent = r.nextInt(0, 100 + 1);
-                if (percent <= 20)
-                    return 10;
+                if (percent <= 20) return 10;
                 else return 20;
         }
         return -1;
@@ -161,10 +169,7 @@ public class Area {
     }
 
     public String toString() {
-        return ("Nombre: " + getName() +
-                "\nBioma: " + getBioma() +
-                "\nNivel: " + getNivel()
-        );
+        return ("Nombre: " + getName() + "\nBioma: " + getBioma() + "\nNivel: " + getNivel());
     }
 }
 

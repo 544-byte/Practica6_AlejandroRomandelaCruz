@@ -117,25 +117,25 @@ public abstract class Personaje {
 
     public void subirNivel() {
         Random r = new Random();
-        if (r.nextInt(2) == 0) setPv(getPv()+1);
-        if (r.nextInt(2) == 0) setAtq(getAtq()+1);
-        if (r.nextInt(2) == 0) setArm(getArm()+1);
-        if (r.nextInt(2) == 0) setRes(getRes()+1);
-        if (r.nextInt(2) == 0) setVel(getVel()+1);
-        setNivel(getNivel()+1);
+        if (r.nextInt(100) < 50) setPv(getPv() + 1);
+        if (r.nextInt(100) < 50) setAtq(getAtq() + 1);
+        if (r.nextInt(100) < 50) setArm(getArm() + 1);
+        if (r.nextInt(100) < 50) setRes(getRes() + 1);
+        if (r.nextInt(100) < 50) setVel(getVel() + 1);
+        setNivel(getNivel() + 1);
     }
 
-    public void realizarTurno(Personaje enemigo){
-        if (!this.getEsJugador()){
-            this.ataca(getAtq(),enemigo,false);
+    public void realizarTurno(Personaje enemigo) {
+        if (!this.getEsJugador()) {
+            this.ataca(getAtq(), enemigo, false);
             System.out.println(new String("\n").repeat(1));
         } else {
             System.out.println("¡Es tu turno!");
             realizarTurnoJugador(enemigo);
             System.out.println(new String("\n").repeat(1));
         }
-        if (this.getVel() > enemigo.getVel()*2 && enemigo.getPv() != 0 && !this.getEsJugador()){
-            turno ++;
+        if (this.getVel() > enemigo.getVel() * 2 && enemigo.getPv() != 0 && !this.getEsJugador()) {
+            turno++;
             if (turno < 2) {
                 realizarTurno(enemigo);
             } else {
@@ -144,28 +144,21 @@ public abstract class Personaje {
         }
     }
 
-    public void realizarTurnoJugador(Personaje enemigo){
+    public void realizarTurnoJugador(Personaje enemigo) {
         int opt = 0;
         Scanner scan = new Scanner(System.in);
-        System.out.println(
-                "Elige una de las siguientes opciones:\n" +
-                        "\t· 1- Atacar\n" +
-                        "\t· 2- " + getAccionEspecial() + "\n" +
-                        "\t· 3- Defender\n" +
-                        "\t· 4- Pasar turno\n" +
-                        "\t· 5- Observar"
-        );
+        System.out.println("Elige una de las siguientes opciones:\n" + "\t· 1- Atacar\n" + "\t· 2- " + getAccionEspecial() + "\n" + "\t· 3- Defender\n" + "\t· 4- Pasar turno\n" + "\t· 5- Observar");
         do {
             System.out.print("Opción: ");
             opt = scan.nextInt();
-            if (opt < 1 | opt > 5){
+            if (opt < 1 | opt > 5) {
                 System.err.println("Opción incorrecta, ingresela de nuevo.");
             }
         } while (opt < 1 | opt > 5);
 
-        switch (opt){
+        switch (opt) {
             case 1 -> {
-                ataca(getAtq(),enemigo,false);
+                ataca(getAtq(), enemigo, false);
             }
             case 2 -> {
                 this.accionEspecial(enemigo);
@@ -173,21 +166,17 @@ public abstract class Personaje {
             case 3 -> {
                 this.setDefiende(true);
                 this.setArm(this.getArm() * 1.2);
-                this.setArm(this.getRes() *1.2);
+                this.setArm(this.getRes() * 1.2);
                 System.out.println("Te defiendes durante el próximo turno");
             }
             case 4 -> {
                 System.out.println(this.getNombre() + " ha decidido no hacer absolutamente nada, let him cook.");
             }
-            case 5 ->{
-                System.out.println(
-                        "\t· 1- Observar enemigo\n" +
-                        "\t· 2- Observarte\n"  +
-                        "\t· 3- Ver aliados"
-                );
+            case 5 -> {
+                System.out.println("\t· 1- Observar enemigo\n" + "\t· 2- Observarte\n" + "\t· 3- Ver aliados");
                 System.out.print("Opción: ");
                 opt = scan.nextInt();
-                switch (opt){
+                switch (opt) {
                     case 1 -> {
                         System.out.println(Miscellaneous.estadisticasJugador(enemigo.toString()));
                         realizarTurnoJugador(enemigo);
@@ -196,9 +185,9 @@ public abstract class Personaje {
                         System.out.println(Miscellaneous.estadisticasJugador(this.toString()));
                         realizarTurnoJugador(enemigo);
                     }
-                    case 3 ->{
+                    case 3 -> {
                         updateAliados();
-                        for (int i = 0; i < nAliados ; i++){
+                        for (int i = 0; i < nAliados; i++) {
                             if (aliados[i] != null) {
                                 System.out.println(Miscellaneous.estadisticasJugador(aliados[i].toString()));
                             }
@@ -210,41 +199,37 @@ public abstract class Personaje {
         }
     }
 
-    public void ataca(double atq,Personaje enemigo,boolean dañoMagico) {
-        if (enemigo.defender(atq,dañoMagico) <= 0) {
+    public void ataca(double atq, Personaje enemigo, boolean dañoMagico) {
+        if (enemigo.defender(atq, dañoMagico) <= 0) {
             System.out.println(enemigo.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar sus defensas.");
-            atacar(enemigo,dañoMagico);
+            atacar(enemigo, dañoMagico);
         } else {
             if (enemigo.getPv() - (atq - enemigo.getArm()) <= 0) {
-                atacar(enemigo,dañoMagico);
+                atacar(enemigo, dañoMagico);
                 System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.\n¡" + enemigo.getNombre() + " ha muerto!");
             } else {
-                atacar(enemigo,dañoMagico);
+                atacar(enemigo, dañoMagico);
                 System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
             }
         }
-        if (enemigo.getDefiende()){
+        if (enemigo.getDefiende()) {
             enemigo.setDefiende(false);
             enemigo.setArm(enemigo.getArm() / 1.2);
             enemigo.setRes(enemigo.getRes() / 1.2);
         }
     }
 
-    public void atacar(Personaje enemigo,boolean dañoMagico) {
-        enemigo.setPv(enemigo.getPv()-enemigo.defender(this.getAtq(),dañoMagico));
+    public void atacar(Personaje enemigo, boolean dañoMagico) {
+        enemigo.setPv(enemigo.getPv() - enemigo.defender(this.getAtq(), dañoMagico));
     }
 
     public double defender(double atq, boolean dañoMagico) {
-        if (dañoMagico){
-            if ((atq - getRes()) < 0)
-                return 0;
-            else
-                return (atq - getRes());
+        if (dañoMagico) {
+            if ((atq - getRes()) < 0) return 0;
+            else return (atq - getRes());
         } else {
-            if ((atq - getArm()) < 0)
-                return 0;
-            else
-                return (atq - getArm());
+            if ((atq - getArm()) < 0) return 0;
+            else return (atq - getArm());
         }
     }
 
@@ -301,11 +286,11 @@ public abstract class Personaje {
                     System.out.println("Un nido de víboras y culebras aparece frente a " + nombre + ". Por suerte quieren ayudarle y recorren sus brazos para hacer " + t.getPerjuicio() + " puntos de daño extra.");
                     atq += t.getPerjuicio();
                     break;
-                        }
+            }
         }
     }
 
-    public String getAccionEspecial(){
+    public String getAccionEspecial() {
         return "Acción especial";
     }
 
@@ -313,7 +298,7 @@ public abstract class Personaje {
      * Debería de incluir esto como setter o no pq realmente no es un setter
      * ya que no recibe nada por parametro pero setea que es el jugador asiq...
      */
-    public void setEsJugador(){
+    public void setEsJugador() {
         esJugador = true;
         setAlianza(0);
     }
@@ -321,35 +306,35 @@ public abstract class Personaje {
     public void accionEspecial(Personaje enemigo) {
     }
 
-    public boolean esAliado(Personaje personaje){
+    public boolean esAliado(Personaje personaje) {
         if (this.getAlianza() == personaje.getAlianza()) return true;
         else return false;
 
     }
 
-    public static void añadirPersonaje(Personaje personaje){
+    public static void añadirPersonaje(Personaje personaje) {
         Personaje[] supportArray = personajes;
-        personajes = new Personaje[supportArray.length+1];
-        for (int i = 0 ; i < supportArray.length ; i++){
+        personajes = new Personaje[supportArray.length + 1];
+        for (int i = 0; i < supportArray.length; i++) {
             personajes[i] = supportArray[i];
         }
-        personajes[personajes.length-1] = personaje;
+        personajes[personajes.length - 1] = personaje;
     }
 
-    public void updateAliados(){
+    public void updateAliados() {
         int aliadosAñadidos = 0;
         String aliadosString = "";
-        for (int i = 0 ; i < personajes.length ; i++){
-            if (this.esAliado(personajes[i]) && personajes[i] != this){
+        for (int i = 0; i < personajes.length; i++) {
+            if (this.esAliado(personajes[i]) && personajes[i] != this) {
                 nAliados++;
             }
         }
         aliados = new Personaje[nAliados];
-        for (int i = 0 ; i < personajes.length ; i++){
-            if (this.esAliado(personajes[i]) && !personajes[i].equals(this)){
+        for (int i = 0; i < personajes.length; i++) {
+            if (this.esAliado(personajes[i]) && !personajes[i].equals(this)) {
                 aliados[aliadosAñadidos] = personajes[i];
                 aliadosAñadidos++;
-                aliadosString += "" + "\t · " + aliadosAñadidos + "- " + aliados[aliadosAñadidos-1].getNombre() + "\n";
+                aliadosString += "" + "\t · " + aliadosAñadidos + "- " + aliados[aliadosAñadidos - 1].getNombre() + "\n";
             }
         }
 
@@ -364,7 +349,7 @@ public abstract class Personaje {
         }
     }
 
-    public void setAtributos(double pv, double atq, double arm, double res, double vel){
+    public void setAtributos(double pv, double atq, double arm, double res, double vel) {
         setPv(pv);
         setAtq(atq);
         setArm(arm);
@@ -375,6 +360,7 @@ public abstract class Personaje {
     public void setPv(double pv) {
         if (pv < 0) {
             System.err.println("Los puntos de vida de " + nombre + " no pueden ser menor de 0");
+            this.pv = 0;
         } else {
             this.pv = pv;
         }
@@ -383,6 +369,7 @@ public abstract class Personaje {
     public void setAtq(double atq) {
         if (atq < 0) {
             System.err.println("Los puntos de ataque de " + nombre + " no pueden ser menor de 0");
+            this.atq = 0;
         } else {
             this.atq = atq;
         }
@@ -391,6 +378,7 @@ public abstract class Personaje {
     public void setArm(double arm) {
         if (arm < 0) {
             System.err.println("Los puntos de armadura de " + nombre + " no pueden ser menor de 0");
+            this.arm = 0;
         } else {
             this.arm = arm;
         }
@@ -407,6 +395,7 @@ public abstract class Personaje {
     public void setRes(double res) {
         if (res < 0) {
             System.err.println("Los puntos de resistencia mágica de " + nombre + " no pueden ser menor de 0");
+            this.res = 0;
         } else {
             this.res = res;
         }
@@ -415,6 +404,7 @@ public abstract class Personaje {
     public void setVel(double vel) {
         if (vel < 0) {
             System.err.println("Los puntos de velocidad de " + nombre + " no pueden ser menor de 0");
+            this.vel = 0;
         } else {
             this.vel = vel;
         }
@@ -424,9 +414,10 @@ public abstract class Personaje {
         this.defiende = defiende;
     }
 
-    public void setAlianza(int alianza){
+    public void setAlianza(int alianza) {
         this.alianza = alianza;
     }
+
     //endregion
     //region Getters
     public String getNombre() {
@@ -457,7 +448,7 @@ public abstract class Personaje {
         return vel;
     }
 
-    public boolean getEsJugador(){
+    public boolean getEsJugador() {
         return esJugador;
     }
 
@@ -465,24 +456,24 @@ public abstract class Personaje {
         return defiende;
     }
 
-    public int getAlianza(){
+    public int getAlianza() {
         return alianza;
     }
 
-    public String getAliados(){
+    public String getAliados() {
         int aliadosAñadidos = 0;
         String aliadosString = "";
-        for (int i = 0 ; i < personajes.length ; i++){
-            if (this.esAliado(personajes[i]) && personajes[i] != this){
+        for (int i = 0; i < personajes.length; i++) {
+            if (this.esAliado(personajes[i]) && personajes[i] != this) {
                 nAliados++;
             }
         }
         aliados = new Personaje[nAliados];
-        for (int i = 0 ; i < personajes.length ; i++){
-            if (this.esAliado(personajes[i]) && !personajes[i].equals(this)){
+        for (int i = 0; i < personajes.length; i++) {
+            if (this.esAliado(personajes[i]) && !personajes[i].equals(this)) {
                 aliados[aliadosAñadidos] = personajes[i];
                 aliadosAñadidos++;
-                aliadosString += "" + "\t · " + aliadosAñadidos + "- " + aliados[aliadosAñadidos-1].getNombre() + "\n";
+                aliadosString += "" + "\t · " + aliadosAñadidos + "- " + aliados[aliadosAñadidos - 1].getNombre() + "\n";
             }
         }
 
@@ -493,25 +484,11 @@ public abstract class Personaje {
     // region Overrides
 
     public boolean equals(Personaje p) {
-        return getNombre().equals(p.getNombre()) &&
-                getPv() == p.getPv() &&
-                getAtq() == p.getAtq() &&
-                getArm() == p.getArm() &&
-                getVel() == p.getVel() &&
-                getRes() == p.getRes() &&
-                getNivel() == p.getNivel();
+        return getNombre().equals(p.getNombre()) && getPv() == p.getPv() && getAtq() == p.getAtq() && getArm() == p.getArm() && getVel() == p.getVel() && getRes() == p.getRes() && getNivel() == p.getNivel();
     }
 
     public String toString() {
-        return ("Nombre: " + getNombre() + "\n" +
-                "Puntos de vida: " + getPv()  + "\n" +
-                "Ataque: " + getAtq() + "\n" +
-                "Armadura: " + getArm() + "\n" +
-                "Resistencia: " + getRes() + "\n" +
-                "Velocidad: " + getVel() + "\n" +
-                "Nivel: " + getNivel() + "\n" +
-                "¿Es jugador?" + getEsJugador()
-        );
+        return ("Nombre: " + getNombre() + "\n" + "Puntos de vida: " + getPv() + "\n" + "Ataque: " + getAtq() + "\n" + "Armadura: " + getArm() + "\n" + "Resistencia: " + getRes() + "\n" + "Velocidad: " + getVel() + "\n" + "Nivel: " + getNivel() + "\n" + "¿Es jugador?" + getEsJugador());
     }
     // endregion
 }
