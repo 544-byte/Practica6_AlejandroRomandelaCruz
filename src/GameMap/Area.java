@@ -7,42 +7,97 @@ import Misc.*;
 
 import java.util.Random;
 
+/**
+ * Representa un área del mapa del juego.<br>
+ * Un área posee un nombre, un bioma y un nivel asociado que determina
+ * la dificultad de los encuentros, las recompensas y la peligrosidad
+ * de las trampas.
+ */
 public class Area {
+    /**
+     * Nivel del área, que determina su dificultad.
+     */
     private int nivel;
+    /**
+     * Nombre del área.
+     */
     private String name;
+    /**
+     * Bioma del área (Pradera, Jungla, Desierto, Montaña o Mazmorra).
+     */
     private String bioma;
+    /**
+     * Trampa asociada al área.
+     */
     private Trampa trampa;
 
+    /**
+     * Constructor por defecto.
+     * Inicializa el área con valores básicos.
+     */
     public Area() {
         name = "???";
         bioma = "Pradera";
         nivel = 1;
     }
 
+    /**
+     * Constructor que inicializa el área con un nombre y un bioma.
+     * El nivel se genera automáticamente según el bioma.
+     *
+     * @param name  Nombre del área
+     * @param bioma Bioma del área
+     */
     public Area(String name, String bioma) {
         setName(name);
         setBioma(bioma);
         randomNivel();
     }
 
+    /**
+     * Constructor copia.
+     *
+     * @param area Área a copiar
+     */
     public Area(Area area) {
         this.setName(area.getName());
         this.setBioma(area.getBioma());
         this.setNivel(area.getNivel());
     }
 
+    /**
+     * Obtiene el nivel del área.
+     *
+     * @return Nivel del área
+     */
     public int getNivel() {
         return nivel;
     }
 
+    /**
+     * Obtiene el nombre del área.
+     *
+     * @return Nombre del área
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Obtiene el bioma del área.
+     *
+     * @return Bioma del área
+     */
     public String getBioma() {
         return bioma;
     }
 
+    /**
+     * Genera aleatoriamente el nivel del área en función de su bioma.
+     * <p>
+     * Cada bioma tiene un rango de niveles específico.
+     * </p>
+     */
     public void randomNivel() {
         Random r = new Random();
         switch (bioma) {
@@ -57,6 +112,11 @@ public class Area {
         }
     }
 
+    /**
+     * Establece el nivel del área respetando los límites del bioma.
+     *
+     * @param nivel Nivel del área
+     */
     public void setNivel(int nivel) {
         if (!(nivel < 1 || nivel > 105)) {
             switch (bioma) {
@@ -80,6 +140,14 @@ public class Area {
         }
     }
 
+    /**
+     * Establece el nombre del área.
+     * <p>
+     * El nombre no puede estar vacío ni contener espacios.
+     * </p>
+     *
+     * @param nameSetter Nombre del área
+     */
     public void setName(String nameSetter) {
         if (nameSetter.isEmpty() || nameSetter.contains(" ")) {
             System.err.println("El nombre no puede estar vacío ni contener espacios");
@@ -88,6 +156,11 @@ public class Area {
         }
     }
 
+    /**
+     * Establece el bioma del área.
+     *
+     * @param biomaSetter Bioma del área
+     */
     public void setBioma(String biomaSetter) {
         if (!biomaSetter.equals("Pradera") && !biomaSetter.equals("Jungla") && !biomaSetter.equals("Desierto") && !biomaSetter.equals("Montaña") && !biomaSetter.equals("Mazmorra")) {
             System.err.println("El bioma introducido es incorrecto, ten en cuenta las mayúsculas.");
@@ -96,6 +169,11 @@ public class Area {
         }
     }
 
+    /**
+     * Genera una poción según el bioma del área.
+     *
+     * @return Valor de curación de la poción
+     */
     public int generarPocion() {
         Random r = new Random();
         switch (bioma) {
@@ -115,6 +193,14 @@ public class Area {
         return -1;
     }
 
+    /**
+     * Genera una trampa en función del bioma del área.
+     *
+     * @param t Categoría de la trampa
+     * @param p Perjuicio de la trampa
+     * @param f Probabilidad de fracaso
+     * @param a Área en la que se genera la trampa
+     */
     public static void generaTrampa(String t, int p, double f, Area a) {
         Trampa trampa = new Trampa();
         switch (a.getBioma()) {
@@ -160,6 +246,11 @@ public class Area {
         }
     }
 
+    /**
+     * Crea una copia del área.
+     *
+     * @return Copia del área
+     */
     public Area clone() {
         Area clon = new Area();
         clon.setNivel(getNivel());
@@ -168,51 +259,12 @@ public class Area {
         return clon;
     }
 
+    /**
+     * Representación textual del área.
+     *
+     * @return Información del área
+     */
     public String toString() {
         return ("Nombre: " + getName() + "\nBioma: " + getBioma() + "\nNivel: " + getNivel());
     }
 }
-
-
-
-
-    /*
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        byte opt;
-        String name;
-        String bioma = null;
-        System.out.println("Si en cualquier momento escribes Salir se terminará el programa.");
-        do {
-            System.out.println("Introduce un nombre");
-            name = scan.nextLine();
-            if (!name.equals("Salir")) {
-                do {
-                    System.out.println("Introduce uno de los siguientes biomas:\n-Pradera\n-Jungla\n-Desierto\n-Montaña\n-Mazmorra");
-                    bioma = scan.nextLine();
-                    if (!bioma.equals("Pradera") && !bioma.equals("Jungla") && !bioma.equals("Desierto") && !bioma.equals("Montaña") && !bioma.equals("Mazmorra") && !bioma.equals("Salir")) {
-                        System.err.println("El bioma introducido es incorrecto, ten en cuenta las mayúsculas.");
-                    } else {
-                        switch (bioma) {
-                            case "Pradera":
-                                System.out.println("Tierra fértil y tranquila, hogar de aldeanos y criaturas pacíficas.");
-                                break;
-                            case "Jungla":
-                                System.out.println("Selva densa y húmeda, llena de vida y misterios ocultos.");
-                                break;
-                            case "Desierto":
-                                System.out.println("Extensión árida y hostil, donde solo los fuertes sobreviven.");
-                                break;
-                            case "Montaña":
-                                System.out.println("Picos fríos y escarpados, refugio de bestias y antiguos secretos.");
-                                break;
-                            case "Mazmorra":
-                                System.out.println("Oscuro laberinto subterráneo repleto de trampas y peligros.");
-                                break;
-                        }
-                    }
-                } while (!bioma.equals("Pradera") && !bioma.equals("Jungla") && !bioma.equals("Desierto") && !bioma.equals("Montaña") && !bioma.equals("Mazmorra") && !bioma.equals("Salir"));
-            }
-        } while (!name.equals("Salir") && !bioma.equals("Salir"));
-        System.out.println("Saliendo del programa . . . ");
-    } */

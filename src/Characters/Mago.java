@@ -5,46 +5,81 @@ import Misc.Miscellaneous;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Clase que representa a un Mago, subclase de {@link Personaje}.<br>
+ * El Mago utiliza magia para atacar y protegerse a sí mismo o a sus aliados.
+ * Posee puntos de magia que determinan la efectividad de sus conjuros y hechizos.
+ */
 public class Mago extends Personaje {
     private double magia;
 
     // region Constructores
+    /**
+     * Constructor por defecto del Mago.
+     * Inicializa un Mago con valores base y magia inicial de 10.
+     */
     public Mago() {
         super();
         setMagia(10);
     }
 
+    /**
+     * Constructor completo del Mago con magia especificada.
+     *
+     * @param nombre Nombre del Mago
+     * @param nivel Nivel inicial
+     * @param pv Puntos de vida
+     * @param atq Ataque base
+     * @param arm Armadura
+     * @param res Resistencia mágica
+     * @param vel Velocidad
+     * @param magia Puntos de magia del Mago
+     */
     public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double magia) {
         super(nombre, nivel, pv, atq, arm, res, vel);
         setMagia(magia);
     }
 
+    /**
+     * Constructor completo sin especificar magia (por defecto 10).
+     *
+     * @param nombre Nombre del Mago
+     * @param nivel Nivel inicial
+     * @param pv Puntos de vida
+     * @param atq Ataque base
+     * @param arm Armadura
+     * @param res Resistencia mágica
+     * @param vel Velocidad
+     */
     public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
         super(nombre, nivel, pv, atq, arm, res, vel);
         setMagia(10);
     }
 
+    /**
+     * Constructor completo del Mago con magia y alianza especificadas.
+     *
+     * @param nombre Nombre del Mago
+     * @param nivel Nivel inicial
+     * @param pv Puntos de vida
+     * @param atq Ataque base
+     * @param arm Armadura
+     * @param res Resistencia mágica
+     * @param vel Velocidad
+     * @param magia Puntos de magia del Mago
+     * @param alianza Identificador de la alianza
+     */
     public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double magia, int alianza) {
         super(nombre, nivel, pv, atq, arm, res, vel, alianza);
         setMagia(magia);
     }
 
-    public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza) {
-        super(nombre, nivel, pv, atq, arm, res, vel, alianza);
-        setMagia(10);
-    }
-
-    public Mago(String nombre, double magia) {
-        super(nombre);
-        setMagia(magia);
-    }
-
-    public Mago(String nombre, int nivel, double magia) {
-        super(nombre, nivel);
-        setMagia(magia);
-    }
     // endregion
 
+    /**
+     * Incrementa el nivel del Mago aumentando aleatoriamente sus atributos
+     * y puntos de magia según probabilidades específicas.
+     */
     public void subirNivel() {
         Random r = new Random();
         if (r.nextInt(100) < 35) setPv(getPv() + 1);
@@ -56,10 +91,21 @@ public class Mago extends Personaje {
         setNivel(getNivel() + 1);
     }
 
+    /**
+     * Ejecuta la acción especial del Mago, que consiste en lanzar un conjuro
+     * sobre un enemigo o sobre sí mismo/aliados.
+     *
+     * @param enemigo Personaje objetivo del conjuro
+     */
     public void accionEspecial(Personaje enemigo) {
         lanzarConjuro(enemigo);
     }
 
+    /**
+     * Permite al Mago seleccionar y lanzar un conjuro de varias opciones.
+     *
+     * @param enemigo Personaje objetivo de los conjuros ofensivos
+     */
     public void lanzarConjuro(Personaje enemigo) {
         Scanner scan = new Scanner(System.in);
         System.out.println(Miscellaneous.opcionesJugador("" + "Escoge un conjuro:\n" + "1- Bola de fuego\n" + "2- Escudo arcano\n" + "3- Céfiro\n" + "4- Presteza mental\n" + "5- Cambio de opinión\n"));
@@ -121,6 +167,11 @@ public class Mago extends Personaje {
 
     }
 
+    /**
+     * Aplica un escudo arcano a un personaje, aumentando armadura y resistencia.
+     *
+     * @param afectado Personaje que recibe el escudo
+     */
     public void escudoArcano(Personaje afectado) {
         afectado.setArm(getArm() + this.getMagia() * 0.5);
         afectado.setRes(getRes() + this.getMagia() * 0.5);
@@ -128,14 +179,29 @@ public class Mago extends Personaje {
 
     // region Setters & Getters
 
+    /**
+     * Obtiene los puntos de magia del Mago.
+     *
+     * @return Puntos de magia
+     */
     public double getMagia() {
         return magia;
     }
 
+    /**
+     * Establece los puntos de magia del Mago.
+     *
+     * @param magia Puntos de magia a asignar
+     */
     public void setMagia(double magia) {
         this.magia = magia;
     }
 
+    /**
+     * Devuelve el nombre de la acción especial del Mago.
+     *
+     * @return "Magia"
+     */
     public String getAccionEspecial() {
         return "Magia";
     }
@@ -143,14 +209,32 @@ public class Mago extends Personaje {
     // endregion
 
     // region Overrides
+    /**
+     * Crea y devuelve una copia del Mago.
+     *
+     * @return Nuevo objeto Mago con los mismos atributos
+     */
     public Mago clone() {
         return new Mago(getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), this.getMagia());
     }
 
+    /**
+     * Compara este Mago con otro para determinar si son equivalentes
+     * en todos sus atributos principales incluyendo magia.
+     *
+     * @param magia Mago a comparar
+     * @return true si todos los atributos coinciden, false en caso contrario
+     */
     public boolean equals(Mago magia) {
         return getNombre().equals(magia.getNombre()) && getPv() == magia.getPv() && getAtq() == magia.getAtq() && getArm() == magia.getArm() && getVel() == magia.getVel() && getRes() == magia.getRes() && getNivel() == magia.getNivel() && getMagia() == magia.getMagia();
     }
 
+    /**
+     * Devuelve una representación en cadena de texto del Mago,
+     * incluyendo su clase, atributos heredados de {@link Personaje} y puntos de magia.
+     *
+     * @return Cadena de texto con la información del Mago
+     */
     public String toString() {
         return ("Clase: Mago\n" + super.toString() + "\n" + "Magia: " + getMagia());
     }

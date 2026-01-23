@@ -10,8 +10,20 @@ import GameMap.Trampa;
 
 import java.util.Random;
 
+/**
+ * Clase encargada de gestionar los combates entre personajes.<br>
+ * Controla el orden de los turnos según la velocidad, la ejecución
+ * de los ataques y la determinación del ganador del combate.
+ */
 public class Combate {
-    // el combate va a pasar de ser un personaje vs un personaje a ser un array de personajes vs un array de personajes
+    /**
+     * Inicia un combate entre un jugador y un enemigo.<br>
+     * El orden de los turnos se determina por la velocidad de los personajes.
+     * El combate continúa hasta que uno de los dos muere.
+     *
+     * @param jugador Personaje controlado por el jugador
+     * @param enemigo Personaje enemigo
+     */
     public static void combatir(Personaje jugador, Personaje enemigo) {
         jugador.setEsJugador();
         Personaje primero;
@@ -34,10 +46,24 @@ public class Combate {
         else imprimirGanador(segundo);
     }
 
+    /**
+     * Imprime por consola el nombre del personaje ganador del combate.
+     *
+     * @param ganador Personaje que ha ganado el combate
+     */
     public static void imprimirGanador(Personaje ganador) {
         System.out.println("El  jugador " + ganador.getNombre() + " ha ganado.");
     }
 
+    /**
+     * Intenta activar una trampa sobre un personaje.
+     * <p>
+     * Existe una probabilidad del 5% de que el personaje caiga en una trampa.
+     * Si se activa, se genera una trampa aleatoria y se aplica al personaje.
+     * </p>
+     *
+     * @param afectado Personaje que puede verse afectado por la trampa
+     */
     private static void llamarTrampa(Personaje afectado) {
         Trampa trampa = new Trampa();
         Random r = new Random();

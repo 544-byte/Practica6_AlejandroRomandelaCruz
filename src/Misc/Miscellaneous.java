@@ -3,8 +3,19 @@ package Misc;
 import Characters.*;
 
 /**
- * Aquí se guardan métodos para cosas misceláneas, es abstracto ya que no tiene instancias, solo tiene métodos de apoyo con funcionalidades específicas.
+ * Clase abstracta que contiene métodos utilitarios para mostrar texto con formatos decorativos en la consola.
+ * <p>
+ * Esta clase no puede instanciarse, ya que todos sus métodos son estáticos y sirven de apoyo para funcionalidades misceláneas
+ * relacionadas con la presentación de información del jugador.
+ * </p>
+ *
+ * <p>Ejemplo de uso:</p>
+ * <pre>
+ * System.out.println(Miscellaneous.opcionesJugador("1- Atacar\n2- Defender"));
+ * System.out.println(Miscellaneous.estadisticasJugador("Vida: 100\nAtaque: 20"));
+ * </pre>
  */
+
 public abstract class Miscellaneous {
     /**
      * Cadena utilizada como contenedor base para construir los marcos decorativos.
