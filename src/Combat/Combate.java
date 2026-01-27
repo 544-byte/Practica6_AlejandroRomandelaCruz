@@ -36,10 +36,11 @@ public class Combate {
             segundo = jugador;
         }
         do {
-            primero.realizarTurno(segundo);
 
-            if (!segundo.estaMuerto()) {
-                segundo.realizarTurno(primero);
+            primero.realizarTurno(segundo);
+            llamarTrampa(primero);
+            if (!segundo.estaMuerto() && !primero.estaMuerto()) {
+                segundo.realizarTurno(segundo);
             }
         } while (!primero.estaMuerto() && !segundo.estaMuerto());
         if (segundo.estaMuerto()) imprimirGanador(primero);

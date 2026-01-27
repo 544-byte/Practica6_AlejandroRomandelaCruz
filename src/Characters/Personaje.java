@@ -213,7 +213,7 @@ public abstract class Personaje {
             this.ataca(getAtq(), enemigo, false);
             System.out.println(new String("\n").repeat(1));
         } else {
-            System.out.println("¡Es tu turno!");
+            System.out.println("¡" + this.getNombre() + " es tu turno!");
             realizarTurnoJugador(enemigo);
             System.out.println(new String("\n").repeat(1));
         }
