@@ -233,8 +233,7 @@ public class Cazador extends Personaje {
      * @param dañoMagico true si es daño mágico, false si es físico
      */
     public void atacar(Personaje enemigo, boolean dañoMagico) {
-        enemigo.setPv(enemigo.getPv() - enemigo.defender(this.getAtq(), dañoMagico));
-        compañeroAnimal.ataca(compañeroAnimal.getAtq(), enemigo, false);
+        enemigo.setPv(enemigo.getPv() - enemigo.defender(this.getAtq()+compañeroAnimal.getAtq(), dañoMagico));
     }
 
     /**

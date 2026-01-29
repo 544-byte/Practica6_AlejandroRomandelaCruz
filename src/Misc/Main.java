@@ -1,5 +1,10 @@
 package Misc;
 
+/**
+ * todo Mejorar los constructores para que lo ultimo que se pida sea la alianza y todo tenga mas semántica
+ * todo Revisar los sout y mejorar como se va documentando todo lo que pasa en la partida incluyendo tal vez un metodo en misc que sea ocurrir ataque o algo asi etc
+ */
+
 import Characters.*;
 import Combat.*;
 import GameMap.*;
@@ -23,7 +28,7 @@ public class Main {
     /**
      * Punto de entrada de la aplicación.
      * <p>
-     * Crea instancias de distintos personajes y un enemigo, y llama al método
+     * Crea instancias de distintos personajes y un enemigo, y llama al metodo
      * {@link Combat.Combate#combatir(Personaje, Personaje)} para simular un combate.
      *
      * @param args Argumentos de línea de comandos (no utilizados).
