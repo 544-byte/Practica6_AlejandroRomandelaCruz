@@ -40,7 +40,7 @@ public class Combate {
             primero.realizarTurno(segundo);
             llamarTrampa(primero);
             if (!segundo.estaMuerto() && !primero.estaMuerto()) {
-                segundo.realizarTurno(segundo);
+                segundo.realizarTurno(primero);
             }
         } while (!primero.estaMuerto() && !segundo.estaMuerto());
         if (segundo.estaMuerto()) imprimirGanador(primero);
@@ -68,17 +68,11 @@ public class Combate {
     private static void llamarTrampa(Personaje afectado) {
         Trampa trampa = new Trampa();
         Random r = new Random();
-        if (r.nextInt(0, 100 + 1) <= 5) {
-            switch (r.nextInt(1, 3 + 1)) {
-                case 1:
-                    trampa.setCategoria("Pinchos");
-                    break;
-                case 2:
-                    trampa.setCategoria("Brea");
-                    break;
-                case 3:
-                    trampa.setCategoria("Serpientes");
-                    break;
+        if (r.nextInt(0, 100) < 60) {
+            switch (r.nextInt(3)) {
+                case 0 -> trampa.setCategoria("Pinchos");
+                case 1 -> trampa.setCategoria("Brea");
+                case 2 -> trampa.setCategoria("Serpientes");
             }
             trampa.setPerjuicio(r.nextInt(5, 20 + 1));
             trampa.setFracaso(r.nextDouble(0, 75 + 1));

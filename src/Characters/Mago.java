@@ -114,10 +114,10 @@ public class Mago extends Personaje {
         switch (opt) {
             case 1 -> {
                 System.out.println("¡Bola de fuego va!");
-                ataca(getAtq() * 0.7, enemigo, true);
+                ataca(getAtq() / 1.3, enemigo, true);
             }
             case 2 -> {
-                System.out.println("Invocas un hechizo arcano, ¿pero a quien protejes? \n" + "\t· 1-Protegerte\n" + "\t· 2-Proteger aliado");
+                System.out.println("Invocas un hechizo arcano, ¿pero a quien proteges?\n" + "\t· 1-Protegerte\n" + "\t· 2-Proteger aliado");
                 System.out.print("Proteges a: ");
                 opt = scan.nextInt();
                 switch (opt) {

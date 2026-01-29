@@ -235,7 +235,7 @@ public abstract class Personaje {
     public void realizarTurnoJugador(Personaje enemigo) {
         int opt = 0;
         Scanner scan = new Scanner(System.in);
-        System.out.println("Elige una de las siguientes opciones:\n" + "\t· 1- Atacar\n" + "\t· 2- " + getAccionEspecial() + "\n" + "\t· 3- Defender\n" + "\t· 4- Pasar turno\n" + "\t· 5- Observar");
+        System.out.println(Miscellaneous.opcionesJugador("Elige una opción:\n" + "1- Atacar\n" + "2- " + getAccionEspecial() + "\n" + "3- Defender\n" + "4- Pasar turno\n" + "5- Observar"));
         do {
             System.out.print("Opción: ");
             opt = scan.nextInt();
@@ -301,10 +301,18 @@ public abstract class Personaje {
         } else {
             if (enemigo.getPv() - (atq - enemigo.getArm()) <= 0) {
                 atacar(enemigo, dañoMagico);
-                System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.\n¡" + enemigo.getNombre() + " ha muerto!");
+                if (dañoMagico){
+                    System.out.println(nombre + " ha inflingido " + (atq - enemigo.getRes()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida acabando por completo con su existencia.");
+                } else {
+                    System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida acabando por completo con su existencia.");
+                }
             } else {
                 atacar(enemigo, dañoMagico);
-                System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
+                if (dañoMagico){
+                    System.out.println(nombre + " ha inflingido " + (atq - enemigo.getRes()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
+                } else {
+                    System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
+                }
             }
         }
         if (enemigo.getDefiende()) {

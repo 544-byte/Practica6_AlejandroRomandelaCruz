@@ -29,17 +29,17 @@ public class Main {
      * @param args Argumentos de línea de comandos (no utilizados).
      */
     public static void main(String[] args) {
-    //    Personaje guerrero = new Guerrero("Guerrero",100,15,10,10,10,10,false,0);
-        Personaje mago = new Mago("Bvbelita",1,100,15,10,10,10,10,1);
-    //    Personaje ladron = new Ladron("Ladron",1,100,15,10,10,10,0);
-        Personaje cazador = new Cazador("alejandrito",1,100,15,10,10,10,2,"Toby",1);
-    //    Personaje paladin = new Paladin("Paladin",1,100,15,10,10,10,0,10);
-    //    Personaje clerigo = new Clerigo("Clerigo",1,100,15,10,10,10,0,10);
-    //    Personaje enemigo = new Monstruo("Orco",1,100,10,10,10,10,3);
+    //    Personaje guerrero = new Guerrero("Iván",1,100,15,10,10,10,false,0);
+        Personaje mago = new Mago("alejandrito el mago con varita",1,100,15,10,10,10,10,1);
+    //    Personaje ladron = new Ladron("Ladron",1,100,15,10,10,10,2);
+    //    Personaje cazador = new Cazador("alejandrito",1,100,15,10,10,10,2,"Toby",3);
+    //    Personaje paladin = new Paladin("Alejandro",1,100,15,10,10,10,4,10);
+    //    Personaje clerigo = new Clerigo("Clerigo",1,100,15,10,10,10,5,10);
+        Personaje enemigo = new Monstruo("Isabel la pequeña gigante (en ve de 1,50 mide 1,65)",1,100,15,10,10,10,6,3);
 
 
         mago.setEsJugador();
-        cazador.setEsJugador();
-        Combate.combatir(mago,cazador);
+        enemigo.setEsJugador();
+        Combate.combatir(mago,enemigo);
     }
 }
