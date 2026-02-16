@@ -11,6 +11,9 @@ import GameMap.*;
 import Misc.*;
 
 import Combat.Combate;
+
+import java.io.IOException;
+
 /**
  * Clase principal del juego.
  * <p>
@@ -33,7 +36,7 @@ public class Main {
      *
      * @param args Argumentos de línea de comandos (no utilizados).
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
     //    Personaje guerrero = new Guerrero("Iván",1,100,15,10,10,10,false,0);
         Personaje mago = new Mago("alejandrito el mago con varita",1,100,15,10,10,10,10,1);
     //    Personaje ladron = new Ladron("Ladron",1,100,15,10,10,10,2);
@@ -42,9 +45,9 @@ public class Main {
     //    Personaje clerigo = new Clerigo("Clerigo",1,100,15,10,10,10,5,10);
         Personaje enemigo = new Monstruo("Isabel la pequeña gigante (en ve de 1,50 mide 1,65)",1,100,15,10,10,10,6,3);
 
-
         mago.setEsJugador();
         enemigo.setEsJugador();
         Combate.combatir(mago,enemigo);
+
     }
 }

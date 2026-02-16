@@ -1,5 +1,6 @@
 package Characters;
 
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -22,9 +23,8 @@ public class Cazador extends Personaje {
          * Constructor por defecto del compañero animal.
          * Inicializa un animal con raza no definida.
          */
-        public CompañeroAnimal() {
+        public CompañeroAnimal() throws IOException {
             super();
-            raza = -1;
         }
 
         /**
@@ -40,7 +40,7 @@ public class Cazador extends Personaje {
          * @param alianza Alianza a la que pertenece
          * @param raza Identificador de raza (1-Cánido, 2-Felino, 3-Rapaz)
          */
-        public CompañeroAnimal(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, int raza) {
+        public CompañeroAnimal(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, int raza) throws IOException {
             super(nombre, nivel, alianza);
             setRaza(raza);
             switch (getRaza()) {
@@ -66,7 +66,7 @@ public class Cazador extends Personaje {
          * @param res Resistencia del dueño
          * @param vel Velocidad del dueño
          */
-        public void subirNivel(double pv, double atq, double arm, double res, double vel) {
+        public void subirNivel(double pv, double atq, double arm, double res, double vel) throws IOException {
             switch (getRaza()) {
                 case 1 -> {
                     setAtributos(pv * 0.2, atq * 0.2, arm * 0.2, res * 0.2, vel * 0.2);

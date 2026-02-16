@@ -4,6 +4,7 @@ package Characters;
 import GameMap.*;
 import Misc.Miscellaneous;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,46 +19,21 @@ import java.util.Scanner;
  */
 public abstract class Personaje {
     // region Atributos
-    /**
-     * Lista estática que almacena todos los personajes creados en la partida.
-     */
     private static Personaje[] personajes = new Personaje[0];
-    /**
-     * Array de aliados del personaje.
-     */
     Personaje[] aliados;
-    /**
-     * Número de aliados actuales.
-     */
     int nAliados = 0;
-    /**
-     * Nombre del personaje
-     */
+
+    private int raza;
     private String nombre;
-    /**
-     * Nivel del personaje
-     */
     private int nivel;
-    /**
-     * Atributos base de los personajes (vida, ataque, velocidad, armadura y resistencia)
-     */
     private double pv, atq, vel, arm, res;
-    /**
-     * Indica si el personaje es controlado por el jugador
-     */
-    private boolean esJugador;
-    /**
-     * Control interno de turnos extra
-     */
-    private int turno;
-    /**
-     * Indica si el personaje se está defendiendo
-     */
-    private boolean defiende;
-    /**
-     * Identificador de alianza
-     */
     private int alianza = -1;
+    private boolean esJugador;
+
+    private int turno;
+    private boolean defiende;
+
+
     // endregion
 
     //region Constructores
@@ -67,12 +43,13 @@ public abstract class Personaje {
      * Inicializa un personaje con valores básicos.
      */
     public Personaje() {
+        raza = -1;
         nombre = "";
-        pv = 100;
-        atq = 10;
-        arm = 10;
-        res = 10;
-        vel = 10;
+        pv = -1;
+        atq = -1;
+        arm = -1;
+        res = -1;
+        vel = -1;
         nivel = 0;
         esJugador = false;
         turno = 0;
@@ -80,94 +57,16 @@ public abstract class Personaje {
     }
 
     /**
-     * Constructor con nombre.
-     *
-     * @param nombre Nombre del personaje
+     * Constructor completo.
      */
-    public Personaje(String nombre) {
-        setNombre(nombre);
-        setNivel(1);
-        pv = 100;
-        atq = 10;
-        arm = 10;
-        res = 10;
-        vel = 10;
-        esJugador = false;
-        turno = 0;
-        añadirPersonaje(this);
-    }
-
-    /**
-     * Constructor con nombre y nivel.
-     *
-     * @param nombre Nombre del personaje
-     * @param nivel  Nivel inicial
-     */
-    public Personaje(String nombre, int nivel) {
+    public Personaje(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, boolean esJugador) {
+        setRaza(raza);
         setNombre(nombre);
         setNivel(nivel);
-        pv = 100;
-        atq = 10;
-        arm = 10;
-        res = 10;
-        vel = 10;
-        esJugador = false;
-        turno = 0;
-        for (int i = 0; i < this.nivel; i++) {
-            subirNivel();
-        }
-        añadirPersonaje(this);
-    }
-
-    /**
-     * Constructor con nombre, nivel y alianza.
-     *
-     * @param nombre  Nombre del personaje
-     * @param nivel   Nivel inicial
-     * @param alianza Alianza a la que pertenece
-     */
-    public Personaje(String nombre, int nivel, int alianza) {
-        setNombre(nombre);
-        setNivel(nivel);
-        esJugador = false;
-        turno = 0;
-        for (int i = 1; i < nivel; i++) {
-            subirNivel();
-        }
-        setAlianza(alianza);
-        añadirPersonaje(this);
-    }
-
-    /**
-     * Constructor completo con atributos personalizados.
-     */
-    public Personaje(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
-        setNombre(nombre);
-        setNivel(nivel);
-        setPv(pv);
-        setAtq(atq);
-        setArm(arm);
-        setRes(res);
-        setVel(vel);
-        esJugador = false;
-        turno = 0;
-        añadirPersonaje(this);
-    }
-
-    /**
-     * Constructor completo con alianza.
-     */
-    public Personaje(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza) {
-        setNombre(nombre);
-        setNivel(nivel);
-        setPv(pv);
-        setAtq(atq);
-        setArm(arm);
-        setRes(res);
-        setVel(vel);
-        esJugador = false;
+        setAtributos(pv,atq,arm,res,vel);
         turno = 0;
         setAlianza(alianza);
+        this.esJugador = esJugador;
         añadirPersonaje(this);
     }
 
@@ -176,16 +75,13 @@ public abstract class Personaje {
      *
      * @param p Personaje a copiar
      */
-    public Personaje(Personaje p) {
+    public Personaje(Personaje p){
+        setRaza(p.getRaza());
         setNombre(p.getNombre());
-        setPv(p.getPv());
-        setAtq(p.getAtq());
-        setArm(p.getArm());
         setNivel(p.getNivel());
-        setRes(p.getRes());
-        setVel(p.getVel());
-        esJugador = false;
+        setAtributos(p.getPv(),p.getAtq(),p.getArm(),p.getRes(),p.getVel());
         turno = 0;
+        esJugador = getEsJugador();
         añadirPersonaje(this);
     }
     //endregion
@@ -195,6 +91,7 @@ public abstract class Personaje {
      */
     public void subirNivel() {
         Random r = new Random();
+
         if (r.nextInt(100) < 50) setPv(getPv() + 1);
         if (r.nextInt(100) < 50) setAtq(getAtq() + 1);
         if (r.nextInt(100) < 50) setArm(getArm() + 1);
@@ -294,7 +191,7 @@ public abstract class Personaje {
      * @param enemigo    Objetivo del ataque
      * @param dañoMagico Indica si el daño es mágico
      */
-    public void ataca(double atq, Personaje enemigo, boolean dañoMagico) {
+    public void ataca(double atq, Personaje enemigo, boolean dañoMagico)  {
         if (enemigo.defender(atq, dañoMagico) <= 0) {
             System.out.println(enemigo.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar sus defensas.");
             atacar(enemigo, dañoMagico);
@@ -500,6 +397,14 @@ public abstract class Personaje {
 
     //region Setters
 
+    public void setRaza(int raza) {
+        if (raza >=1 && raza <=3){
+            this.raza = raza;
+        } else {
+            Miscellaneous.alert(Miscellaneous.formato(Miscellaneous.RojoB,"Indica una Raza válida"));
+        }
+    }
+
     /**
      * Establece el nombre del personaje.<br>
      * El nombre debe tener al menos 2 caracteres, no estar vacío
@@ -575,20 +480,6 @@ public abstract class Personaje {
     }
 
     /**
-     * Establece el nivel del personaje.<br>
-     * El nivel debe estar entre 1 y 100.
-     *
-     * @param lvl Nivel del personaje
-     */
-    public void setNivel(int lvl) {
-        if (lvl < 1 || lvl > 100) {
-            System.err.println("Introduce un nivel válido para " + nombre + "\tInput: " + lvl);
-        } else {
-            nivel = lvl;
-        }
-    }
-
-    /**
      * Establece la resistencia mágica del personaje.<br>
      * Si el valor es negativo, se ajusta automáticamente a 0.
      *
@@ -618,6 +509,20 @@ public abstract class Personaje {
     }
 
     /**
+     * Establece el nivel del personaje.<br>
+     * El nivel debe estar entre 1 y 100.
+     *
+     * @param lvl Nivel del personaje
+     */
+    public void setNivel(int lvl) {
+        if (lvl < 1 || lvl > 100) {
+            System.err.println("Introduce un nivel válido para " + nombre + "\tInput: " + lvl);
+        } else {
+            nivel = lvl;
+        }
+    }
+
+    /**
      * Establece si el personaje se encuentra defendiendo.
      *
      * @param defiende true si está defendiendo, false en caso contrario
@@ -635,9 +540,39 @@ public abstract class Personaje {
         this.alianza = alianza;
     }
 
+    private void aumentarAtributo(int cantidad, int prcnt){
+        Random r = new Random();
+        if (r.nextInt(100) < 50) setPv(getPv() + 1);
+    }
+
     //endregion
 
     //region Getters
+
+    public int getRaza() {
+        return raza;
+    }
+
+    public String getRazaName() {
+        switch (getRaza()){
+            case -1 -> {
+                return "Raza no inicializada";
+            }
+            case 1 -> {
+                return "Humano";
+            }
+            case 2 -> {
+                return "Enano";
+            }
+            case 3 -> {
+                return "Elfo";
+            }
+            default -> {
+                Miscellaneous.alert(Miscellaneous.formato(Miscellaneous.RojoB,"La raza asignada es errónea."));
+                return "Aquí algo no cuadra...";
+            }
+        }
+    }
 
     /**
      * Obtiene el nombre del personaje

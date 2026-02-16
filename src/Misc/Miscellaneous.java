@@ -2,6 +2,11 @@ package Misc;
 
 import Characters.*;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Clase abstracta que contiene métodos utilitarios para mostrar texto con formatos decorativos en la consola.
  * <p>
@@ -16,7 +21,38 @@ import Characters.*;
  * </pre>
  */
 
-public abstract class Miscellaneous {
+
+
+
+public class Miscellaneous {
+    public static final String Codigo = "\u001B[";
+    public static final String Reset = "\u001B[0m";
+    public static final String m = "m";
+
+    // Estilos
+    public static final String Negrita = "1";
+    public static final String Cursiva = "3";
+    public static final String Subrayado = "4";
+    public static final String Tachado = "9";
+
+    // colore
+    public static final String Rojo = "31";
+    public static final String Verde = "32";
+    public static final String Amarillo = "33";
+    public static final String Azul = "34" ;
+    public static final String Rosa = "35" ;
+    public static final String Cian = "36" ;
+
+    // colore brillantes
+    public static final String Gris = "90";
+    public static final String RojoB = "91";
+    public static final String VerdeB = "92";
+    public static final String AmarilloB = "93";
+    public static final String AzulB = "94" ;
+    public static final String RosaB = "95" ;
+    public static final String CianB = "96" ;
+    public static final String Brillante = "97" ;
+
     /**
      * Cadena utilizada como contenedor base para construir los marcos decorativos.
      */
@@ -92,6 +128,21 @@ public abstract class Miscellaneous {
             return " ";
         } else {
             return "";
+        }
+    }
+
+    public static String formato(String formato,String texto){
+        return "\u001B[" + formato + "m" + texto + "\u001B[0m";
+    }
+
+    public static void alert(String string) {
+        System.out.println(string);
+        try{
+        FileWriter fw = new FileWriter("GameLog.log");
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(string);}
+        catch (IOException e){
+            System.err.println(e);
         }
     }
 
