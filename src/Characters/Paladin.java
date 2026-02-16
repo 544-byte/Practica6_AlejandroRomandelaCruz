@@ -1,6 +1,6 @@
 package Characters;
 
-import Misc.Miscellaneous;
+import Misc.Misc;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -93,7 +93,7 @@ public class Paladin extends Creyente {
      */
     public void plegaria(Personaje enemigo) {
         Scanner scan = new Scanner(System.in);
-        System.out.println(Miscellaneous.opcionesJugador("" + "Escoge una plegaria:\n" + "1- Imbuir arma\n" + "2- Baluarte de fe\n" + "3- Fogonazo sagrado\n" + "4- Cambio de opinión\n"));
+        System.out.println(Misc.opcionesJugador("" + "Escoge una plegaria:\n" + "1- Imbuir arma\n" + "2- Baluarte de fe\n" + "3- Fogonazo sagrado\n" + "4- Cambio de opinión\n"));
         System.out.print("Opción: ");
         int opt = scan.nextInt();
         switch (opt) {

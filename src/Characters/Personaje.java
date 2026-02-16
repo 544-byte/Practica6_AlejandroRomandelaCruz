@@ -2,9 +2,8 @@ package Characters;
 
 
 import GameMap.*;
-import Misc.Miscellaneous;
+import Misc.Misc;
 
-import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -90,13 +89,11 @@ public abstract class Personaje {
      * Sube el nivel del personaje aumentando aleatoriamente sus atributos.
      */
     public void subirNivel() {
-        Random r = new Random();
-
-        if (r.nextInt(100) < 50) setPv(getPv() + 1);
-        if (r.nextInt(100) < 50) setAtq(getAtq() + 1);
-        if (r.nextInt(100) < 50) setArm(getArm() + 1);
-        if (r.nextInt(100) < 50) setRes(getRes() + 1);
-        if (r.nextInt(100) < 50) setVel(getVel() + 1);
+        setPv(getPv() + aumentarAtributo(50));
+        setAtq(getAtq() + aumentarAtributo(50));
+        setArm(getArm() + aumentarAtributo(50));
+        setRes(getRes() + aumentarAtributo(50));
+        setVel(getVel() + aumentarAtributo(50));
         setNivel(getNivel() + 1);
     }
 
@@ -132,7 +129,7 @@ public abstract class Personaje {
     public void realizarTurnoJugador(Personaje enemigo) {
         int opt = 0;
         Scanner scan = new Scanner(System.in);
-        System.out.println(Miscellaneous.opcionesJugador("Elige una opción:\n" + "1- Atacar\n" + "2- " + getAccionEspecial() + "\n" + "3- Defender\n" + "4- Pasar turno\n" + "5- Observar"));
+        System.out.println(Misc.opcionesJugador("Elige una opción:\n" + "1- Atacar\n" + "2- " + getAccionEspecial() + "\n" + "3- Defender\n" + "4- Pasar turno\n" + "5- Observar"));
         do {
             System.out.print("Opción: ");
             opt = scan.nextInt();
@@ -163,18 +160,18 @@ public abstract class Personaje {
                 opt = scan.nextInt();
                 switch (opt) {
                     case 1 -> {
-                        System.out.println(Miscellaneous.estadisticasJugador(enemigo.toString()));
+                        System.out.println(Misc.estadisticasJugador(enemigo.toString()));
                         realizarTurnoJugador(enemigo);
                     }
                     case 2 -> {
-                        System.out.println(Miscellaneous.estadisticasJugador(this.toString()));
+                        System.out.println(Misc.estadisticasJugador(this.toString()));
                         realizarTurnoJugador(enemigo);
                     }
                     case 3 -> {
                         updateAliados();
                         for (int i = 0; i < nAliados; i++) {
                             if (aliados[i] != null) {
-                                System.out.println(Miscellaneous.estadisticasJugador(aliados[i].toString()));
+                                System.out.println(Misc.estadisticasJugador(aliados[i].toString()));
                             }
                         }
                         realizarTurnoJugador(enemigo);
@@ -356,7 +353,6 @@ public abstract class Personaje {
     public boolean esAliado(Personaje personaje) {
         if (this.getAlianza() == personaje.getAlianza()) return true;
         else return false;
-
     }
 
     /**
@@ -389,10 +385,32 @@ public abstract class Personaje {
             if (this.esAliado(personajes[i]) && !personajes[i].equals(this)) {
                 aliados[aliadosAñadidos] = personajes[i];
                 aliadosAñadidos++;
-                aliadosString += "" + "\t · " + aliadosAñadidos + "- " + aliados[aliadosAñadidos - 1].getNombre() + "\n";
+                aliadosString += "\t · " + aliadosAñadidos + "- " + aliados[aliadosAñadidos - 1].getNombre() + "\n";
             }
         }
 
+    }
+
+    /**
+     * Calcula el porcentaje y si sale true devuelve 1 (que se suma con el getAtributo correspondiente dentro del setAtributo correspondiente)
+     * Se usa con el metodo de subir nivel
+     * @param prcnt El porcentaje de probabilidad de subir
+     * @return 1 si el cálculo del porcentaje es positivo y 0 en su defecto
+     */
+    private int aumentarAtributo(int prcnt){
+        Random r = new Random();
+        return r.nextInt(100) < prcnt ? 1 : 0;
+    }
+
+    /**
+     * Sobrecarga de aumentarAtributo(prcnt) que añade un int cantidad para elegir la cantidad que se suma.
+     * @param cantidad La subida del atributo que se va a hacer en caso positivo
+     * @param prcnt El porcentaje de probabilidad de subir
+     * @return cantidad si el cálculo del porcentaje es positivo y 0 en su defecto
+     */
+    private int aumentarAtributo(int cantidad, int prcnt){
+        Random r = new Random();
+        return r.nextInt(100) < prcnt ? cantidad : 0;
     }
 
     //region Setters
@@ -401,7 +419,7 @@ public abstract class Personaje {
         if (raza >=1 && raza <=3){
             this.raza = raza;
         } else {
-            Miscellaneous.alert(Miscellaneous.formato(Miscellaneous.RojoB,"Indica una Raza válida"));
+            Misc.alert(Misc.formato(Misc.RojoB,"Indica una Raza válida"));
         }
     }
 
@@ -540,11 +558,6 @@ public abstract class Personaje {
         this.alianza = alianza;
     }
 
-    private void aumentarAtributo(int cantidad, int prcnt){
-        Random r = new Random();
-        if (r.nextInt(100) < 50) setPv(getPv() + 1);
-    }
-
     //endregion
 
     //region Getters
@@ -568,7 +581,7 @@ public abstract class Personaje {
                 return "Elfo";
             }
             default -> {
-                Miscellaneous.alert(Miscellaneous.formato(Miscellaneous.RojoB,"La raza asignada es errónea."));
+                Misc.alert(Misc.formato(Misc.RojoB,"La raza asignada es errónea."));
                 return "Aquí algo no cuadra...";
             }
         }
@@ -689,6 +702,15 @@ public abstract class Personaje {
         return aliadosString;
 
     }
+
+    /**
+     * Metodo que devuelve un string con los valores separados por ":" para usarlo luego y guardarlo en un .csv tanto para importar como para exportar.
+     * @return String con los atributos comúnes entre todos los personajes separados por ":"
+     */
+    public String getCSV() {
+        return getRaza() + ":" + getNombre() + ":" + getNivel() + ":" + getPv() + ":" + getAtq() + ":" + getArm() + ":" + getRes() + ":" + getVel();
+    }
+
     //endregion
 
     // region Overrides

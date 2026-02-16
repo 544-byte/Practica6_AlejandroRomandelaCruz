@@ -1,0 +1,3 @@
+Aquí se van a guardar carpetas con Fecha y hora y su contenido será los archivos volcados de CurrentGameLog al finalizar
+la partida, es decir en current gamelog se van guardando los personajes de esa partida y su estado al empezar y al
+terminar la partida junto con el log de sucesos.

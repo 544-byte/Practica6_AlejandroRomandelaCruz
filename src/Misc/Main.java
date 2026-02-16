@@ -1,8 +1,12 @@
 package Misc;
 
 /**
- * todo Mejorar los constructores para que lo ultimo que se pida sea la alianza y todo tenga mas semántica
- * todo Revisar los sout y mejorar como se va documentando todo lo que pasa en la partida incluyendo tal vez un metodo en misc que sea ocurrir ataque o algo asi etc
+ * todo Revisar los subir nivel de cada clase
+ * todo Revisar los constructores en cada clase
+ * todo Escribir el csv en cada clase
+ * todo poner alert(en absolutamente todo.)
+ * todo método "anyDead?" se explica por si solo
+ * todo tener en cuenta que si hago lo del iterador para los personajes, si importo alguno puede haber conflicto
  */
 
 import Characters.*;
@@ -12,7 +16,6 @@ import Misc.*;
 
 import Combat.Combate;
 
-import java.io.IOException;
 
 /**
  * Clase principal del juego.
@@ -36,7 +39,7 @@ public class Main {
      *
      * @param args Argumentos de línea de comandos (no utilizados).
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
     //    Personaje guerrero = new Guerrero("Iván",1,100,15,10,10,10,false,0);
         Personaje mago = new Mago("alejandrito el mago con varita",1,100,15,10,10,10,10,1);
     //    Personaje ladron = new Ladron("Ladron",1,100,15,10,10,10,2);

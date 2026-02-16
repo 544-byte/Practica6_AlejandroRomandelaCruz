@@ -1,11 +1,9 @@
 package Misc;
 
-import Characters.*;
-
 import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * Clase abstracta que contiene métodos utilitarios para mostrar texto con formatos decorativos en la consola.
@@ -16,15 +14,15 @@ import java.io.IOException;
  *
  * <p>Ejemplo de uso:</p>
  * <pre>
- * System.out.println(Miscellaneous.opcionesJugador("1- Atacar\n2- Defender"));
- * System.out.println(Miscellaneous.estadisticasJugador("Vida: 100\nAtaque: 20"));
+ * System.out.println(Misc.opcionesJugador("1- Atacar\n2- Defender"));
+ * System.out.println(Misc.estadisticasJugador("Vida: 100\nAtaque: 20"));
  * </pre>
  */
 
 
 
 
-public class Miscellaneous {
+public class Misc {
     public static final String Codigo = "\u001B[";
     public static final String Reset = "\u001B[0m";
     public static final String m = "m";
@@ -145,6 +143,4 @@ public class Miscellaneous {
             System.err.println(e);
         }
     }
-
-
 }

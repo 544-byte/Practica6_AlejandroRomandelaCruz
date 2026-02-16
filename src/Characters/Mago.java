@@ -1,6 +1,6 @@
 package Characters;
 
-import Misc.Miscellaneous;
+import Misc.Misc;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -108,7 +108,7 @@ public class Mago extends Personaje {
      */
     public void lanzarConjuro(Personaje enemigo) {
         Scanner scan = new Scanner(System.in);
-        System.out.println(Miscellaneous.opcionesJugador("" + "Escoge un conjuro:\n" + "1- Bola de fuego\n" + "2- Escudo arcano\n" + "3- Céfiro\n" + "4- Presteza mental\n" + "5- Cambio de opinión\n"));
+        System.out.println(Misc.opcionesJugador("" + "Escoge un conjuro:\n" + "1- Bola de fuego\n" + "2- Escudo arcano\n" + "3- Céfiro\n" + "4- Presteza mental\n" + "5- Cambio de opinión\n"));
         System.out.print("Opción: ");
         int opt = scan.nextInt();
         switch (opt) {
