@@ -28,6 +28,12 @@ public class GameLogger {
         copiar(TempCharactersStatusCSV, CHARACTERS_STATUS_CSV);
     }
 
+    /**
+     * Copia el contenido del archivo de origen en el archivo de destino pasado por parámetros.
+     * Funciona leyendo y copiando línea por línea
+     * @param origen El archivo de origen del cual se va a sacar el contenido
+     * @param destino El archivo de destino donde se va a volcar el contenido
+     */
     public static void copiar(File origen,File destino){
         try {
             FileReader fr = new FileReader(origen);
