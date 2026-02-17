@@ -133,6 +133,8 @@ public class Misc {
         return "\u001B[" + formato + "m" + texto + "\u001B[0m";
     }
 
+
+    // todo Igual es mejor darle formato directamente aquí y hacer que los alerts sean rojos, poner otro metodo que sea info y así con lo que necesite.
     public static void alert(String string) {
         System.out.println(string);
         try{

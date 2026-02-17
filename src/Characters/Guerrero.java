@@ -23,41 +23,8 @@ public class Guerrero extends Personaje {
     }
 
     /**
-     * Constructor completo del Guerrero incluyendo estado de Furia.
-     *
-     * @param nombre Nombre del Guerrero
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
-     * @param furia Estado inicial de Furia
-     */
-    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, boolean furia) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
-        setFuria(furia);
-    }
-
-    /**
-     * Constructor completo del Guerrero sin especificar estado de Furia.
-     *
-     * @param nombre Nombre del Guerrero
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
-     */
-    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
-        setFuria(false);
-    }
-
-    /**
-     * Constructor completo del Guerrero con estado de Furia y alianza.
-     *
+     * Constructor completo del Guerrero.
+     * @param raza Raza del Guerrero
      * @param nombre Nombre del Guerrero
      * @param nivel Nivel inicial
      * @param pv Puntos de vida
@@ -67,9 +34,10 @@ public class Guerrero extends Personaje {
      * @param vel Velocidad
      * @param furia Estado inicial de Furia
      * @param alianza Identificador de la alianza
+     * @param esJugador Identifica si el personaje es Jugador
      */
-    public Guerrero(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, boolean furia, int alianza) {
-        super(nombre, nivel, pv, atq, arm, res, vel, alianza);
+    public Guerrero(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, boolean furia, int alianza, boolean esJugador) {
+        super(raza, nombre, nivel, pv, atq, arm, res, vel, alianza, esJugador);
         setFuria(furia);
     }
 
@@ -80,21 +48,20 @@ public class Guerrero extends Personaje {
      * según probabilidades específicas y el estado de Furia.
      */
     public void subirNivel() {
-        Random r = new Random();
-        if (r.nextInt(100) < 75) setPv(getPv() + 1);
+        setPv(getPv() + aumentarAtributo(75));
         if (getFuria()) {
             setAtq(getAtq() / 2);
-            if (r.nextInt(100) < 80) setAtq(getAtq() + 2);
+            setAtq(getAtq() + aumentarAtributo(80,2));
             setAtq(getAtq() * 2);
-        } else if (r.nextInt(100) < 80) setAtq(getAtq() + 2);
+        } else setAtq(getAtq() + aumentarAtributo(80,2));
         if (getFuria()) {
             setAtq(getAtq() * 2);
-            if (r.nextInt(100) < 75) setArm(getArm() + 1);
+            setArm(getArm() + aumentarAtributo(75));
             setAtq(getAtq() / 2);
-        } else if (r.nextInt(100) < 75) setArm(getArm() + 1);
-        if (r.nextInt(100) < 20) setRes(getRes() + 1);
-        if (r.nextInt(100) < 50) setVel(getVel() + 1);
-        this.setNivel(getNivel() + 1);
+        } else setArm(getArm() + aumentarAtributo(75));
+        setRes(getRes() + aumentarAtributo(20));
+        setVel(getVel() + aumentarAtributo(50));
+        setNivel(getNivel() + 1);
     }
 
     /**
@@ -187,7 +154,7 @@ public class Guerrero extends Personaje {
      * @return Nuevo objeto Guerrero con los mismos atributos
      */
     public Guerrero clone() {
-        return new Guerrero(getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), this.getFuria());
+        return new Guerrero(getRaza(),getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), getFuria(),getAlianza(),getEsJugador());
     }
 
     /**
