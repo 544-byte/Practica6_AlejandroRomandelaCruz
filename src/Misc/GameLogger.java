@@ -8,26 +8,24 @@ import java.time.format.DateTimeFormatter;
  *
  */
 public class GameLogger {
-    private static final String Saves = "Saves/";
-    private static final String GameLogs = "GameLogs/";
-    private static final String TempGameLog = "TempGameLog/";
+    private static final String SAVES = "Saves/";
+    private static final String GAME_LOGS = "GameLogs/";
+    private static final String TEMP_GAME_LOG = "TempGameLog/";
+    private static final File GAME_LOG = new File(TEMP_GAME_LOG + "GameLog.log");
+    private static final File CHARACTERS_CSV = new File(TEMP_GAME_LOG + "Characters.csv");
+    private static final File CHARACTERS_STATUS_CSV = new File(TEMP_GAME_LOG + "CharactersStatus.csv");
 
     /**
      * Guarda el log actual Temporal
      */
     public static void guardarLog() {
-        String thisGameLog = GameLogs + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yy - HH.mm.ss"));
-        File GameLog = new File(TempGameLog + "GameLog.log");
+        String thisGameLog = GAME_LOGS + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yy - HH.mm.ss")) + "/";
         File TempGameLog = new File(thisGameLog + "GameLog.log");
-        File CharactersCSV = new File(TempGameLog + "Characters.csv");
         File TempCharactersCSV = new File(thisGameLog + "Characters.csv");
-        File CharactersStatusCSV = new File(TempGameLog + "CharactersStatus.csv");
         File TempCharactersStatusCSV = new File(thisGameLog + "CharactersStatus.csv");
-
-        copiar(TempGameLog,GameLog);
-        copiar(TempCharactersCSV,CharactersCSV);
-        copiar(TempCharactersStatusCSV,CharactersStatusCSV);
-
+        copiar(TempGameLog, GAME_LOG);
+        copiar(TempCharactersCSV, CHARACTERS_CSV);
+        copiar(TempCharactersStatusCSV, CHARACTERS_STATUS_CSV);
     }
 
     public static void copiar(File origen,File destino){
