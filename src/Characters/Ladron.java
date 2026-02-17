@@ -20,21 +20,6 @@ public class Ladron extends Personaje {
     }
 
     /**
-     * Constructor completo del Ladrón sin especificar alianza.
-     *
-     * @param nombre Nombre del Ladrón
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
-     */
-    public Ladron(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
-    }
-
-    /**
      * Constructor completo del Ladrón con alianza especificada.
      *
      * @param nombre Nombre del Ladrón
@@ -46,8 +31,8 @@ public class Ladron extends Personaje {
      * @param vel Velocidad
      * @param alianza Identificador de la alianza
      */
-    public Ladron(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza) {
-        super(nombre, nivel, pv, atq, arm, res, vel, alianza);
+    public Ladron(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, boolean esJugador) {
+        super(raza, nombre, nivel, pv, atq, arm, res, vel,alianza, esJugador);
     }
     // endregion
 
@@ -56,12 +41,11 @@ public class Ladron extends Personaje {
      * según probabilidades específicas.
      */
     public void subirNivel() {
-        Random r = new Random();
-        if (r.nextInt(100) < 40) setPv(getPv() + 1);
-        if (r.nextInt(100) < 60) setAtq(getAtq() + 1);
-        if (r.nextInt(100) < 40) setArm(getArm() + 1);
-        if (r.nextInt(100) < 40) setRes(getRes() + 1);
-        if (r.nextInt(100) < 85) setVel(getVel() + 2);
+        setPv(getPv() + aumentarAtributo(40));
+        setAtq(getAtq() + aumentarAtributo(60));
+        setArm(getArm() + aumentarAtributo(40));
+        setRes(getRes() + aumentarAtributo(40));
+        setVel(getVel() + aumentarAtributo(85,2));
         setNivel(getNivel() + 1);
     }
 
@@ -96,7 +80,7 @@ public class Ladron extends Personaje {
      * @return Nuevo objeto Ladron con los mismos atributos
      */
     public Ladron clone() {
-        return new Ladron(getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel());
+        return new Ladron(getRaza(),getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(),getAlianza(),getEsJugador());
     }
 
     /**

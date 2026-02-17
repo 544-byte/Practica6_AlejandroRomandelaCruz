@@ -52,6 +52,7 @@ public abstract class Personaje {
         nivel = 0;
         esJugador = false;
         turno = 0;
+        alianza = -1;
         añadirPersonaje(this);
     }
 
@@ -408,7 +409,7 @@ public abstract class Personaje {
      * @param prcnt El porcentaje de probabilidad de subir
      * @return cantidad si el cálculo del porcentaje es positivo y 0 en su defecto
      */
-    public int aumentarAtributo(int cantidad, int prcnt){
+    public int aumentarAtributo(int prcnt, int cantidad){
         Random r = new Random();
         return r.nextInt(100) < prcnt ? cantidad : 0;
     }

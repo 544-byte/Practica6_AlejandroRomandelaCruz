@@ -24,41 +24,9 @@ public class Mago extends Personaje {
     }
 
     /**
-     * Constructor completo del Mago con magia especificada.
-     *
-     * @param nombre Nombre del Mago
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
-     * @param magia Puntos de magia del Mago
-     */
-    public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double magia) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
-        setMagia(magia);
-    }
-
-    /**
-     * Constructor completo sin especificar magia (por defecto 10).
-     *
-     * @param nombre Nombre del Mago
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
-     */
-    public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
-        setMagia(10);
-    }
-
-    /**
      * Constructor completo del Mago con magia y alianza especificadas.
      *
+     * @param raza Raza del Mago
      * @param nombre Nombre del Mago
      * @param nivel Nivel inicial
      * @param pv Puntos de vida
@@ -68,9 +36,10 @@ public class Mago extends Personaje {
      * @param vel Velocidad
      * @param magia Puntos de magia del Mago
      * @param alianza Identificador de la alianza
+     * @param esJugador Identifica si es o no jugador
      */
-    public Mago(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double magia, int alianza) {
-        super(nombre, nivel, pv, atq, arm, res, vel, alianza);
+    public Mago(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double magia,int alianza, boolean esJugador) {
+        super(raza, nombre, nivel, pv, atq, arm, res, vel, alianza, esJugador);
         setMagia(magia);
     }
 
@@ -81,13 +50,12 @@ public class Mago extends Personaje {
      * y puntos de magia según probabilidades específicas.
      */
     public void subirNivel() {
-        Random r = new Random();
-        if (r.nextInt(100) < 35) setPv(getPv() + 1);
-        if (r.nextInt(100) < 15) setAtq(getAtq() + 1);
-        if (r.nextInt(100) < 35) setArm(getArm() + 1);
-        if (r.nextInt(100) < 80) setRes(getRes() + 1);
-        if (r.nextInt(100) < 65) setVel(getVel() + 1);
-        if (r.nextInt(100) < 85) setMagia(getMagia() + 1);
+        setPv(getPv() + aumentarAtributo(35));
+        setAtq(getAtq() + aumentarAtributo(15));
+        setArm(getArm() + aumentarAtributo(35));
+        setRes(getRes() + aumentarAtributo(80));
+        setVel(getVel() + aumentarAtributo(65));
+        setMagia(getMagia() + aumentarAtributo(85));
         setNivel(getNivel() + 1);
     }
 
@@ -215,7 +183,7 @@ public class Mago extends Personaje {
      * @return Nuevo objeto Mago con los mismos atributos
      */
     public Mago clone() {
-        return new Mago(getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), this.getMagia());
+        return new Mago(getRaza(),getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), getMagia(),getAlianza(),getEsJugador());
     }
 
     /**
