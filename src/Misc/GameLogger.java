@@ -19,7 +19,7 @@ public class GameLogger {
      * Guarda el log actual Temporal
      */
     public static void guardarLog() {
-        String thisGameLog = GAME_LOGS + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yy - HH.mm.ss")) + "/";
+        String thisGameLog = GAME_LOGS + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yy_HH.mm.ss")) + "/";
         File TempGameLog = new File(thisGameLog + "GameLog.log");
         File TempCharactersCSV = new File(thisGameLog + "Characters.csv");
         File TempCharactersStatusCSV = new File(thisGameLog + "CharactersStatus.csv");
