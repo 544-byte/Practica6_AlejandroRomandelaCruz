@@ -417,7 +417,7 @@ public abstract class Personaje {
     //region Setters
 
     public void setRaza(int raza) {
-        if (raza >=1 && raza <=3){
+        if (raza >=1 && raza <=5){
             this.raza = raza;
         } else {
             Misc.alert(Misc.formato(Misc.RojoB,"Indica una Raza válida"));
@@ -580,6 +580,12 @@ public abstract class Personaje {
             }
             case 3 -> {
                 return "Elfo";
+            }
+            case 4 -> {
+                return "Pandaren";
+            }
+            case 5 -> {
+                return "Kenku";
             }
             default -> {
                 Misc.alert(Misc.formato(Misc.RojoB,"La raza asignada es errónea."));

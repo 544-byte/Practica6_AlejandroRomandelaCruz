@@ -53,4 +53,14 @@ public class GameLogger {
             System.out.println(e);
         }
     }
+
+    public static File getGameLog(){
+        return GAME_LOG;
+    }
+    public static File getCharactersCsv(){
+        return CHARACTERS_CSV;
+    }
+    public static File getCharactersStatusCsv(){
+        return CHARACTERS_STATUS_CSV;
+    }
 }

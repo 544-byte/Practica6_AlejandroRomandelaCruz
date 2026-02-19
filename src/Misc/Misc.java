@@ -138,9 +138,10 @@ public class Misc {
     public static void alert(String string) {
         System.out.println(string);
         try{
-        FileWriter fw = new FileWriter("GameLog.log");
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(string);}
+            BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog()));
+            bw.append(string);
+            bw.close();
+        }
         catch (IOException e){
             System.err.println(e);
         }
