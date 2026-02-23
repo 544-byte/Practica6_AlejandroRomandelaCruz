@@ -21,51 +21,44 @@ public class Paladin extends Creyente {
     }
 
     /**
-     * Constructor completo del Paladín sin atributos de fe ni alianza.
-     *
-     * @param nombre Nombre del Paladín
+     * Constructor completo del Paladin.
+     * @param raza Raza del Paladin
+     * @param nombre Nombre del Paladin
      * @param nivel Nivel inicial
      * @param pv Puntos de vida
      * @param atq Ataque base
      * @param arm Armadura
      * @param res Resistencia mágica
      * @param vel Velocidad
-     */
-    public Paladin(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
-    }
-
-    /**
-     * Constructor completo del Paladín con atributo de fe.
-     *
-     * @param nombre Nombre del Paladín
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
-     * @param fe Puntos de fe del Paladín
-     */
-    public Paladin(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double fe) {
-        super(nombre, nivel, pv, atq, arm, res, vel, fe);
-    }
-
-    /**
-     * Constructor completo del Paladín con alianza y atributo de fe.
-     *
-     * @param nombre Nombre del Paladín
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
+     * @param fe especial Atributo especial
      * @param alianza Identificador de la alianza
-     * @param fe Puntos de fe del Paladín
+     * @param esJugador Identifica si el personaje es Jugador
      */
-    public Paladin(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, double fe) {
-        super(nombre, nivel, pv, atq, arm, res, vel, alianza, fe);
+    public Paladin(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double fe, int alianza, boolean esJugador) {
+        super(raza, nombre, nivel, pv, atq, arm, res, vel, fe, alianza, esJugador);
+    }
+
+    /**
+     * Constructor por CSV del Paladin
+     * @param csv El array del csv del personaje a crear.
+     */
+    public Paladin(String[] csv){
+        if (!this.esClase(csv[0]))
+            Misc.alert("El csv proporcionado no es de un Paladin, corresponde a un " + csv[0]);
+        return;
+        new Paladin(
+                Integer.parseInt(csv[1]),
+                csv[2],
+                Integer.parseInt(csv[3]),
+                Double.parseDouble(csv[4]),
+                Double.parseDouble(csv[5]),
+                Double.parseDouble(csv[6]),
+                Double.parseDouble(csv[7]),
+                Double.parseDouble(csv[8]),
+                Double.parseDouble(csv[9]),
+                Integer.parseInt(csv[10]),
+                Boolean.parseBoolean(csv[11])
+        );
     }
 
     // endregion
@@ -75,13 +68,12 @@ public class Paladin extends Creyente {
      * y su fe, siguiendo probabilidades específicas para cada atributo.
      */
     public void subirNivel() {
-        Random r = new Random();
-        if (r.nextInt(100) < 50) setPv(getPv() * 1.05);
-        if (r.nextInt(100) < 60) setAtq(getAtq() + 1);
-        if (r.nextInt(100) < 70) setArm(getArm() + 2);
-        if (r.nextInt(100) < 15) setRes(getRes() + 1);
-        if (r.nextInt(100) < 15) setVel(getVel() + 1);
-        if (r.nextInt(100) < 30) setFe(getFe() + 1);
+        setPv(getPv() + aumentarAtributo(50,getPv()*0.05));
+        setAtq(getAtq() + aumentarAtributo(60));
+        setArm(getArm() + aumentarAtributo(70,2));
+        setRes(getRes() + aumentarAtributo(15));
+        setVel(getVel() + aumentarAtributo(15));
+        setFe(getFe() + aumentarAtributo(30));
         setNivel(getNivel() + 1);
     }
 
@@ -119,6 +111,13 @@ public class Paladin extends Creyente {
         }
     }
 
+    /**
+     * Metodo que devuelve un string con los valores separados por ":" para usarlo luego y guardarlo en un .csv tanto para importar como para exportar.
+     * @return String con los atributos comúnes entre todos los personajes separados por ":"
+     */
+    public String getCSV() {
+        return  "Paladin:" + super.getCSV();
+    }
 
     // region Setters & Getters
 
@@ -131,7 +130,7 @@ public class Paladin extends Creyente {
      * @return Nuevo objeto Paladín con los mismos atributos
      */
     public Paladin clone() {
-        return new Paladin(getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel());
+        return new Paladin(getRaza(), getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), getFe(), getAlianza(), getEsJugador());
     }
 
     /**

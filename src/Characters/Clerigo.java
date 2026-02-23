@@ -19,51 +19,44 @@ public class Clerigo extends Creyente {
     }
 
     /**
-     * Constructor completo del Clérigo sin fe ni alianza.
-     *
-     * @param nombre Nombre del Clérigo
+     * Constructor completo del Clerigo.
+     * @param raza Raza del Clerigo
+     * @param nombre Nombre del Clerigo
      * @param nivel Nivel inicial
      * @param pv Puntos de vida
-     * @param atq Ataque
+     * @param atq Ataque base
      * @param arm Armadura
-     * @param res Resistencia
+     * @param res Resistencia mágica
      * @param vel Velocidad
+     * @param fe especial Atributo especial
+     * @param alianza Identificador de la alianza
+     * @param esJugador Identifica si el personaje es Jugador
      */
-    public Clerigo(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
+    public Clerigo(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double fe, int alianza, boolean esJugador) {
+        super(raza, nombre, nivel, pv, atq, arm, res, vel, fe, alianza, esJugador);
     }
 
     /**
-     * Constructor completo del Clérigo con fe inicial.
-     *
-     * @param nombre Nombre del Clérigo
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque
-     * @param arm Armadura
-     * @param res Resistencia
-     * @param vel Velocidad
-     * @param fe Valor inicial de fe
+     * Constructor por CSV del Clerigo
+     * @param csv El array del csv del personaje a crear.
      */
-    public Clerigo(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double fe) {
-        super(nombre, nivel, pv, atq, arm, res, vel, fe);
-    }
-
-    /**
-     * Constructor completo del Clérigo con fe inicial y alianza.
-     *
-     * @param nombre Nombre del Clérigo
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque
-     * @param arm Armadura
-     * @param res Resistencia
-     * @param vel Velocidad
-     * @param alianza Alianza del Clérigo
-     * @param fe Valor inicial de fe
-     */
-    public Clerigo(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, double fe) {
-        super(nombre, nivel, pv, atq, arm, res, vel, alianza, fe);
+    public Clerigo(String[] csv){
+        if (!this.esClase(csv[0]))
+            Misc.alert("El csv proporcionado no es de un Clerigo, corresponde a un " + csv[0]);
+        return;
+        new Clerigo(
+                Integer.parseInt(csv[1]),
+                csv[2],
+                Integer.parseInt(csv[3]),
+                Double.parseDouble(csv[4]),
+                Double.parseDouble(csv[5]),
+                Double.parseDouble(csv[6]),
+                Double.parseDouble(csv[7]),
+                Double.parseDouble(csv[8]),
+                Double.parseDouble(csv[9]),
+                Integer.parseInt(csv[10]),
+                Boolean.parseBoolean(csv[11])
+        );
     }
 
     // endregion
@@ -72,13 +65,12 @@ public class Clerigo extends Creyente {
      * Incrementa el nivel del Clérigo aplicando mejoras aleatorias a sus atributos y a su fe.
      */
     public void subirNivel() {
-        Random r = new Random();
-        if (r.nextInt(100) < 20) setPv(getPv() + 1);
-        if (r.nextInt(100) < 10) setAtq(getAtq() + 1);
-        if (r.nextInt(100) < 20) setArm(getArm() + 2);
-        if (r.nextInt(100) < 80) setRes(getRes() + 2);
-        if (r.nextInt(100) < 50) setVel(getVel() + 1);
-        if (r.nextInt(100) < 80) setFe(getFe() + 2);
+        setPv(getPv() + aumentarAtributo(20));
+        setAtq(getAtq() + aumentarAtributo(10));
+        setArm(getArm() + aumentarAtributo(20,2));
+        setRes(getRes() + aumentarAtributo(80,2));
+        setVel(getVel() + aumentarAtributo(50));
+        setFe(getFe() + aumentarAtributo(80,2));
         setNivel(getNivel() + 1);
     }
 
@@ -104,8 +96,8 @@ public class Clerigo extends Creyente {
             }
             case 2 -> {
                 System.out.println("Rezas una fuerte oración que cura a todos tus aliados " + getFe() * 0.3 + " puntos de vida");
-                for (int i = 0; i < aliados.length; i++) {
-                    aliados[i].setPv(getPv() + getFe() * 0.3);
+                for (Personaje aliado : aliados) {
+                    aliado.setPv(getPv() + getFe() * 0.3);
                 }
             }
             case 3 -> {
@@ -121,8 +113,15 @@ public class Clerigo extends Creyente {
         }
     }
 
-
     // region Setters & Getters
+
+    /**
+     * Metodo que devuelve un string con los valores separados por ":" para usarlo luego y guardarlo en un .csv tanto para importar como para exportar.
+     * @return String con los atributos comúnes entre todos los personajes separados por ":"
+     */
+    public String getCSV() {
+        return  "Clerigo:" + super.getCSV();
+    }
 
     // endregion
 
@@ -133,7 +132,7 @@ public class Clerigo extends Creyente {
      * @return Nuevo objeto Clerigo idéntico
      */
     public Clerigo clone() {
-        return new Clerigo(getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel());
+        return new Clerigo(getRaza(),getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), getFe(), getAlianza(), getEsJugador());
     }
 
     /**

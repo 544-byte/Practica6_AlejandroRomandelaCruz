@@ -36,23 +36,20 @@ public class GameLogger {
      */
     public static void copiar(File origen,File destino){
         try {
-            FileReader fr = new FileReader(origen);
-            FileWriter fw = new FileWriter(destino);
-            BufferedReader br = new BufferedReader(fr);
-            BufferedWriter bw = new BufferedWriter(fw);
+            BufferedReader br = new BufferedReader(new FileReader(origen));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(destino));
             String l;
             while((l = br.readLine()) != null) {
                 bw.write(l + "\n");
             }
             bw.close();
             br.close();
-            fw.close();
-            fr.close();
         }
         catch (IOException e){
             System.out.println(e);
         }
     }
+
 
     public static File getGameLog(){
         return GAME_LOG;

@@ -1,5 +1,6 @@
 package Characters;
 
+import Misc.Misc;
 import java.util.Random;
 
 /**
@@ -17,11 +18,12 @@ public abstract class Creyente extends Personaje {
      */
     public Creyente() {
         super();
+        fe = -1;
     }
 
     /**
-     * Constructor completo del Creyente sin especificar fe.
-     *
+     * Constructor completo del Creyente.
+     * @param raza Raza del Creyente
      * @param nombre Nombre del Creyente
      * @param nivel Nivel inicial
      * @param pv Puntos de vida
@@ -29,43 +31,12 @@ public abstract class Creyente extends Personaje {
      * @param arm Armadura
      * @param res Resistencia mágica
      * @param vel Velocidad
-     */
-    public Creyente(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
-    }
-
-    /**
-     * Constructor completo del Creyente incluyendo fe.
-     *
-     * @param nombre Nombre del Creyente
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
-     * @param fe Valor inicial de fe
-     */
-    public Creyente(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double fe) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
-        setFe(fe);
-    }
-
-    /**
-     * Constructor completo del Creyente con fe y alianza.
-     *
-     * @param nombre Nombre del Creyente
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
+     * @param fe especial Atributo especial
      * @param alianza Identificador de la alianza
-     * @param fe Valor inicial de fe
+     * @param esJugador Identifica si el personaje es Jugador
      */
-    public Creyente(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, double fe) {
-        super(nombre, nivel, pv, atq, arm, res, vel, alianza);
+    public Creyente(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, double fe, int alianza, boolean esJugador) {
+        super(raza, nombre, nivel, pv, atq, arm, res, vel, alianza, esJugador);
         setFe(fe);
     }
     // endregion
@@ -75,12 +46,11 @@ public abstract class Creyente extends Personaje {
      * según probabilidades definidas.
      */
     public void subirNivel() {
-        Random r = new Random();
-        if (r.nextInt(100) < 40) setPv(getPv() + 1);
-        if (r.nextInt(100) < 60) setAtq(getAtq() + 1);
-        if (r.nextInt(100) < 40) setArm(getArm() + 1);
-        if (r.nextInt(100) < 40) setRes(getRes() + 1);
-        if (r.nextInt(100) < 85) setVel(getVel() + 2);
+        setPv(getPv() + aumentarAtributo(40));
+        setAtq(getAtq() + aumentarAtributo(60));
+        setArm(getArm() + aumentarAtributo(40));
+        setRes(getRes() + aumentarAtributo(40));
+        setVel(getVel() + aumentarAtributo(85,2));
         setNivel(getNivel() + 1);
     }
 
@@ -129,6 +99,14 @@ public abstract class Creyente extends Personaje {
      */
     public void setFe(double fe) {
         this.fe = fe;
+    }
+
+    /**
+     * Metodo que devuelve un string con los valores separados por ":" para usarlo luego y guardarlo en un .csv tanto para importar como para exportar.
+     * @return String con los atributos comúnes entre todos los personajes separados por ":"
+     */
+    public String getCSV() {
+        return  getRaza() + ":" + getNombre() + ":" + getNivel() + ":" + getPv() + ":" + getAtq() + ":" + getArm() + ":" + getRes() + ":" + getVel() + ":" + getFe() + ":" + getAlianza() + ":" + getEsJugador();
     }
 
     // endregion

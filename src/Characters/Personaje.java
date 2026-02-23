@@ -84,6 +84,7 @@ public abstract class Personaje {
         esJugador = getEsJugador();
         añadirPersonaje(this);
     }
+
     //endregion
 
     /**
@@ -409,9 +410,26 @@ public abstract class Personaje {
      * @param prcnt El porcentaje de probabilidad de subir
      * @return cantidad si el cálculo del porcentaje es positivo y 0 en su defecto
      */
-    public int aumentarAtributo(int prcnt, int cantidad){
+    public double aumentarAtributo(int prcnt, double cantidad){
         Random r = new Random();
         return r.nextInt(100) < prcnt ? cantidad : 0;
+    }
+
+    public double aumentarAtributo(int prcnt, int min, int max){
+        Random r = new Random();
+        return r.nextInt(100) < prcnt ? r.nextInt(min,max) : 0;
+    }
+
+    /**
+     * Un metodo que compara la clase recibida por parámetros
+     * (está pensado para pasar el array[0] del csv de un personaje)
+     * y devolver un true en caso correcto
+     * (Pensado para usarse en el constructor por csv del personaje)
+     * @param clase Recibe por parámetro el nombre de la clase a checkear.
+     * @return true si es la misma clase false en caso contrario
+     */
+    public boolean esClase(String clase){
+        return clase.toLowerCase().equals(this.getClass().getSimpleName().toLowerCase());
     }
 
     //region Setters
@@ -715,7 +733,7 @@ public abstract class Personaje {
      * @return String con los atributos comúnes entre todos los personajes separados por ":"
      */
     public String getCSV() {
-        return getRaza() + ":" + getNombre() + ":" + getNivel() + ":" + getPv() + ":" + getAtq() + ":" + getArm() + ":" + getRes() + ":" + getVel();
+        return this.getClass().getName() + ":" + getRaza() + ":" + getNombre() + ":" + getNivel() + ":" + getPv() + ":" + getAtq() + ":" + getArm() + ":" + getRes() + ":" + getVel();
     }
 
     //endregion

@@ -1,5 +1,7 @@
 package Characters;
 
+import Misc.Misc;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -34,6 +36,29 @@ public class Ladron extends Personaje {
     public Ladron(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, boolean esJugador) {
         super(raza, nombre, nivel, pv, atq, arm, res, vel,alianza, esJugador);
     }
+
+    /**
+     * Constructor por CSV del Ladron
+     * @param csv El array del csv del personaje a crear.
+     */
+    public Ladron(String[] csv){
+        if (!this.esClase(csv[0]))
+            Misc.alert("El csv proporcionado no es de un Ladron, corresponde a un " + csv[0]);
+        return;
+        new Ladron(
+                Integer.parseInt(csv[1]),
+                csv[2],
+                Integer.parseInt(csv[3]),
+                Double.parseDouble(csv[4]),
+                Double.parseDouble(csv[5]),
+                Double.parseDouble(csv[6]),
+                Double.parseDouble(csv[7]),
+                Double.parseDouble(csv[8]),
+                Integer.parseInt(csv[10]),
+                Boolean.parseBoolean(csv[11])
+        );
+    }
+
     // endregion
 
     /**
@@ -70,6 +95,13 @@ public class Ladron extends Personaje {
         return "Robar";
     }
 
+    /**
+     * Metodo que devuelve un string con los valores separados por ":" para usarlo luego y guardarlo en un .csv tanto para importar como para exportar.
+     * @return String con los atributos comúnes entre todos los personajes separados por ":"
+     */
+    public String getCSV() {
+        return   super.getCSV() + ":" + -1 + ":" + getAlianza() + ":" + getEsJugador();
+    }
 
     // endregion
 

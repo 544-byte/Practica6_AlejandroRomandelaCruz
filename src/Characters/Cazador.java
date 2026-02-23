@@ -1,14 +1,13 @@
 package Characters;
 
-import java.io.IOException;
-import java.util.Random;
+import Misc.Misc;
 
 /**
  * Clase que representa a un Cazador, subclase de {@link Personaje}.
  * El Cazador posee un {@link CompañeroAnimal} que actúa como aliado en combate.
  */
 public class Cazador extends Personaje {
-    CompañeroAnimal compañeroAnimal;
+    private CompañeroAnimal compañeroAnimal;
 
     /**
      * Clase interna que representa al compañero animal del Cazador.
@@ -23,62 +22,43 @@ public class Cazador extends Personaje {
          * Constructor por defecto del compañero animal.
          * Inicializa un animal con raza no definida.
          */
-        public CompañeroAnimal() throws IOException {
+        public CompañeroAnimal()  {
             super();
         }
 
         /**
          * Constructor completo del compañero animal.
+         * La mayoría de parametros los coge del padre y los setea modificados.
          *
-         * @param nombre Nombre del animal
-         * @param nivel Nivel inicial del animal
-         * @param pv Puntos de vida del animal
-         * @param atq Ataque del animal
-         * @param arm Armadura del animal
-         * @param res Resistencia del animal
-         * @param vel Velocidad del animal
-         * @param alianza Alianza a la que pertenece
          * @param raza Identificador de raza (1-Cánido, 2-Felino, 3-Rapaz)
+         * @param nombre Nombre del animal
          */
-        public CompañeroAnimal(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, int raza) throws IOException {
-            super(nombre, nivel, alianza);
+        public CompañeroAnimal(int raza, String nombre) {
             setRaza(raza);
-            switch (getRaza()) {
-                case 1 -> {
-                    setAtributos(pv * 0.2, atq * 0.2, arm * 0.2, res * 0.2, vel * 0.2);
-                }
-                case 2 -> {
-                    setAtributos(pv * 0.15, atq * 0.3, arm * 0.15, res * 0.15, vel * 0.3);
-                }
-                case 3 -> {
-                    setAtributos(pv * 0.05, atq * 0.15, arm * 0.05, res * 0.25, vel * 0.35);
-                }
-            }
+            setNombre(nombre);
+            setAlianza(Cazador.this.getAlianza());
+            updateAtributos();
         }
         // endregion
 
         /**
          * Sube de nivel al compañero animal ajustando sus atributos según su raza.
-         *
-         * @param pv Puntos de vida del dueño
-         * @param atq Ataque del dueño
-         * @param arm Armadura del dueño
-         * @param res Resistencia del dueño
-         * @param vel Velocidad del dueño
          */
-        public void subirNivel(double pv, double atq, double arm, double res, double vel) throws IOException {
+        public void subirNivel() {
+            updateAtributos();
+            setNivel(Cazador.this.getNivel());
+        }
+
+        public void updateAtributos(){
             switch (getRaza()) {
                 case 1 -> {
-                    setAtributos(pv * 0.2, atq * 0.2, arm * 0.2, res * 0.2, vel * 0.2);
-                    setNivel(Cazador.this.getNivel());
+                    setAtributos(Cazador.this.getPv() * 0.2, Cazador.this.getAtq() * 0.2, Cazador.this.getArm() * 0.2, Cazador.this.getRes() * 0.2, Cazador.this.getVel() * 0.2);
                 }
                 case 2 -> {
-                    setAtributos(pv * 0.15, atq * 0.3, arm * 0.15, res * 0.15, vel * 0.3);
-                    setNivel(Cazador.this.getNivel());
+                    setAtributos(Cazador.this.getPv() * 0.15, Cazador.this.getAtq() * 0.3, Cazador.this.getArm() * 0.15, Cazador.this.getRes() * 0.15, Cazador.this.getVel() * 0.3);
                 }
                 case 3 -> {
-                    setAtributos(pv * 0.05, atq * 0.15, arm * 0.05, res * 0.25, vel * 0.35);
-                    setNivel(Cazador.this.getNivel());
+                    setAtributos(Cazador.this.getPv() * 0.05, Cazador.this.getAtq() * 0.15, Cazador.this.getArm() * 0.05, Cazador.this.getRes() * 0.25, Cazador.this.getVel() * 0.35);
                 }
             }
         }
@@ -143,7 +123,7 @@ public class Cazador extends Personaje {
          * @return Nuevo objeto CompañeroAnimal idéntico
          */
         public CompañeroAnimal clone() {
-            return new CompañeroAnimal(getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), getAlianza(), getRaza());
+            return new CompañeroAnimal(getRaza(),getNombre());
         }
 
         /**
@@ -176,39 +156,47 @@ public class Cazador extends Personaje {
     }
 
     /**
-     * Constructor completo del Cazador sin compañero animal.
-     *
+     * Constructor completo del Cazador.
+     * @param raza Raza del Cazador
      * @param nombre Nombre del Cazador
      * @param nivel Nivel inicial
      * @param pv Puntos de vida
-     * @param atq Ataque
+     * @param atq Ataque base
      * @param arm Armadura
-     * @param res Resistencia
+     * @param res Resistencia mágica
      * @param vel Velocidad
+     * @param alianza Identificador de la alianza
+     * @param esJugador Identifica si el personaje es Jugador
      */
-    public Cazador(String nombre, int nivel, double pv, double atq, double arm, double res, double vel) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
+    public Cazador(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, boolean esJugador, String nombreCompañero, int razaCompañero) {
+        super(raza, nombre, nivel, pv, atq, arm, res, vel, alianza, esJugador);
+        setCompañeroAnimal(nombreCompañero,razaCompañero);
     }
-
 
     /**
-     * Constructor completo del Cazador con compañero animal.
-     *
-     * @param nombre Nombre del Cazador
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque
-     * @param arm Armadura
-     * @param res Resistencia
-     * @param vel Velocidad
-     * @param alianza Alianza del Cazador
-     * @param nombreAnimal Nombre del compañero animal
-     * @param raza Raza del compañero animal (1-Cánido, 2-Felino, 3-Rapaz)
+     * Constructor por CSV del Cazador
+     * @param csv El array del csv del personaje a crear.
      */
-    public Cazador(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, String nombreAnimal, int raza) {
-        super(nombre, nivel, pv, atq, arm, res, vel, alianza);
-        compañeroAnimal = new CompañeroAnimal(nombreAnimal, nivel, pv, atq, arm, res, vel, alianza, raza);
+    public Cazador(String[] csv){
+        if (!this.esClase(csv[0]))
+            Misc.alert("El csv proporcionado no es de un cazador, corresponde a un " + csv[0]);
+        return;
+        new Cazador(
+                Integer.parseInt(csv[1]),
+                csv[2],
+                Integer.parseInt(csv[3]),
+                Double.parseDouble(csv[4]),
+                Double.parseDouble(csv[5]),
+                Double.parseDouble(csv[6]),
+                Double.parseDouble(csv[7]),
+                Double.parseDouble(csv[8]),
+                Integer.parseInt(csv[10]),
+                Boolean.parseBoolean(csv[11]),
+                csv[12],
+                Integer.parseInt(csv[13])
+        );
     }
+
     // endregion
 
 
@@ -216,14 +204,13 @@ public class Cazador extends Personaje {
      * Incrementa el nivel del Cazador y de su compañero animal.
      */
     public void subirNivel() {
-        Random r = new Random();
-        if (r.nextInt(100) < 50) setPv(getPv() + 1);
-        if (r.nextInt(100) < 50) setAtq(getAtq() + 1);
-        if (r.nextInt(100) < 50) setArm(getArm() + 1);
-        if (r.nextInt(100) < 50) setRes(getRes() + 1);
-        if (r.nextInt(100) < 70) setVel(getVel() + 1);
+        setPv(getPv() + aumentarAtributo(50));
+        setAtq(getAtq() + aumentarAtributo(50));
+        setArm(getArm() + aumentarAtributo(50));
+        setRes(getRes() + aumentarAtributo(50));
+        setVel(getVel() + aumentarAtributo(70));
         setNivel(getNivel() + 1);
-        compañeroAnimal.subirNivel(getPv(), getAtq(), getArm(), getRes(), getVel());
+        compañeroAnimal.updateAtributos();
     }
 
     /**
@@ -246,6 +233,14 @@ public class Cazador extends Personaje {
     }
 
     // region Setters & Getters
+    private void setCompañeroAnimal(String nombre, int raza){
+        compañeroAnimal = new CompañeroAnimal(raza,nombre);
+    }
+
+    private CompañeroAnimal getCompañeroAnimal(){
+        return compañeroAnimal;
+    }
+
     /**
      * Devuelve la descripción de la acción especial del Cazador.
      *
@@ -253,6 +248,14 @@ public class Cazador extends Personaje {
      */
     public String getAccionEspecial() {
         return "Enviar a " + compañeroAnimal.getNombre() + " a atacar";
+    }
+
+    /**
+     * Metodo que devuelve un string con los valores separados por ":" para usarlo luego y guardarlo en un .csv tanto para importar como para exportar.
+     * @return String con los atributos comúnes entre todos los personajes separados por ":"
+     */
+    public String getCSV() {
+        return  super.getCSV() + ":"  + -1 + ":" + getAlianza() + ":" + getEsJugador() + ":" + getCompañeroAnimal().getNombre() + ":" + getCompañeroAnimal().getRaza();
     }
 
     // endregion
@@ -264,7 +267,7 @@ public class Cazador extends Personaje {
      * @return Nuevo objeto Cazador idéntico
      */
     public Cazador clone() {
-        return new Cazador(getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel());
+        return new Cazador(getRaza(),getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), getAlianza(),getEsJugador(),getCompañeroAnimal().getNombre(),getCompañeroAnimal().getRaza());
     }
 
     /**

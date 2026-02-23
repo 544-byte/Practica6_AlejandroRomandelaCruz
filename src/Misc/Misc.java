@@ -1,5 +1,7 @@
 package Misc;
 
+import Characters.*;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -144,6 +146,17 @@ public class Misc {
         }
         catch (IOException e){
             System.err.println(e);
+        }
+    }
+    public static Personaje importarPersonaje(String [] csv){
+        switch (csv[0]){
+            case "Guerrero" -> {return new Guerrero (csv);}
+            case "Mago" -> new Mago (csv);
+            case "Ladron" -> new Ladron (csv);
+            case "Cazador" -> new Cazador (csv);
+            case "Paladin" -> new Paladin (csv);
+            case "Clerigo" -> new Clerigo (csv);
+            case "Monstruo" -> new Monstruo (csv);
         }
     }
 }

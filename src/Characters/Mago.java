@@ -43,6 +43,29 @@ public class Mago extends Personaje {
         setMagia(magia);
     }
 
+    /**
+     * Constructor por CSV del Mago
+     * @param csv El array del csv del personaje a crear.
+     */
+    public Mago(String[] csv){
+        if (!this.esClase(csv[0]))
+            Misc.alert("El csv proporcionado no es de un mago, corresponde a un " + csv[0]);
+        return;
+        new Mago(
+                Integer.parseInt(csv[1]),
+                csv[2],
+                Integer.parseInt(csv[3]),
+                Double.parseDouble(csv[4]),
+                Double.parseDouble(csv[5]),
+                Double.parseDouble(csv[6]),
+                Double.parseDouble(csv[7]),
+                Double.parseDouble(csv[8]),
+                Double.parseDouble(csv[9]),
+                Integer.parseInt(csv[10]),
+                Boolean.parseBoolean(csv[11])
+        );
+    }
+
     // endregion
 
     /**
@@ -172,6 +195,14 @@ public class Mago extends Personaje {
      */
     public String getAccionEspecial() {
         return "Magia";
+    }
+
+    /**
+     * Metodo que devuelve un string con los valores separados por ":" para usarlo luego y guardarlo en un .csv tanto para importar como para exportar.
+     * @return String con los atributos comúnes entre todos los personajes separados por ":"
+     */
+    public String getCSV() {
+        return  super.getCSV() + ":" + getMagia() + ":" + getAlianza() + ":" + getEsJugador();
     }
 
     // endregion

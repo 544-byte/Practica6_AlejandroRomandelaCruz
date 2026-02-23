@@ -1,5 +1,6 @@
 package Characters;
 
+import Misc.Misc;
 import java.util.Random;
 
 /**
@@ -21,24 +22,8 @@ public class Monstruo extends Personaje {
     }
 
     /**
-     * Constructor completo del Monstruo sin alianza.
-     *
-     * @param nombre Nombre del Monstruo
-     * @param nivel Nivel inicial
-     * @param pv Puntos de vida
-     * @param atq Ataque base
-     * @param arm Armadura
-     * @param res Resistencia mágica
-     * @param vel Velocidad
-     * @param raza Raza del Monstruo (1: Bestia, 2: No-Muerto, 3: Gigante)
-     */
-    public Monstruo(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int raza) {
-        super(nombre, nivel, pv, atq, arm, res, vel);
-    }
-
-    /**
-     * Constructor completo del Monstruo con alianza.
-     *
+     * Constructor completo del Monstruo.
+     * @param raza Raza del Monstruo
      * @param nombre Nombre del Monstruo
      * @param nivel Nivel inicial
      * @param pv Puntos de vida
@@ -47,11 +32,35 @@ public class Monstruo extends Personaje {
      * @param res Resistencia mágica
      * @param vel Velocidad
      * @param alianza Identificador de la alianza
-     * @param raza Raza del Monstruo (1: Bestia, 2: No-Muerto, 3: Gigante)
+     * @param esJugador Identifica si el personaje es Jugador
      */
-    public Monstruo(String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, int raza) {
-        super(nombre, nivel, pv, atq, arm, res, vel, alianza);
+    public Monstruo(int raza, String nombre, int nivel, double pv, double atq, double arm, double res, double vel, int alianza, boolean esJugador) {
+        super(raza, nombre, nivel, pv, atq, arm, res, vel, alianza, esJugador);
     }
+
+    /**
+     * Constructor por CSV del Monstruo
+     * @param csv El array del csv del personaje a crear.
+     */
+    public Monstruo(String[] csv){
+        if (!this.esClase(csv[0]))
+            Misc.alert("El csv proporcionado no es de un monstruo, corresponde a un " + csv[0]);
+        return;
+        new Monstruo(
+                Integer.parseInt(csv[1]),
+                csv[2],
+                Integer.parseInt(csv[3]),
+                Double.parseDouble(csv[4]),
+                Double.parseDouble(csv[5]),
+                Double.parseDouble(csv[6]),
+                Double.parseDouble(csv[7]),
+                Double.parseDouble(csv[8]),
+                Integer.parseInt(csv[10]),
+                Boolean.parseBoolean(csv[11])
+        );
+    }
+
+
     // endregion
 
     /**
@@ -59,29 +68,28 @@ public class Monstruo extends Personaje {
      * según su raza. Cada raza tiene probabilidades y mejoras específicas.
      */
     public void subirNivel() {
-        Random r = new Random();
         switch (getRaza()) {
             case 1 -> {
-                if (r.nextInt(100) < 50) setPv(getPv() + 1);
-                if (r.nextInt(100) < 80) setAtq(getAtq() + 2);
-                if (r.nextInt(100) < 15) setArm(getArm() + 1);
-                if (r.nextInt(100) < 15) setRes(getRes() + 1);
-                if (r.nextInt(100) < 80) setVel(getVel() + 2);
+                setPv(getPv() + aumentarAtributo(50));
+                setAtq(getAtq() + aumentarAtributo(80,2));
+                setArm(getArm() + aumentarAtributo(15));
+                setRes(getRes() + aumentarAtributo(15));
+                setVel(getVel() + aumentarAtributo(80,2));
             }
             case 2 -> {
-                if (r.nextInt(100) < 30) setPv(getPv() + 1);
-                if (r.nextInt(100) < 50) setAtq(getAtq() + 1);
-                if (r.nextInt(100) < 30) setArm(getArm() + 1);
-                if (r.nextInt(100) < 70) setRes(getRes() + 4);
-                if (r.nextInt(100) < 5) setVel(getVel() + 1);
+                setPv(getPv() + aumentarAtributo(30));
+                setAtq(getAtq() + aumentarAtributo(50));
+                setArm(getArm() + aumentarAtributo(30));
+                setRes(getRes() + aumentarAtributo(70,4));
+                setVel(getVel() + aumentarAtributo(5));
             }
             case 3 -> {
-                setPv(getPv() + 1);
-                if (r.nextInt(100) < 50) setPv(getPv() + (r.nextInt(1, 3)));
-                if (r.nextInt(100) < 50) setAtq(getAtq() + 1);
-                if (r.nextInt(100) < 50) setArm(getArm() + 1);
-                if (r.nextInt(100) < 10) setRes(getRes() + 1);
-                if (r.nextInt(100) < 10) setVel(getVel() + 1);
+                setPv(getPv() + aumentarAtributo(100));
+                setPv(getPv() + aumentarAtributo(50,1,3));
+                setAtq(getAtq() + aumentarAtributo(50));
+                setArm(getArm() + aumentarAtributo(50));
+                setRes(getRes() + aumentarAtributo(10));
+                setVel(getVel() + aumentarAtributo(10));
             }
         }
         setNivel(getNivel() + 1);
@@ -138,6 +146,15 @@ public class Monstruo extends Personaje {
             System.err.println("Error en setRaza: Introduce una raza válida\nInput: " + raza);
         }
     }
+
+    /**
+     * Metodo que devuelve un string con los valores separados por ":" para usarlo luego y guardarlo en un .csv tanto para importar como para exportar.
+     * @return String con los atributos comúnes entre todos los personajes separados por ":"
+     */
+    public String getCSV() {
+        return  super.getCSV() + ":" + -1 + ":" + getAlianza() + ":" + getEsJugador();
+    }
+
     // endregion
 
     // region Overrides
@@ -147,7 +164,7 @@ public class Monstruo extends Personaje {
      * @return Nuevo objeto Monstruo con los mismos atributos
      */
     public Monstruo clone() {
-        return new Monstruo(getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(), getRaza());
+        return new Monstruo(getRaza(),getNombre(), getNivel(), getPv(), getAtq(), getArm(), getRes(), getVel(),getAlianza(),getEsJugador());
     }
 
     /**
