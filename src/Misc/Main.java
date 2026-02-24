@@ -49,6 +49,7 @@ public class Main {
 
         mago.setEsJugador();
         enemigo.setEsJugador();
+
         Combate.combatir(mago,enemigo);
         GameLogger.guardarLog();
     }

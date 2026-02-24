@@ -75,10 +75,25 @@ public class GameLogger {
     public static File getGameLog(){
         return GAME_LOG;
     }
+
+    /**
+     * todo Hacer un método que coja todos los personajes y los meta en un archivo, prefiero hacer esto en la siguiente práctica ya que tendremos mejor organizados los personajes
+     */
+    public static void setCharactersCsv(){
+
+    }
     public static File getCharactersCsv(){
         return CHARACTERS_CSV;
+    }
+
+    /**
+     * todo Hacer un método que coja todos los personajes y los meta en un archivo, prefiero hacer esto en la siguiente práctica ya que tendremos mejor organizados los personajes
+     */
+    public static void setCharactersStatusCsv(){
     }
     public static File getCharactersStatusCsv(){
         return CHARACTERS_STATUS_CSV;
     }
+
+
 }
