@@ -2,9 +2,7 @@ package Misc;
 
 import Characters.*;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 
 /**
@@ -138,7 +136,7 @@ public class Misc {
 
     // todo Igual es mejor darle formato directamente aquí y hacer que los alerts sean rojos, poner otro metodo que sea info y así con lo que necesite.
     public static void alert(String string) {
-        System.out.println(string);
+        System.out.println(formato(RojoB,string));
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog()));
             bw.append(string);
@@ -148,15 +146,45 @@ public class Misc {
             System.err.println(e);
         }
     }
-    public static Personaje importarPersonaje(String [] csv){
+
+    public static String [] fileToCSV(File charCSV) throws Exception{
+        if (charCSV.isFile() && charCSV.canRead()) {
+            try {
+                BufferedReader bw = new BufferedReader(new FileReader(charCSV));
+                String l = bw.readLine();
+                bw.close();
+                return l.split(":");
+            } catch (IOException e) {
+                System.err.println(e);
+            }
+        }
+        throw new Exception("El archivo no existe o no se puede leer.");
+    }
+
+    public static Personaje importarPersonaje(String [] csv) throws Exception{
         switch (csv[0]){
             case "Guerrero" -> {return new Guerrero (csv);}
-            case "Mago" -> new Mago (csv);
-            case "Ladron" -> new Ladron (csv);
-            case "Cazador" -> new Cazador (csv);
-            case "Paladin" -> new Paladin (csv);
-            case "Clerigo" -> new Clerigo (csv);
-            case "Monstruo" -> new Monstruo (csv);
+            case "Mago" -> {return new Mago (csv);}
+            case "Ladron" -> {return new Ladron (csv);}
+            case "Cazador" -> {return new Cazador(csv);}
+            case "Paladin" -> {return new Paladin (csv);}
+            case "Clerigo" -> {return new Clerigo (csv);}
+            case "Monstruo" -> {return new Monstruo (csv);}
+            default -> throw new Exception("La clase del personaje introducida es incorrecta (" + csv[0] + ")");
+        }
+    }
+
+    public static Personaje importarPersonaje(File charCSV) throws Exception{
+        String [] csv = fileToCSV(charCSV);
+        switch (csv[0]){
+            case "Guerrero" -> {return new Guerrero (csv);}
+            case "Mago" -> {return new Mago (csv);}
+            case "Ladron" -> {return new Ladron (csv);}
+            case "Cazador" -> {return new Cazador(csv);}
+            case "Paladin" -> {return new Paladin (csv);}
+            case "Clerigo" -> {return new Clerigo (csv);}
+            case "Monstruo" -> {return new Monstruo (csv);}
+            default -> throw new Exception("La clase del personaje introducida es incorrecta (" + csv[0] + ")");
         }
     }
 }

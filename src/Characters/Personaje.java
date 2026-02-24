@@ -733,7 +733,7 @@ public abstract class Personaje {
      * @return String con los atributos comúnes entre todos los personajes separados por ":"
      */
     public String getCSV() {
-        return this.getClass().getName() + ":" + getRaza() + ":" + getNombre() + ":" + getNivel() + ":" + getPv() + ":" + getAtq() + ":" + getArm() + ":" + getRes() + ":" + getVel();
+        return this.getClass().getSimpleName() + ":" + getRaza() + ":" + getNombre() + ":" + getNivel() + ":" + getPv() + ":" + getAtq() + ":" + getArm() + ":" + getRes() + ":" + getVel();
     }
 
     //endregion

@@ -41,11 +41,8 @@ public class Ladron extends Personaje {
      * Constructor por CSV del Ladron
      * @param csv El array del csv del personaje a crear.
      */
-    public Ladron(String[] csv){
-        if (!this.esClase(csv[0]))
-            Misc.alert("El csv proporcionado no es de un Ladron, corresponde a un " + csv[0]);
-        return;
-        new Ladron(
+    public Ladron(String[] csv) {
+        this(
                 Integer.parseInt(csv[1]),
                 csv[2],
                 Integer.parseInt(csv[3]),
@@ -57,6 +54,9 @@ public class Ladron extends Personaje {
                 Integer.parseInt(csv[10]),
                 Boolean.parseBoolean(csv[11])
         );
+        if (!this.esClase(csv[0])){
+            Misc.alert("El csv proporcionado no es de un Ladron, corresponde a un " + csv[0]);
+        }
     }
 
     // endregion

@@ -41,10 +41,7 @@ public class Clerigo extends Creyente {
      * @param csv El array del csv del personaje a crear.
      */
     public Clerigo(String[] csv){
-        if (!this.esClase(csv[0]))
-            Misc.alert("El csv proporcionado no es de un Clerigo, corresponde a un " + csv[0]);
-        return;
-        new Clerigo(
+        this(
                 Integer.parseInt(csv[1]),
                 csv[2],
                 Integer.parseInt(csv[3]),
@@ -57,6 +54,9 @@ public class Clerigo extends Creyente {
                 Integer.parseInt(csv[10]),
                 Boolean.parseBoolean(csv[11])
         );
+        if (!this.esClase(csv[0])) {
+            Misc.alert("El csv proporcionado no es de un Clerigo, corresponde a un " + csv[0]);
+        }
     }
 
     // endregion

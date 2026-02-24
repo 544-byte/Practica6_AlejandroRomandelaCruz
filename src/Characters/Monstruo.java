@@ -43,10 +43,7 @@ public class Monstruo extends Personaje {
      * @param csv El array del csv del personaje a crear.
      */
     public Monstruo(String[] csv){
-        if (!this.esClase(csv[0]))
-            Misc.alert("El csv proporcionado no es de un monstruo, corresponde a un " + csv[0]);
-        return;
-        new Monstruo(
+        this(
                 Integer.parseInt(csv[1]),
                 csv[2],
                 Integer.parseInt(csv[3]),
@@ -58,6 +55,9 @@ public class Monstruo extends Personaje {
                 Integer.parseInt(csv[10]),
                 Boolean.parseBoolean(csv[11])
         );
+        if (!this.esClase(csv[0])) {
+            Misc.alert("El csv proporcionado no es de un monstruo, corresponde a un " + csv[0]);
+        }
     }
 
 

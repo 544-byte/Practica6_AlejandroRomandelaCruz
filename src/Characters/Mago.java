@@ -48,10 +48,7 @@ public class Mago extends Personaje {
      * @param csv El array del csv del personaje a crear.
      */
     public Mago(String[] csv){
-        if (!this.esClase(csv[0]))
-            Misc.alert("El csv proporcionado no es de un mago, corresponde a un " + csv[0]);
-        return;
-        new Mago(
+        this(
                 Integer.parseInt(csv[1]),
                 csv[2],
                 Integer.parseInt(csv[3]),
@@ -64,6 +61,9 @@ public class Mago extends Personaje {
                 Integer.parseInt(csv[10]),
                 Boolean.parseBoolean(csv[11])
         );
+        if (!this.esClase(csv[0])) {
+            Misc.alert("El csv proporcionado no es de un mago, corresponde a un " + csv[0]);
+        }
     }
 
     // endregion
