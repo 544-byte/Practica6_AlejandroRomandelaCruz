@@ -4,6 +4,7 @@ import Characters.*;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Clase abstracta que contiene métodos utilitarios para mostrar texto con formatos decorativos en la consola.
@@ -139,7 +140,7 @@ public class Misc {
         System.out.println(formato(RojoB,string));
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog()));
-            bw.append(string);
+            bw.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yy_HH.mm.ss")) + " - " + string);
             bw.close();
         }
         catch (IOException e){

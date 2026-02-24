@@ -45,9 +45,11 @@ public class Main {
     //    Personaje cazador = new Cazador("alejandrito",1,100,15,10,10,10,2,"Toby",3);
     //    Personaje paladin = new Paladin("Alejandro",1,100,15,10,10,10,4,10);
     //    Personaje clerigo = new Clerigo("Clerigo",1,100,15,10,10,10,5,10);
-        Personaje enemigo = new Monstruo(3,"Isabel la pequeña gigante (en ve de 1,50 mide 1,65)",1,100,15,10,10,10,6,false);
+        Personaje enemigo = new Monstruo(3,"Isabel la pequeña gigante (en ve de 1,50 mide 1,65)",1,1,15,0,10,10,6,false);
 
-        System.out.println(new Guerrero(Misc.fileToCSV(new File("./Prueba.csv"))).getCSV());
-        System.out.println(Misc.importarPersonaje(new File("./Prueba.csv")).getCSV());
+        mago.setEsJugador();
+        enemigo.setEsJugador();
+        Combate.combatir(mago,enemigo);
+        GameLogger.guardarLog();
     }
 }
