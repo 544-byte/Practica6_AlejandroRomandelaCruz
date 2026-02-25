@@ -136,6 +136,19 @@ public class Misc {
 
 
     // todo Igual es mejor darle formato directamente aquí y hacer que los alerts sean rojos, poner otro metodo que sea info y así con lo que necesite.
+    public static void info(String string) {
+        System.out.println(formato(AmarilloB+";"+Cursiva,string));
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog()));
+            bw.write(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yy_HH.mm.ss")) + " - " + string);
+            System.out.println("Se ha escrito correctamente");
+            bw.close();
+        }
+        catch (IOException e){
+            System.err.println(e);
+        }
+    }
+
     public static void alert(String string) {
         System.out.println(formato(RojoB,string));
         try{

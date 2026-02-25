@@ -25,27 +25,12 @@ public class GameLogger {
         if (!TempDir.exists()){
             TempDir.mkdir();
         }
-        File TempGameLog = new File(thisGameLog + "GameLog.log");
-        try {
-            if (!TempGameLog.exists()) TempGameLog.createNewFile();
-        } catch (IOException e){
-            Misc.alert(String.valueOf(e));
-        }
-        File TempCharactersCSV = new File(thisGameLog + "Characters.csv");
-        try {
-            if (!TempCharactersCSV.exists()) TempCharactersCSV.createNewFile();
-        } catch (IOException e){
-            Misc.alert(String.valueOf(e));
-        }
-        File TempCharactersStatusCSV = new File(thisGameLog + "CharactersStatus.csv");
-        try {
-            if (!TempCharactersStatusCSV.exists()) TempCharactersStatusCSV.createNewFile();
-        } catch (IOException e){
-            Misc.alert(String.valueOf(e));
-        }
-        copiar(TempGameLog, GAME_LOG);
-        copiar(TempCharactersCSV, CHARACTERS_CSV);
-        copiar(TempCharactersStatusCSV, CHARACTERS_STATUS_CSV);
+        File SavedGameLog = new File(thisGameLog + "GameLog.log");
+        File SavedCharactersCSV = new File(thisGameLog + "Characters.csv");
+        File SavedCharactersStatusCSV = new File(thisGameLog + "CharactersStatus.csv");
+        copiar(GAME_LOG,SavedGameLog);
+        copiar(CHARACTERS_CSV,SavedCharactersCSV);
+        copiar(CHARACTERS_STATUS_CSV,SavedCharactersStatusCSV);
 
     }
 

@@ -91,12 +91,14 @@ public abstract class Personaje {
      * Sube el nivel del personaje aumentando aleatoriamente sus atributos.
      */
     public void subirNivel() {
+        Misc.info(this.getNombre()+" Ha subido de nivel");
         setPv(getPv() + aumentarAtributo(50));
         setAtq(getAtq() + aumentarAtributo(50));
         setArm(getArm() + aumentarAtributo(50));
         setRes(getRes() + aumentarAtributo(50));
         setVel(getVel() + aumentarAtributo(50));
         setNivel(getNivel() + 1);
+
     }
 
     /**
@@ -142,6 +144,7 @@ public abstract class Personaje {
 
         switch (opt) {
             case 1 -> {
+                Misc.info(this.getNombre()+" Ataca!");
                 ataca(getAtq(), enemigo, false);
             }
             case 2 -> {
@@ -415,6 +418,13 @@ public abstract class Personaje {
         return r.nextInt(100) < prcnt ? cantidad : 0;
     }
 
+    /**
+     * Sobrecarga de aumentarAtributo que en vez de subir una cierta cantidad calcula sobre un mínimo y un máximo
+     * @param prcnt Calcula un random para saber si sube o no de nivel usando el prcnt como límite
+     * @param min La subida mínima posible
+     * @param max La subida máxima posible
+     * @return
+     */
     public double aumentarAtributo(int prcnt, int min, int max){
         Random r = new Random();
         return r.nextInt(100) < prcnt ? r.nextInt(min,max) : 0;
