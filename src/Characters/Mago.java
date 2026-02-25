@@ -191,9 +191,17 @@ public class Mago extends Personaje {
     /**
      * Devuelve el nombre de la acción especial del Mago.
      *
-     * @return "Magia"
+     * @return "Hechizo"
      */
     public String getAccionEspecial() {
+        return "Hechizo";
+    }
+
+    /**
+     * Devuelve el nombre del Atributo especial del mago
+     * @return "Magia"
+     */
+    public static String getAtributoEspecial(){
         return "Magia";
     }
 

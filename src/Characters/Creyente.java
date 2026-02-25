@@ -109,6 +109,14 @@ public abstract class Creyente extends Personaje {
         return  getRaza() + ":" + getNombre() + ":" + getNivel() + ":" + getPv() + ":" + getAtq() + ":" + getArm() + ":" + getRes() + ":" + getVel() + ":" + getFe() + ":" + getAlianza() + ":" + getEsJugador();
     }
 
+    /**
+     * Devuelve el nombre del Atributo especial del Creyente
+     * @return "Fe"
+     */
+    public static String getAtributoEspecial(){
+        return "Fe";
+    }
+
     // endregion
 
     // region Overrides

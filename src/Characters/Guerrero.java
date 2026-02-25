@@ -178,6 +178,14 @@ public class Guerrero extends Personaje {
         return  super.getCSV() + ":" + this.getFuria() + ":" + getAlianza() + ":" + getEsJugador();
     }
 
+    /**
+     * Devuelve el nombre del Atributo especial del Guerreo
+     * @return "Furia"
+     */
+    public static String getAtributoEspecial(){
+        return "Furia";
+    }
+
     // endregion
 
     // region Overrides

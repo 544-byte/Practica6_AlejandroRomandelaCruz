@@ -91,7 +91,7 @@ public abstract class Personaje {
      * Sube el nivel del personaje aumentando aleatoriamente sus atributos.
      */
     public void subirNivel() {
-        Misc.info(this.getNombre()+" Ha subido de nivel");
+        Misc.happen(this.getNombre()+" Ha subido de nivel");
         setPv(getPv() + aumentarAtributo(50));
         setAtq(getAtq() + aumentarAtributo(50));
         setArm(getArm() + aumentarAtributo(50));
@@ -144,7 +144,6 @@ public abstract class Personaje {
 
         switch (opt) {
             case 1 -> {
-                Misc.info(this.getNombre()+" Ataca!");
                 ataca(getAtq(), enemigo, false);
             }
             case 2 -> {
@@ -743,8 +742,13 @@ public abstract class Personaje {
      * @return String con los atributos comúnes entre todos los personajes separados por ":"
      */
     public String getCSV() {
+        // Clase,Raza,Nombre,Nivel,PV,ATQ,ARM,RES,VEL,ESP,ALIANZA,ESJUGADOR
         return this.getClass().getSimpleName() + ":" + getRaza() + ":" + getNombre() + ":" + getNivel() + ":" + getPv() + ":" + getAtq() + ":" + getArm() + ":" + getRes() + ":" + getVel();
     }
+
+    public static String getAtributoEspecial(){
+        return "";
+    };
 
     //endregion
 
@@ -766,7 +770,24 @@ public abstract class Personaje {
      * @return Información del personaje
      */
     public String toString() {
-        return ("Nombre: " + getNombre() + "\n" + "Puntos de vida: " + getPv() + "\n" + "Ataque: " + getAtq() + "\n" + "Armadura: " + getArm() + "\n" + "Resistencia: " + getRes() + "\n" + "Velocidad: " + getVel() + "\n" + "Nivel: " + getNivel() + "\n" + "¿Es jugador?" + getEsJugador());
+        String [] stats = this.getCSV().split(":");
+        String toString = ("Clase: " + stats[0] +
+                "\nRaza: " + stats[1] +
+                "\nNombre: " + stats[2] +
+                "\nNivel: " + stats[3] +
+                "\nVida: " + stats[4] +
+                "\nAtaque: " + stats[5] +
+                "\nArmadura: " + stats[6] +
+                "\nResistencia: " + stats[7] +
+                "\nVelocidad: " + stats[8]);
+
+        if (!getAtributoEspecial().equals("")){
+            toString.concat("\n"+this.getAtributoEspecial() + ": " + stats[9]);
+        }
+
+        toString.concat("\nAlianza" + stats[10] +
+                "\n¿Es Jugador?" + stats[11]);
+        return toString;
     }
     // endregion
 }

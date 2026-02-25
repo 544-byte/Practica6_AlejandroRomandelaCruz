@@ -103,6 +103,14 @@ public class Ladron extends Personaje {
         return   super.getCSV() + ":" + -1 + ":" + getAlianza() + ":" + getEsJugador();
     }
 
+    /**
+     * Devuelve el nombre del Atributo especial del Ladron
+     * @return ""
+     */
+    public static String getAtributoEspecial(){
+        return "";
+    }
+
     // endregion
 
     // region Overrides

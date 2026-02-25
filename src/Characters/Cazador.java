@@ -258,6 +258,14 @@ public class Cazador extends Personaje {
         return  super.getCSV() + ":"  + -1 + ":" + getAlianza() + ":" + getEsJugador() + ":" + getCompañeroAnimal().getNombre() + ":" + getCompañeroAnimal().getRaza();
     }
 
+    /**
+     * Devuelve el nombre del Atributo especial del Cazador
+     * @return ""
+     */
+    public static String getAtributoEspecial(){
+        return "";
+    }
+
     // endregion
 
     // region Overrides
@@ -286,7 +294,7 @@ public class Cazador extends Personaje {
      * @return Cadena con información del Cazador y su compañero
      */
     public String toString() {
-        return ("Clase: Cazador\n" + super.toString() + "\n" + "─────────── Compañero Animal ────────────\n" + this.compañeroAnimal.toString());
+        return (super.toString() + "\n" + "─────────── Compañero Animal ────────────\nNombre:" + getCompañeroAnimal().getNombre() + "\nRaza: " + getCompañeroAnimal().getRazaName());
     }
     // endregion
 }
