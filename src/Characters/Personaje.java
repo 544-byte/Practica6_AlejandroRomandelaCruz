@@ -91,14 +91,13 @@ public abstract class Personaje {
      * Sube el nivel del personaje aumentando aleatoriamente sus atributos.
      */
     public void subirNivel() {
-        Misc.happen(this.getNombre()+" Ha subido de nivel");
-        setPv(getPv() + aumentarAtributo(50));
-        setAtq(getAtq() + aumentarAtributo(50));
-        setArm(getArm() + aumentarAtributo(50));
-        setRes(getRes() + aumentarAtributo(50));
-        setVel(getVel() + aumentarAtributo(50));
         setNivel(getNivel() + 1);
-
+        Misc.happen(this.getNombre()+" Ha subido de nivel,");
+        aumentarAtributo("pv",50);
+        aumentarAtributo("atq",50);
+        aumentarAtributo("arm",50);
+        aumentarAtributo("res",50);
+        aumentarAtributo("vel",50);
     }
 
     /**
@@ -173,9 +172,9 @@ public abstract class Personaje {
                     }
                     case 3 -> {
                         updateAliados();
-                        for (int i = 0; i < nAliados; i++) {
-                            if (aliados[i] != null) {
-                                System.out.println(Misc.estadisticasJugador(aliados[i].toString()));
+                        for (Personaje aliado : aliados ) {
+                            if (aliado != null) {
+                                System.out.println(Misc.estadisticasJugador(aliado.toString()));
                             }
                         }
                         realizarTurnoJugador(enemigo);
@@ -194,38 +193,33 @@ public abstract class Personaje {
      */
     public void ataca(double atq, Personaje enemigo, boolean dañoMagico)  {
         if (enemigo.defender(atq, dañoMagico) <= 0) {
-            System.out.println(enemigo.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar sus defensas.");
+            Misc.happen(enemigo.getNombre() + " es tan vigoroso que " + nombre + " ha sido incapaz de penetrar sus defensas.");
             atacar(enemigo, dañoMagico);
         } else {
             if (enemigo.getPv() - (atq - enemigo.getArm()) <= 0) {
                 atacar(enemigo, dañoMagico);
-                if (dañoMagico){
-                    System.out.println(nombre + " ha inflingido " + (atq - enemigo.getRes()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida acabando por completo con su existencia.");
-                } else {
-                    System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida acabando por completo con su existencia.");
-                }
+                Misc.happen(nombre + " ha inflingido " + enemigo.defender(this.getAtq(), dañoMagico) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida acabando por completo con su existencia.");
+
             } else {
                 atacar(enemigo, dañoMagico);
-                if (dañoMagico){
-                    System.out.println(nombre + " ha inflingido " + (atq - enemigo.getRes()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
-                } else {
-                    System.out.println(nombre + " ha inflingido " + (atq - enemigo.getArm()) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
-                }
+                Misc.happen(nombre + " ha inflingido " + enemigo.defender(this.getAtq(), dañoMagico) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
+
             }
         }
         if (enemigo.getDefiende()) {
             enemigo.setDefiende(false);
             enemigo.setArm(enemigo.getArm() / 1.2);
             enemigo.setRes(enemigo.getRes() / 1.2);
+            Misc.happen("Se bajan las defensas de " + enemigo.getNombre());
         }
-    }
+    } //SOUTEADOOOOOOOO
 
     /**
      * Aplica el daño efectivo al enemigo.
      */
     public void atacar(Personaje enemigo, boolean dañoMagico) {
         enemigo.setPv(enemigo.getPv() - enemigo.defender(this.getAtq(), dañoMagico));
-    }
+    }           //souted
 
     /**
      * Calcula el daño recibido tras aplicar defensas.
@@ -236,13 +230,26 @@ public abstract class Personaje {
      */
     public double defender(double atq, boolean dañoMagico) {
         if (dañoMagico) {
-            if ((atq - getRes()) < 0) return 0;
-            else return (atq - getRes());
+
+            if ((atq - getRes()) < 0) {
+                Misc.happen(this.getNombre() + " ha defendido " + atq + " puntos de daño con " + this.getRes() + " recibiendo " + 0 + " puntos de daño.");
+                return 0;
+            }
+            else {
+                Misc.happen(this.getNombre() + " ha defendido " + atq + " puntos de daño con " + this.getRes() + " recibiendo " + (atq - getRes()) + " puntos de daño.");
+                return (atq - getRes());
+            }
         } else {
-            if ((atq - getArm()) < 0) return 0;
-            else return (atq - getArm());
+            if ((atq - getArm()) < 0) {
+                Misc.happen(this.getNombre() + " ha defendido " + atq + " puntos de daño con " + this.getRes() + " recibiendo " + 0 + " puntos de daño.");
+                return 0;
+            }
+            else {
+                Misc.happen(this.getNombre() + " ha defendido " + atq + " puntos de daño con " + this.getRes() + " recibiendo " + (atq - getArm()) + " puntos de daño.");
+                return (atq - getArm());
+            }
         }
-    }
+    }       //souted
 
     /**
      * Permite que nuestra vida aumente según la poción siempre y cuando nuestra vida esté por debajo de 30
@@ -250,10 +257,13 @@ public abstract class Personaje {
      * @param pocion los puntos de vida que se van a sumar
      */
     public void beberPocion(int pocion) {
-        if (pv <= 30) {
-            pv += pocion;
+        if (getPv() <= 30) {
+            setPv(getPv() + pocion);
+            Misc.happen(this.getNombre() + " ha bebido una poción aumentando su vida en " + pocion + " puntos, ahora tiene " + this.getPv() + " puntos de vida.");
+        } else {
+            Misc.happen(getNombre() + " ha querido beber una poción pero se ha arrepentido a mitad de camino porque tiene muuuuucha vida... (" + this.getPv() + ")");
         }
-    }
+    }   //souted
 
     /**
      * Cuando un personaje cae en una trampa y sale ileso se inspira con la cantidad corerspondiente
@@ -262,14 +272,11 @@ public abstract class Personaje {
      * @param tipo     Indica que tipo de inspiración es
      */
     public void inspirar(int cantidad, String tipo) {
-        if (tipo.equals("ataque")) {
-            atq += cantidad;
-        } else if (tipo.equals("armadura")) {
-            arm += cantidad;
-        } else if (tipo.equals("vida")) {
-            pv += cantidad;
-        } else {
-            System.err.println("Introduce un tipo válido");
+        switch (tipo.toLowerCase()){
+            case "ataque" -> setAtq(getAtq() + cantidad);
+            case "armadura" -> setArm(getArm() + cantidad);
+            case "vida" -> setPv(getPv() + cantidad);
+            default -> System.err.println("Introduce un tipo válido");
         }
     }
 
@@ -280,44 +287,43 @@ public abstract class Personaje {
      */
     public boolean estaMuerto() {
         return getPv() <= 0;
-    }
+    }           //souted
 
     /**
      * Hace a personaje caer en una trampa, puede salir ileso o no...
      *
      * @param t La trampa en la que cae el personaje
      */
-    public void caerTrampa(Trampa t) {
+    public void caerTrampa(Trampa t) {      //souted
         String trampaCategoria = t.getCategoria();
-        if (t.activaTrampa() != 0) {
-            switch (trampaCategoria) {
-                case "Pinchos":
-                    System.out.println("Estacas afiladas salen de las superficies cercanas y atraviesan a " + nombre + " por " + t.getPerjuicio() + " puntos de daño.");
-                    pv -= t.getPerjuicio();
-                    break;
-                case "Brea":
-                    System.out.println("Aceite viscoso cae de pronto sobre " + nombre + " impidiéndole moverse con libertad.");
-                    arm -= t.getPerjuicio();
-                    break;
-                case "Serpientes":
-                    System.out.println("Un nido de víboras y culebras aparece frente a " + nombre + ". La visión es tan terrorífica que pierde las ganas de continuar.");
-                    atq -= t.getPerjuicio();
-                    break;
+        switch (trampaCategoria) {
+            case "Pinchos" -> {
+                if (t.activaTrampa() != 0){
+                    Misc.happen("Estacas afiladas salen de las superficies cercanas y atraviesan a " + nombre + " por " + t.getPerjuicio() + " puntos de daño.");
+                    setPv(getPv() - t.getPerjuicio());
+                } else {
+                    Misc.happen("Estacas afiladas salen de las superficies cercanas, pero " + nombre + " es muy avispado y las sortea, inspirandose con " + t.getPerjuicio() + " puntos de vida.");
+                    setPv(getPv() + t.getPerjuicio());
+                }
+
             }
-        } else {
-            switch (trampaCategoria) {
-                case "Pinchos":
-                    System.out.println("Estacas afiladas salen de las superficies cercanas, pero " + nombre + " es muy avispado y las sortea, inspirandose con " + t.getPerjuicio() + " puntos de vida.");
-                    pv += t.getPerjuicio();
-                    break;
-                case "Brea":
-                    System.out.println("Aceite viscoso cae de pronto justo delante de " + nombre + " esta suerte le da tanto alivio que aumenta su armadura en " + t.getPerjuicio() + " puntos.");
-                    arm += t.getPerjuicio();
-                    break;
-                case "Serpientes":
-                    System.out.println("Un nido de víboras y culebras aparece frente a " + nombre + ". Por suerte quieren ayudarle y recorren sus brazos para hacer " + t.getPerjuicio() + " puntos de daño extra.");
-                    atq += t.getPerjuicio();
-                    break;
+            case "Brea" -> {
+                if (t.activaTrampa() != 0){
+                    Misc.happen("Aceite viscoso cae de pronto sobre " + nombre + " impidiéndole moverse con libertad.");
+                    setArm(getArm() - t.getPerjuicio());
+                } else {
+                    Misc.happen("Aceite viscoso cae de pronto justo delante de " + nombre + " esta suerte le da tanto alivio que aumenta su armadura en " + t.getPerjuicio() + " puntos.");
+                    setArm(getArm() + t.getPerjuicio());
+                }
+            }
+            case "Serpientes" -> {
+                if (t.activaTrampa() != 0){
+                    Misc.happen("Un nido de víboras y culebras aparece frente a " + nombre + ". La visión es tan terrorífica que pierde las ganas de continuar.");
+                    setAtq(getAtq() - t.getPerjuicio());
+                } else {
+                    Misc.happen("Un nido de víboras y culebras aparece frente a " + nombre + ". Por suerte quieren ayudarle y recorren sus brazos para hacer " + t.getPerjuicio() + " puntos de daño extra.");
+                    setAtq(getAtq() + t.getPerjuicio());
+                }
             }
         }
     }
@@ -399,12 +405,13 @@ public abstract class Personaje {
      * Calcula el porcentaje y si sale true devuelve 1 (que se suma con el getAtributo correspondiente dentro del setAtributo correspondiente)
      * Se usa con el metodo de subir nivel
      * @param prcnt El porcentaje de probabilidad de subir
-     * @return 1 si el cálculo del porcentaje es positivo y 0 en su defecto
      */
-    public int aumentarAtributo(int prcnt){
-        Random r = new Random();
-        return r.nextInt(100) < prcnt ? 1 : 0;
+    public void aumentarAtributo(String atr,int prcnt) {
+        aumentarAtributo(atr,prcnt,1);
+                // Para los atributos extra llamar super + personalizado
     }
+
+
 
     /**
      * Sobrecarga de aumentarAtributo(prcnt) que añade un int cantidad para elegir la cantidad que se suma.
@@ -412,9 +419,38 @@ public abstract class Personaje {
      * @param prcnt El porcentaje de probabilidad de subir
      * @return cantidad si el cálculo del porcentaje es positivo y 0 en su defecto
      */
-    public double aumentarAtributo(int prcnt, double cantidad){
+    public void aumentarAtributo(String atr,int prcnt, double cantidad){
         Random r = new Random();
-        return r.nextInt(100) < prcnt ? cantidad : 0;
+        if (r.nextInt(100) < prcnt)
+            switch (atr) {
+                case "pv" -> {
+                    setPv(getPv() + cantidad);
+                    Misc.happen(this.getNombre() + " ha aumentado sus puntos de vida " + cantidad + " puntos, dejandolo con " + getPv() + " puntos de vida");
+                }
+                case "atq" -> {
+                    setAtq(getAtq() + cantidad);
+                    Misc.happen(this.getNombre() + " ha aumentado sus puntos de ataque " + cantidad + " puntos, dejandolo con " + getAtq() + " puntos de ataque");
+                }
+                case "arm" -> {
+                    setArm(getArm() + cantidad);
+                    Misc.happen(this.getNombre() + " ha aumentado sus puntos de armadura " + cantidad + " puntos, dejandolo con " + getArm() + " puntos de armadura");
+                }
+                case "res" -> {
+                    setRes(getRes() + cantidad);
+                    Misc.happen(this.getNombre() + " ha aumentado sus puntos de resistencia " + cantidad + " puntos, dejandolo con " + getRes() + " puntos de resistencia");
+                }
+                case "vel" -> {
+                    setVel(getVel() + cantidad);
+                    Misc.happen(this.getNombre() + " ha aumentado sus puntos de velocidad " + cantidad + " puntos, dejandolo con " + getVel() + " puntos de velocidad");
+                }
+                // Para los atributos extra llamar super + personalizado
+                /*
+                if (atr.equals("ATRIBUTO")){
+                    setATRIBUTO(getATRIBUTO() + cantidad);
+                    Misc.happen(this.getNombre() + " ha aumentado sus puntos de ATRIBUTO " + cantidad + " puntos, dejandolo con " + getATRIBUTO() + " puntos de ATRIBUTO");
+                }
+                 */
+            }
     }
 
     /**
@@ -424,9 +460,10 @@ public abstract class Personaje {
      * @param max La subida máxima posible
      * @return
      */
-    public double aumentarAtributo(int prcnt, int min, int max){
+    public void aumentarAtributo(String atr,int prcnt, int min, int max){
         Random r = new Random();
-        return r.nextInt(100) < prcnt ? r.nextInt(min,max) : 0;
+        double cantidad = r.nextInt(min,max);
+        aumentarAtributo(atr,prcnt,cantidad);
     }
 
     /**

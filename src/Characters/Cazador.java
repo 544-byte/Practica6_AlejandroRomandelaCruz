@@ -142,7 +142,7 @@ public class Cazador extends Personaje {
          * @return Cadena con información del compañero animal
          */
         public String toString() {
-            return ("Clase: Compañero Animal\n" + "Raza: " + getRazaName() + "\n" + "Dueño: " + Cazador.this.getNombre() + "\n" + super.toString());
+            return ("Clase: Compañero Animal\n" + "Raza: " + getRazaName() + "\n" + "Dueño: " + Cazador.this.getNombre());
         }
         // endregion
     }
