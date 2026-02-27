@@ -138,7 +138,7 @@ public class Mago extends Personaje {
                 opt = scan.nextInt();
                 switch (opt) {
                     case 1 -> {
-                        System.out.println("Aumenta tu agilidad en " + getMagia() + " puntos");
+                        Misc.happen( this.getNombre()+ " se aplica presteza mental aumentando su agilidad en " + this.getMagia() + " puntos." );
                         this.setVel(this.getVel() + this.getMagia());
                     }
                     case 2 -> {
@@ -146,7 +146,7 @@ public class Mago extends Personaje {
                         System.out.println(this.getAliados());
                         System.out.print("Opción: ");
                         opt = scan.nextInt();
-                        System.out.println("Aplicas el escudo arcano a tu aliado " + aliados[opt - 1].getNombre());
+                        Misc.happen( this.getNombre()+ " aplica presteza mental a su aliado " + aliados[opt - 1].getNombre() + " aumentando su agilidad en " + this.getMagia() + " puntos.");
                         aliados[opt - 1].setVel(aliados[opt - 1].getVel() + this.getMagia());
                     }
                 }
@@ -169,7 +169,7 @@ public class Mago extends Personaje {
             }
         }
 
-    }
+    }       //souted
 
     /**
      * Aplica un escudo arcano a un personaje, aumentando armadura y resistencia.
