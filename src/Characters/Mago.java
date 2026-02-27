@@ -81,7 +81,7 @@ public class Mago extends Personaje {
         aumentarAtributo("res",80);
         aumentarAtributo("vel",65);
         aumentarAtributo("magia",85);
-    }
+    }   //souted
 
     /**
      * Ejecuta la acción especial del Mago, que consiste en lanzar un conjuro
@@ -91,7 +91,7 @@ public class Mago extends Personaje {
      */
     public void accionEspecial(Personaje enemigo) {
         lanzarConjuro(enemigo);
-    }
+    }   //souted
 
     /**
      * Permite al Mago seleccionar y lanzar un conjuro de varias opciones.
@@ -100,13 +100,13 @@ public class Mago extends Personaje {
      */
     public void lanzarConjuro(Personaje enemigo) {
         Scanner scan = new Scanner(System.in);
-        System.out.println(Misc.opcionesJugador("" + "Escoge un conjuro:\n" + "1- Bola de fuego\n" + "2- Escudo arcano\n" + "3- Céfiro\n" + "4- Presteza mental\n" + "5- Cambio de opinión\n"));
+        System.out.println(Misc.opcionesJugador("" + "Escoge un conjuro:\n" + "1- Bola de fuego\n" + "2- Escudo arcano\n" + "3- Céfiro\n" + "4- Presteza mental\n" + "5- Info\n" + "6- Cambio de opinión\n"));
         System.out.print("Opción: ");
         int opt = scan.nextInt();
         switch (opt) {
             case 1 -> {
                 System.out.println("¡Bola de fuego va!");
-                ataca(getAtq() / 1.3, enemigo, true);
+                ataca(getMagia() * 0.70, enemigo, true);
             }
             case 2 -> {
                 System.out.println("Invocas un hechizo arcano, ¿pero a quien proteges?\n" + "\t· 1-Protegerte\n" + "\t· 2-Proteger aliado");
@@ -114,7 +114,7 @@ public class Mago extends Personaje {
                 opt = scan.nextInt();
                 switch (opt) {
                     case 1 -> {
-                        System.out.println("Aplicas el escudo arcano sobre ti");
+                        Misc.happen(this.getNombre() +" aplica un escudo arcano sobre si mismo.");
                         escudoArcano(this);
                     }
                     case 2 -> {
@@ -122,7 +122,7 @@ public class Mago extends Personaje {
                         System.out.println(this.getAliados());
                         System.out.print("Opción: ");
                         opt = scan.nextInt();
-                        System.out.println("Aplicas el escudo arcano a tu aliado " + aliados[opt - 1].getNombre());
+                        Misc.happen( this.getNombre()+ " aplica un escudo arcano a su aliado " + aliados[opt - 1].getNombre());
                         escudoArcano(aliados[opt - 1]);
                     }
                 }
@@ -130,7 +130,7 @@ public class Mago extends Personaje {
             }
             case 3 -> {
                 System.out.println("Céfiro: Una fuerte ventisca afecta a los enemigos");
-                ataca(getAtq() * 0.3, enemigo, true);
+                ataca(getMagia() * 0.3, enemigo, true);
             }
             case 4 -> {
                 System.out.println("¿A quién quieres aplicar con Presteza mental? \n" + "\t· 1-Aplicarte Presteza mental\n" + "\t· 2-Aplicar Presteza mental a un aliado");
@@ -152,8 +152,20 @@ public class Mago extends Personaje {
                 }
             }
             case 5 -> {
+                System.out.println("Información de los conjuros:\n" +
+                        "1- Bola de fuego: Lanza un ataque potente que inflige el 70% de tus puntos de magia.\n" +
+                        "2- Escudo arcano: Protege a un aliado o a ti mismo, reduciendo el daño recibido.\n" +
+                        "3- Céfiro: Una ventisca que golpea al enemigo con un daño equivalente al 30% de tu ataque.\n" +
+                        "4- Presteza mental: Aumenta la velocidad del objetivo (tú o un aliado) sumando tu estadística de Magia.\n");
+                lanzarConjuro(enemigo);
+            }
+            case 6 -> {
                 System.out.println("Cambias de opinión y decides hacer otra cosa...");
                 realizarTurnoJugador(enemigo);
+            }
+            default -> {
+                System.out.println("Introduce una opción correcta.");
+                lanzarConjuro(enemigo);
             }
         }
 
