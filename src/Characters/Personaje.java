@@ -298,7 +298,7 @@ public abstract class Personaje {
             case "vida" -> setPv(getPv() + cantidad);
             default -> System.err.println("Introduce un tipo válido");
         }
-    }
+    }   //souted
 
     /**
      * Indica si el personaje está muerto.
@@ -314,7 +314,7 @@ public abstract class Personaje {
      *
      * @param t La trampa en la que cae el personaje
      */
-    public void caerTrampa(Trampa t) {      //souted
+    public void caerTrampa(Trampa t) {
         String trampaCategoria = t.getCategoria();
         switch (trampaCategoria) {
             case "Pinchos" -> {
@@ -346,25 +346,7 @@ public abstract class Personaje {
                 }
             }
         }
-    }
-
-    /**
-     * Devuelve el nombre de la acción especial.
-     *
-     * @return Nombre de la acción especial
-     */
-
-    public String getAccionEspecial() {
-        return "Acción especial";
-    }
-
-    /**
-     * Hace que el personaje se convierta en un personaje jugable.
-     */
-    public void setEsJugador() {
-        esJugador = true;
-        setAlianza(0);
-    }
+    }   //souted
 
     /**
      * Ejecuta la acción especial del personaje.<br>
@@ -373,17 +355,6 @@ public abstract class Personaje {
      * @param enemigo Enemigo objetivo
      */
     public abstract void accionEspecial(Personaje enemigo);
-
-    /**
-     * Comprueba si otro personaje es aliado.
-     *
-     * @param personaje Personaje a comprobar
-     * @return true si pertenecen a la misma alianza
-     */
-    public boolean esAliado(Personaje personaje) {
-        if (this.getAlianza() == personaje.getAlianza()) return true;
-        else return false;
-    }
 
     /**
      * Añade un personaje a la lista global.
@@ -422,13 +393,38 @@ public abstract class Personaje {
     }
 
     /**
+     * Comprueba si otro personaje es aliado.
+     *
+     * @param personaje Personaje a comprobar
+     * @return true si pertenecen a la misma alianza
+     */
+    public boolean esAliado(Personaje personaje) {
+        if (this.getAlianza() == personaje.getAlianza()) return true;
+        else return false;
+    }
+
+    /**
+     * Un metodo que compara la clase recibida por parámetros
+     * (está pensado para pasar el array[0] del csv de un personaje)
+     * y devolver un true en caso correcto
+     * (Pensado para usarse en el constructor por csv del personaje)
+     * @param clase Recibe por parámetro el nombre de la clase a checkear.
+     * @return true si es la misma clase false en caso contrario
+     */
+    public boolean esClase(String clase){
+        return clase.toLowerCase().equals(this.getClass().getSimpleName().toLowerCase());
+    }
+
+    //region Setters
+
+    /**
      * Calcula el porcentaje y si sale true devuelve 1 (que se suma con el getAtributo correspondiente dentro del setAtributo correspondiente)
      * Se usa con el metodo de subir nivel
      * @param prcnt El porcentaje de probabilidad de subir
      */
     public void aumentarAtributo(String atr,int prcnt) {
         aumentarAtributo(atr,prcnt,1);
-                // Para los atributos extra llamar super + personalizado
+        // Para los atributos extra llamar super + personalizado
     }
 
     /**
@@ -484,19 +480,7 @@ public abstract class Personaje {
         aumentarAtributo(atr,prcnt,cantidad);
     }
 
-    /**
-     * Un metodo que compara la clase recibida por parámetros
-     * (está pensado para pasar el array[0] del csv de un personaje)
-     * y devolver un true en caso correcto
-     * (Pensado para usarse en el constructor por csv del personaje)
-     * @param clase Recibe por parámetro el nombre de la clase a checkear.
-     * @return true si es la misma clase false en caso contrario
-     */
-    public boolean esClase(String clase){
-        return clase.toLowerCase().equals(this.getClass().getSimpleName().toLowerCase());
-    }
 
-    //region Setters
 
     public void setRaza(int raza) {
         if (raza >=1 && raza <=5){
@@ -641,6 +625,15 @@ public abstract class Personaje {
         this.alianza = alianza;
     }
 
+    /**
+     * Hace que el personaje se convierta en un personaje jugable.
+     */
+    public void setEsJugador() {
+        esJugador = true;
+        setAlianza(0);
+    }
+
+
     //endregion
 
     //region Getters
@@ -740,21 +733,12 @@ public abstract class Personaje {
     }
 
     /**
-     * Obtiene si el personaje es jugable o no.
+     * Devuelve el nombre de la acción especial.
      *
-     * @return true si el personaje es jugador.
+     * @return Nombre de la acción especial
      */
-    public boolean getEsJugador() {
-        return esJugador;
-    }
-
-    /**
-     * Obtiene si el personaje está defendiendo.
-     *
-     * @return true si el personaje está defendiendo
-     */
-    public boolean getDefiende() {
-        return defiende;
+    public String getAccionEspecial() {
+        return "Acción especial";
     }
 
     /**
@@ -764,6 +748,15 @@ public abstract class Personaje {
      */
     public int getAlianza() {
         return alianza;
+    }
+
+    /**
+     * Obtiene si el personaje es jugable o no.
+     *
+     * @return true si el personaje es jugador.
+     */
+    public boolean getEsJugador() {
+        return esJugador;
     }
 
     /**
@@ -790,6 +783,15 @@ public abstract class Personaje {
 
         return aliadosString;
 
+    }
+
+    /**
+     * Obtiene si el personaje está defendiendo.
+     *
+     * @return true si el personaje está defendiendo
+     */
+    public boolean getDefiende() {
+        return defiende;
     }
 
     /**
