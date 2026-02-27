@@ -50,6 +50,7 @@ public class GameLogger {
             }
             bw.close();
             br.close();
+            new FileWriter(GAME_LOG);
         }
         catch (IOException e){
             System.out.println(e);

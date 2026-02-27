@@ -152,7 +152,7 @@ public abstract class Personaje {
         Scanner scan = new Scanner(System.in);
         switch (opt) {
             case 1 -> {
-                Misc.info(this.getNombre() + " a elegido atacar,");
+                Misc.info(this.getNombre() + " ha elegido atacar,");
                 ataca(getAtq(), enemigo, false);
             }
             case 2 -> {
@@ -177,12 +177,12 @@ public abstract class Personaje {
                 switch (opt) {
                     case 1 -> {
                         Misc.happen(this.getNombre() + " observa a " + enemigo.getNombre());
-                        Misc.info(Misc.estadisticasJugador(enemigo.toString()));
+                        System.out.println(Misc.estadisticasJugador(enemigo.toString()));
                         realizarTurnoJugador(enemigo);
                     }
                     case 2 -> {
                         Misc.happen(this.getNombre() + " se observa, parece que está disociando un poco");
-                        Misc.info(Misc.estadisticasJugador(this.toString()));
+                        System.out.println(Misc.estadisticasJugador(this.toString()));
                         realizarTurnoJugador(enemigo);
                     }
                     case 3 -> {
@@ -190,7 +190,7 @@ public abstract class Personaje {
                         for (Personaje aliado : aliados ) {
                             if (aliado != null) {
                                 Misc.happen(this.getNombre() + " observa a su aliado " + aliado.getNombre());
-                                Misc.info(Misc.estadisticasJugador(aliado.toString()));
+                                System.out.println(Misc.estadisticasJugador(aliado.toString()));
                             }
                         }
                         realizarTurnoJugador(enemigo);
@@ -252,20 +252,16 @@ public abstract class Personaje {
         if (dañoMagico) {
 
             if ((atq - getRes()) < 0) {
-                Misc.happen(this.getNombre() + " ha defendido " + atq + " puntos de daño con " + this.getRes() + " recibiendo " + 0 + " puntos de daño.");
                 return 0;
             }
             else {
-                Misc.happen(this.getNombre() + " ha defendido " + atq + " puntos de daño con " + this.getRes() + " recibiendo " + (atq - getRes()) + " puntos de daño.");
                 return (atq - getRes());
             }
         } else {
             if ((atq - getArm()) < 0) {
-                Misc.happen(this.getNombre() + " ha defendido " + atq + " puntos de daño con " + this.getRes() + " recibiendo " + 0 + " puntos de daño.");
                 return 0;
             }
             else {
-                Misc.happen(this.getNombre() + " ha defendido " + atq + " puntos de daño con " + this.getRes() + " recibiendo " + (atq - getArm()) + " puntos de daño.");
                 return (atq - getArm());
             }
         }
@@ -643,7 +639,11 @@ public abstract class Personaje {
     }
 
     public String getRazaName() {
-        switch (getRaza()){
+        return getRazaName(getRaza());
+    }
+
+    public String getRazaName(int raza) {
+        switch (raza){
             case -1 -> {
                 return "Raza no inicializada";
             }
@@ -829,7 +829,7 @@ public abstract class Personaje {
     public String toString() {
         String [] stats = this.getCSV().split(":");
         String toString = ("Clase: " + stats[0] +
-                "\nRaza: " + stats[1] +
+                "\nRaza: " + getRazaName(Integer.parseInt(stats[1])) +
                 "\nNombre: " + stats[2] +
                 "\nNivel: " + stats[3] +
                 "\nVida: " + stats[4] +

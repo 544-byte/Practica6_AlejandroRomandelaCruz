@@ -139,9 +139,8 @@ public class Misc {
     public static void info(String string) {
         System.out.println(formato(Amarillo+";"+Subrayado,string));
         try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog()));
-            bw.write(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss")) + " - " + string);
-            System.out.println("Se ha escrito correctamente");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog(),true));
+            bw.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss")) + " - " + string + "\n");
             bw.close();
         }
         catch (IOException e){
@@ -152,8 +151,8 @@ public class Misc {
     public static void happen(String string) {
         System.out.println(formato(CianB+";"+Cursiva,string));
         try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog()));
-            bw.write(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss")) + " - " + string);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog(),true));
+            bw.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss")) + " - " + string + "\n");
             bw.close();
         }
         catch (IOException e){
@@ -164,8 +163,8 @@ public class Misc {
     public static void alert(String string) {
         System.out.println(formato(RojoB,string));
         try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog()));
-            bw.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss")) + " - " + string);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(GameLogger.getGameLog(),true));
+            bw.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss")) + " - " + string + "\n");
             bw.close();
         }
         catch (IOException e){

@@ -53,7 +53,7 @@ public class Combate {
      * @param ganador Personaje que ha ganado el combate
      */
     public static void imprimirGanador(Personaje ganador) {
-        System.out.println("El  jugador " + ganador.getNombre() + " ha ganado.");
+        Misc.happen("El  jugador " + ganador.getNombre() + " ha ganado.");
     }
 
     /**

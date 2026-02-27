@@ -47,7 +47,7 @@ public class Main {
         Personaje clerigo = new Clerigo(1,"Clerigo",1,100,15,10,10,10,10,0,false);
         //Personaje enemigo = new Monstruo(3,"Isabel la pequeña gigante (en ve de 1,50 mide 1,65)",1,1,15,0,10,10,6,false);
 
-        System.out.println(cazador.toString());
+
         Personaje p = Misc.importarPersonaje("Mago:2:alejandrito el mago con varita:1:100.0:15.0:10.0:10.0:10.0:10.0:1:true".split(":"));
         Personaje enemigo = Misc.importarPersonaje(new File("./Prueba.csv"));
 
