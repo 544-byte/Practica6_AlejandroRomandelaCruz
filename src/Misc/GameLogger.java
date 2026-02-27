@@ -1,5 +1,7 @@
 package Misc;
 
+import Characters.Personaje;
+
 import javax.swing.plaf.basic.BasicDirectoryModel;
 import java.io.*;
 import java.time.LocalDateTime;
@@ -15,6 +17,18 @@ public class GameLogger {
     private static final File GAME_LOG = new File(TEMP_GAME_LOG + "GameLog.log");
     private static final File CHARACTERS_CSV = new File(TEMP_GAME_LOG + "Characters.csv");
     private static final File CHARACTERS_STATUS_CSV = new File(TEMP_GAME_LOG + "CharactersStatus.csv");
+
+    /**
+     * es el metodo del ejercicio 1
+     *
+     * @param ficha la ficha del personaje
+     * @throws Exception Checkea si la clase del personaje es correcta
+     * @since practica6
+     */
+    public static void soutCharFile(File ficha)throws Exception{
+        Misc.importarPersonaje(ficha).toString();
+    }
+
 
     /**
      * Guarda el log actual Temporal
