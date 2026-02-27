@@ -66,12 +66,13 @@ public class Ladron extends Personaje {
      * según probabilidades específicas.
      */
     public void subirNivel() {
-        setPv(getPv() + aumentarAtributo(40));
-        setAtq(getAtq() + aumentarAtributo(60));
-        setArm(getArm() + aumentarAtributo(40));
-        setRes(getRes() + aumentarAtributo(40));
-        setVel(getVel() + aumentarAtributo(85,2));
         setNivel(getNivel() + 1);
+        Misc.happen(this.getNombre()+" Ha subido de nivel,");
+        aumentarAtributo("pv",40);
+        aumentarAtributo("atq",60);
+        aumentarAtributo("arm",40);
+        aumentarAtributo("res",40);
+        aumentarAtributo("vel",80,2);
     }
 
     /**

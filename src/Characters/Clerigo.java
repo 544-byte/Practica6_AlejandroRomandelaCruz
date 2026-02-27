@@ -65,13 +65,14 @@ public class Clerigo extends Creyente {
      * Incrementa el nivel del Clérigo aplicando mejoras aleatorias a sus atributos y a su fe.
      */
     public void subirNivel() {
-        setPv(getPv() + aumentarAtributo(20));
-        setAtq(getAtq() + aumentarAtributo(10));
-        setArm(getArm() + aumentarAtributo(20,2));
-        setRes(getRes() + aumentarAtributo(80,2));
-        setVel(getVel() + aumentarAtributo(50));
-        setFe(getFe() + aumentarAtributo(80,2));
         setNivel(getNivel() + 1);
+        Misc.happen(this.getNombre()+" Ha subido de nivel,");
+        aumentarAtributo("pv",20);
+        aumentarAtributo("atq",10);
+        aumentarAtributo("arm",20,2);
+        aumentarAtributo("res",80,2);
+        aumentarAtributo("vel",50);
+        aumentarAtributo("fe",80,2);
     }
 
     /**

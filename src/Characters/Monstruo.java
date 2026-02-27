@@ -68,31 +68,32 @@ public class Monstruo extends Personaje {
      * según su raza. Cada raza tiene probabilidades y mejoras específicas.
      */
     public void subirNivel() {
+        setNivel(getNivel() + 1);
+        Misc.happen(this.getNombre()+" Ha subido de nivel,");
         switch (getRaza()) {
             case 1 -> {
-                setPv(getPv() + aumentarAtributo(50));
-                setAtq(getAtq() + aumentarAtributo(80,2));
-                setArm(getArm() + aumentarAtributo(15));
-                setRes(getRes() + aumentarAtributo(15));
-                setVel(getVel() + aumentarAtributo(80,2));
+                aumentarAtributo("pv",50);
+                aumentarAtributo("atq",80,2);
+                aumentarAtributo("arm",15);
+                aumentarAtributo("res",15);
+                aumentarAtributo("vel",80,2);
             }
             case 2 -> {
-                setPv(getPv() + aumentarAtributo(30));
-                setAtq(getAtq() + aumentarAtributo(50));
-                setArm(getArm() + aumentarAtributo(30));
-                setRes(getRes() + aumentarAtributo(70,4));
-                setVel(getVel() + aumentarAtributo(5));
+                aumentarAtributo("pv",30);
+                aumentarAtributo("atq",50);
+                aumentarAtributo("arm",30);
+                aumentarAtributo("res",70,4);
+                aumentarAtributo("vel",5);
             }
             case 3 -> {
-                setPv(getPv() + aumentarAtributo(100));
-                setPv(getPv() + aumentarAtributo(50,1,3));
-                setAtq(getAtq() + aumentarAtributo(50));
-                setArm(getArm() + aumentarAtributo(50));
-                setRes(getRes() + aumentarAtributo(10));
-                setVel(getVel() + aumentarAtributo(10));
+                aumentarAtributo("pv",100);
+                aumentarAtributo("pv",50,1,3);
+                aumentarAtributo("atq",50);
+                aumentarAtributo("arm",50);
+                aumentarAtributo("res",10);
+                aumentarAtributo("vel",10);
             }
         }
-        setNivel(getNivel() + 1);
     }
 
     /**

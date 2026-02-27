@@ -204,12 +204,12 @@ public class Cazador extends Personaje {
      * Incrementa el nivel del Cazador y de su compañero animal.
      */
     public void subirNivel() {
-        setPv(getPv() + aumentarAtributo(50));
-        setAtq(getAtq() + aumentarAtributo(50));
-        setArm(getArm() + aumentarAtributo(50));
-        setRes(getRes() + aumentarAtributo(50));
-        setVel(getVel() + aumentarAtributo(70));
         setNivel(getNivel() + 1);
+        aumentarAtributo("pv",50);
+        aumentarAtributo("atq",50);
+        aumentarAtributo("arm",50);
+        aumentarAtributo("res",50);
+        aumentarAtributo("vel",70,2);
         compañeroAnimal.updateAtributos();
     }
 

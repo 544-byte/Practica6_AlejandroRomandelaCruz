@@ -73,20 +73,22 @@ public class Guerrero extends Personaje {
      * según probabilidades específicas y el estado de Furia.
      */
     public void subirNivel() {
-        setPv(getPv() + aumentarAtributo(75));
-        if (getFuria()) {
-            setAtq(getAtq() / 2);
-            setAtq(getAtq() + aumentarAtributo(80,2));
-            setAtq(getAtq() * 2);
-        } else setAtq(getAtq() + aumentarAtributo(80,2));
-        if (getFuria()) {
-            setAtq(getAtq() * 2);
-            setArm(getArm() + aumentarAtributo(75));
-            setAtq(getAtq() / 2);
-        } else setArm(getArm() + aumentarAtributo(75));
-        setRes(getRes() + aumentarAtributo(20));
-        setVel(getVel() + aumentarAtributo(50));
         setNivel(getNivel() + 1);
+        Misc.happen(this.getNombre()+" Ha subido de nivel,");
+        aumentarAtributo("pv",75);
+        if (getFuria()) {
+            setAtq(getAtq() / 2);
+            setArm(getArm() * 2);
+            aumentarAtributo("atq",80,2);
+            aumentarAtributo("arm",75);
+            setAtq(getAtq() * 2);
+            setArm(getArm() / 2);
+        } else {
+            aumentarAtributo("atq",80,2);
+            aumentarAtributo("arm",75);
+        }
+        aumentarAtributo("res",20);
+        aumentarAtributo("vel",50);
     }
 
     /**

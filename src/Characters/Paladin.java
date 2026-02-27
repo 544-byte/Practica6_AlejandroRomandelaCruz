@@ -68,13 +68,14 @@ public class Paladin extends Creyente {
      * y su fe, siguiendo probabilidades específicas para cada atributo.
      */
     public void subirNivel() {
-        setPv(getPv() + aumentarAtributo(50,getPv()*0.05));
-        setAtq(getAtq() + aumentarAtributo(60));
-        setArm(getArm() + aumentarAtributo(70,2));
-        setRes(getRes() + aumentarAtributo(15));
-        setVel(getVel() + aumentarAtributo(15));
-        setFe(getFe() + aumentarAtributo(30));
         setNivel(getNivel() + 1);
+        Misc.happen(this.getNombre()+" Ha subido de nivel,");
+        aumentarAtributo("pv",50,getPv()*0.05);
+        aumentarAtributo("atq",60);
+        aumentarAtributo("arm",70,2);
+        aumentarAtributo("res",15);
+        aumentarAtributo("vel",15);
+        aumentarAtributo("fe",30);
     }
 
     /**

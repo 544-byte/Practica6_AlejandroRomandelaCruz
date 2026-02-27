@@ -4,6 +4,7 @@ package Characters;
 import GameMap.*;
 import Misc.Misc;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -98,7 +99,7 @@ public abstract class Personaje {
         aumentarAtributo("arm",50);
         aumentarAtributo("res",50);
         aumentarAtributo("vel",50);
-    }
+    } // souteeed
 
     /**
      * Ejecuta el turno del personaje contra un enemigo.
@@ -122,7 +123,7 @@ public abstract class Personaje {
                 turno = 0;
             }
         }
-    }
+    } // souteeeed
 
     /**
      * Gestiona el turno del jugador mostrando opciones por consola.
@@ -135,27 +136,39 @@ public abstract class Personaje {
         System.out.println(Misc.opcionesJugador("Elige una opción:\n" + "1- Atacar\n" + "2- " + getAccionEspecial() + "\n" + "3- Defender\n" + "4- Pasar turno\n" + "5- Observar"));
         do {
             System.out.print("Opción: ");
-            opt = scan.nextInt();
+            try {opt = scan.nextInt();}
+            catch (InputMismatchException e) {
+                System.out.println(e);
+                realizarTurnoJugador(enemigo);
+            }
             if (opt < 1 | opt > 5) {
                 System.err.println("Opción incorrecta, ingresela de nuevo.");
             }
         } while (opt < 1 | opt > 5);
+        realizarTurnoJugador(enemigo,opt);
+    } // souteeeed
 
+    public void realizarTurnoJugador(Personaje enemigo, int opt) {
+        Scanner scan = new Scanner(System.in);
         switch (opt) {
             case 1 -> {
+                Misc.info(this.getNombre() + " a elegido atacar,");
                 ataca(getAtq(), enemigo, false);
             }
             case 2 -> {
+                Misc.info(this.getNombre() + " ha elegido " + this.getAccionEspecial());
                 this.accionEspecial(enemigo);
             }
             case 3 -> {
                 this.setDefiende(true);
                 this.setArm(this.getArm() * 1.2);
                 this.setRes(this.getRes() * 1.2);
-                System.out.println("Te defiendes durante el próximo turno");
+                Misc.happen(this.getNombre() + " ha subido sus defensas.");
+                Misc.info(this.getNombre() + " se defiende durante el próximo turno.");
             }
             case 4 -> {
-                System.out.println(this.getNombre() + " ha decidido no hacer absolutamente nada, let him cook.");
+                Misc.happen(this.getNombre() + " mira muy desafiante a su enemigo, no se que habrá intentado hacer...");
+                Misc.info(this.getNombre() + " ha decidido no hacer absolutamente nada, let him cook.");
             }
             case 5 -> {
                 System.out.println("\t· 1- Observar enemigo\n" + "\t· 2- Observarte\n" + "\t· 3- Ver aliados");
@@ -163,26 +176,33 @@ public abstract class Personaje {
                 opt = scan.nextInt();
                 switch (opt) {
                     case 1 -> {
-                        System.out.println(Misc.estadisticasJugador(enemigo.toString()));
+                        Misc.happen(this.getNombre() + " observa a " + enemigo.getNombre());
+                        Misc.info(Misc.estadisticasJugador(enemigo.toString()));
                         realizarTurnoJugador(enemigo);
                     }
                     case 2 -> {
-                        System.out.println(Misc.estadisticasJugador(this.toString()));
+                        Misc.happen(this.getNombre() + " se observa, parece que está disociando un poco");
+                        Misc.info(Misc.estadisticasJugador(this.toString()));
                         realizarTurnoJugador(enemigo);
                     }
                     case 3 -> {
                         updateAliados();
                         for (Personaje aliado : aliados ) {
                             if (aliado != null) {
-                                System.out.println(Misc.estadisticasJugador(aliado.toString()));
+                                Misc.happen(this.getNombre() + " observa a su aliado " + aliado.getNombre());
+                                Misc.info(Misc.estadisticasJugador(aliado.toString()));
                             }
                         }
                         realizarTurnoJugador(enemigo);
                     }
+                    default -> {
+                        System.out.println("Opción no contemplada, elige una opción correcta.");
+                        realizarTurnoJugador(enemigo,5);
+                    }
                 }
             }
         }
-    }
+    } //souteeed
 
     /**
      * Realiza un ataque contra un enemigo.
@@ -410,8 +430,6 @@ public abstract class Personaje {
         aumentarAtributo(atr,prcnt,1);
                 // Para los atributos extra llamar super + personalizado
     }
-
-
 
     /**
      * Sobrecarga de aumentarAtributo(prcnt) que añade un int cantidad para elegir la cantidad que se suma.

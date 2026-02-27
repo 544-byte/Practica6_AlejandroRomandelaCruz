@@ -73,13 +73,14 @@ public class Mago extends Personaje {
      * y puntos de magia según probabilidades específicas.
      */
     public void subirNivel() {
-        setPv(getPv() + aumentarAtributo(35));
-        setAtq(getAtq() + aumentarAtributo(15));
-        setArm(getArm() + aumentarAtributo(35));
-        setRes(getRes() + aumentarAtributo(80));
-        setVel(getVel() + aumentarAtributo(65));
-        setMagia(getMagia() + aumentarAtributo(85));
         setNivel(getNivel() + 1);
+        Misc.happen(this.getNombre()+" Ha subido de nivel,");
+        aumentarAtributo("pv",35);
+        aumentarAtributo("atq",15);
+        aumentarAtributo("arm",35);
+        aumentarAtributo("res",80);
+        aumentarAtributo("vel",65);
+        aumentarAtributo("magia",85);
     }
 
     /**
@@ -166,6 +167,14 @@ public class Mago extends Personaje {
     public void escudoArcano(Personaje afectado) {
         afectado.setArm(getArm() + this.getMagia() * 0.5);
         afectado.setRes(getRes() + this.getMagia() * 0.5);
+    }
+
+    public void aumentarAtributo(String atr,int prcnt,double cantidad){
+        super.aumentarAtributo(atr,prcnt,cantidad);
+        if (atr.equals("magia")){
+            setMagia(getMagia() + cantidad);
+            Misc.happen(this.getNombre() + " ha aumentado sus puntos de magia " + cantidad + " puntos, dejandolo con " + getMagia() + " puntos de magia");
+        }
     }
 
     // region Setters & Getters

@@ -46,12 +46,13 @@ public abstract class Creyente extends Personaje {
      * según probabilidades definidas.
      */
     public void subirNivel() {
-        setPv(getPv() + aumentarAtributo(40));
-        setAtq(getAtq() + aumentarAtributo(60));
-        setArm(getArm() + aumentarAtributo(40));
-        setRes(getRes() + aumentarAtributo(40));
-        setVel(getVel() + aumentarAtributo(85,2));
         setNivel(getNivel() + 1);
+        Misc.happen(this.getNombre()+" Ha subido de nivel,");
+        aumentarAtributo("pv",40);
+        aumentarAtributo("atq",60);
+        aumentarAtributo("arm",40);
+        aumentarAtributo("res",40);
+        aumentarAtributo("vel",85,2);
     }
 
     /**
@@ -71,6 +72,14 @@ public abstract class Creyente extends Personaje {
      * @param enemigo Personaje objetivo de la plegaria
      */
     public abstract void plegaria(Personaje enemigo);
+
+    public void aumentarAtributo(String atr,int prcnt,double cantidad){
+        super.aumentarAtributo(atr,prcnt,cantidad);
+        if (atr.equals("fe")){
+            setFe(getFe() + cantidad);
+            Misc.happen(this.getNombre() + " ha aumentado sus puntos de fe " + cantidad + " puntos, dejandolo con " + getFe() + " puntos de fe");
+        }
+    }
 
     // region Setters & Getters
 
