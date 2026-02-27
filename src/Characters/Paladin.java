@@ -86,28 +86,37 @@ public class Paladin extends Creyente {
      */
     public void plegaria(Personaje enemigo) {
         Scanner scan = new Scanner(System.in);
-        System.out.println(Misc.opcionesJugador("" + "Escoge una plegaria:\n" + "1- Imbuir arma\n" + "2- Baluarte de fe\n" + "3- Fogonazo sagrado\n" + "4- Cambio de opinión\n"));
+        System.out.println(Misc.opcionesJugador("" + "Escoge una plegaria:\n" + "1- Imbuir arma\n" + "2- Baluarte de fe\n" + "3- Fogonazo sagrado\n" + "4- Info\n" + "5- Cambio de opinión\n"));
         System.out.print("Opción: ");
         int opt = scan.nextInt();
         switch (opt) {
             case 1 -> {
-                System.out.println("Atacas con un arma llena de fé");
+                Misc.happen(this.getNombre() + " imbuye su arma aumentando su ataque " + getFe()*0.8 + " puntos.");
                 setAtq(getAtq() + getFe() * 0.8);
-                atacar(enemigo, false);
-                setAtq(getAtq() - getFe() * 0.8);
             }
             case 2 -> {
-                System.out.println("Bendices tu armadura aumentandola en " + getFe() * 0.3 + " puntos");
+                Misc.happen(this.getNombre() + " bendice su armadura aumentandola en " + getFe() * 0.3 + " puntos");
                 setArm(getArm() + getFe() * 0.3);
             }
             case 3 -> {
-                System.out.println("Un rayo del mismísimo Dios cae sobre tu enemigo causando una gran cegera");
+                Misc.happen(this.getNombre() + " hace caer sobre " + enemigo.getNombre() + " causandole una gran cegera disminuyendo su velocidad y resistencia " + getFe()*0.4 + " puntos.");
                 enemigo.setVel(enemigo.getVel() - getFe() * 0.4);
                 enemigo.setRes(enemigo.getRes() - getFe() * 0.4);
             }
             case 4 -> {
+                System.out.println("Información de las plegarias:\n" +
+                        "1- Imbuir arma: Bendice tu arma aumentando tu estadística de Ataque en un 80% de tu Fe.\n" +
+                        "2- Baluarte de fe: Refuerza tu defensa aumentando tu Armadura en un 30% de tu estadística de Fe.\n" +
+                        "3- Fogonazo sagrado: Deslumbra al enemigo reduciendo su Velocidad y Resistencia en un 40% de tu Fe.\n");
+                plegaria(enemigo);
+            }
+            case 5 -> {
                 System.out.println("Cambias de opinión y decides hacer otra cosa...");
                 realizarTurnoJugador(enemigo);
+            }
+            default -> {
+                System.out.println("Introduce una opción correcta.");
+                plegaria(enemigo);
             }
         }
     }

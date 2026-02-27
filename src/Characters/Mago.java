@@ -105,7 +105,7 @@ public class Mago extends Personaje {
         int opt = scan.nextInt();
         switch (opt) {
             case 1 -> {
-                System.out.println("¡Bola de fuego va!");
+                Misc.happen(this.getNombre() + " lanza una bola de fuego sobre " + enemigo.getNombre());
                 ataca(getMagia() * 0.70, enemigo, true);
             }
             case 2 -> {
@@ -129,7 +129,7 @@ public class Mago extends Personaje {
 
             }
             case 3 -> {
-                System.out.println("Céfiro: Una fuerte ventisca afecta a los enemigos");
+                Misc.happen(this.getNombre() + " lanza un céfiro contra " + enemigo.getNombre());
                 ataca(getMagia() * 0.3, enemigo, true);
             }
             case 4 -> {
