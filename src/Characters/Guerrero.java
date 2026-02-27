@@ -89,16 +89,22 @@ public class Guerrero extends Personaje {
         }
         aumentarAtributo("res",20);
         aumentarAtributo("vel",50);
-    }
+    } //souted
 
     /**
      * Cambia el estado de Furia del Guerrero.
      * Si estaba activo, lo desactiva; si estaba inactivo, lo activa.
      */
     public void modificarFuria() {
-        if (furia) setFuria(false);
-        else setFuria(true);
-    }
+        if (furia) {
+            Misc.happen(this.getNombre() + " desactiva su furia");
+            setFuria(false);
+        }
+        else {
+            Misc.happen(this.getNombre() + " activa su furia");
+            setFuria(true);
+        }
+    }   //souted
 
     /**
      * Ejecuta la acción especial del Guerrero, que consiste en activar
@@ -117,11 +123,6 @@ public class Guerrero extends Personaje {
         char opt = scan.nextLine().toLowerCase().charAt(0);
         switch (opt) {
             case 's' -> {
-                if (getFuria()) {
-                    System.out.println("Te calmas un poco, menos mal...");
-                } else {
-                    System.out.println("¡Furia activada!");
-                }
                 modificarFuria();
             }
             case 'n' -> {
@@ -129,7 +130,7 @@ public class Guerrero extends Personaje {
             }
         }
 
-    }
+    }       //souted
 
     // region Setters & Getters
     /**
