@@ -17,7 +17,7 @@ import java.util.Scanner;
  * pero deja ciertas acciones (como la acción especial) para que sean
  * implementadas por subclases concretas.
  */
-public abstract class Personaje {
+public abstract class Personaje implements Comparable<Personaje> {
     // region Atributos
     private static Personaje[] personajes = new Personaje[0];
     Personaje[] aliados;
@@ -494,7 +494,7 @@ public abstract class Personaje {
      * @param nombre Nombre del personaje
      */
     public void setNombre(String nombre) {
-        if (nombre.isBlank() || nombre.contains("GM") || nombre.length() < 2) {
+        if (nombre.isBlank() || nombre.contains("GM") || nombre.length() < 2 && nombre.contains(":")) {
             System.err.println("Introduce un nombre válido");
         } else {
             this.nombre = nombre;
@@ -803,7 +803,7 @@ public abstract class Personaje {
         return this.getClass().getSimpleName() + ":" + getRaza() + ":" + getNombre() + ":" + getNivel() + ":" + getPv() + ":" + getAtq() + ":" + getArm() + ":" + getRes() + ":" + getVel();
     }
 
-    public static String getAtributoEspecial(){
+    public String getAtributoEspecial(){
         return "";
     };
 
@@ -818,7 +818,9 @@ public abstract class Personaje {
      * @return true si son equivalentes
      */
     public boolean equals(Personaje p) {
-        return getNombre().equals(p.getNombre()) && getPv() == p.getPv() && getAtq() == p.getAtq() && getArm() == p.getArm() && getVel() == p.getVel() && getRes() == p.getRes() && getNivel() == p.getNivel();
+        return p.getCSV().equals(this.getCSV());
+
+        //return getNombre().equals(p.getNombre()) && getPv() == p.getPv() && getAtq() == p.getAtq() && getArm() == p.getArm() && getVel() == p.getVel() && getRes() == p.getRes() && getNivel() == p.getNivel();
     }
 
     /**
@@ -839,12 +841,16 @@ public abstract class Personaje {
                 "\nVelocidad: " + stats[8]);
 
         if (!getAtributoEspecial().equals("")){
-            toString.concat("\n"+this.getAtributoEspecial() + ": " + stats[9]);
+            toString = toString.concat("\n"+getAtributoEspecial() + ": " + stats[9]);
         }
 
-        toString.concat("\nAlianza" + stats[10] +
-                "\n¿Es Jugador?" + stats[11]);
+        toString = toString.concat("\nAlianza: " + stats[10] +
+                "\n¿Es Jugador? " + stats[11]);
         return toString;
+    }
+
+    public int compareTo(Personaje personaje){
+        return Double.compare(personaje.getVel(),this.getVel());
     }
     // endregion
 }

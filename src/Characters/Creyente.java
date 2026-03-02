@@ -122,7 +122,7 @@ public abstract class Creyente extends Personaje {
      * Devuelve el nombre del Atributo especial del Creyente
      * @return "Fe"
      */
-    public static String getAtributoEspecial(){
+    public String getAtributoEspecial(){
         return "Fe";
     }
 
@@ -147,7 +147,7 @@ public abstract class Creyente extends Personaje {
      * @return Cadena de texto con la información del Creyente
      */
     public String toString() {
-        return (super.toString() + "\n" + "Fe: " + getFe());
+        return (super.toString());
     }
     // endregion
 }

@@ -41,17 +41,22 @@ public class Main {
 
         Personaje guerrero = new Guerrero(2,"Iván",1,100,15,10,10,10,false,0,false);
         Mago mago = new Mago(2,"alejandrito el mago con varita",1,100,15,10,10,10,10,0,true);
-        Personaje ladron = new Ladron(1,"Ladron",1,100,15,10,10,10,0,false);
+        Personaje ladron = new Ladron(1,"Ladron",1,100,15,10,10,10,0,true);
         Personaje cazador = new Cazador(2,"alejandrito",1,100,15,10,10,10,0,true,"Toby",3);
         Personaje paladin = new Paladin(3,"Alejandro",1,100,15,10,10,10,10,0,false);
         Personaje clerigo = new Clerigo(1,"Clerigo",1,100,15,10,10,10,10,0,false);
         //Personaje enemigo = new Monstruo(3,"Isabel la pequeña gigante (en ve de 1,50 mide 1,65)",1,1,15,0,10,10,6,false);
 
 
+        GameLogger.guardarParty(new Personaje[]{ guerrero, mago, ladron, cazador, paladin, clerigo });
+
+/*
         Personaje p = Misc.importarPersonaje("Mago:2:alejandrito el mago con varita:1:100.0:15.0:10.0:10.0:10.0:10.0:1:true".split(":"));
         Personaje enemigo = Misc.importarPersonaje(new File("./Prueba.csv"));
 
-        Combate.combatir(cazador,enemigo);
+        Combate.combatir(p,ladron);
         GameLogger.guardarLog();
+
+ */
     }
 }

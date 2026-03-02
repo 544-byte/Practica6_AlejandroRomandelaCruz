@@ -222,7 +222,7 @@ public class Mago extends Personaje {
      * Devuelve el nombre del Atributo especial del mago
      * @return "Magia"
      */
-    public static String getAtributoEspecial(){
+    public String getAtributoEspecial(){
         return "Magia";
     }
 
@@ -264,7 +264,7 @@ public class Mago extends Personaje {
      * @return Cadena de texto con la información del Mago
      */
     public String toString() {
-        return ("Clase: Mago\n" + super.toString() + "\n" + "Magia: " + getMagia());
+        return (super.toString());
     }
     // endregion
 }

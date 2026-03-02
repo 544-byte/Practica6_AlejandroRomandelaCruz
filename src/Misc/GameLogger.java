@@ -1,11 +1,17 @@
 package Misc;
 
+import Characters.Guerrero;
+import Characters.Monstruo;
 import Characters.Personaje;
 
 import javax.swing.plaf.basic.BasicDirectoryModel;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  *
@@ -26,7 +32,31 @@ public class GameLogger {
      * @since practica6
      */
     public static void soutCharFile(File ficha)throws Exception{
-        Misc.importarPersonaje(ficha).toString();
+        System.out.println(Misc.importarPersonaje(ficha).toString());
+    }
+
+    /**
+     * metodo del ejercicio 2
+     * @param personajes array de personajes que se van a guardar
+     */
+    public static void guardarParty(Personaje [] personajes){
+        Scanner scan = new Scanner(System.in);
+        String nombreFichero;
+        String contenidoFichero = "";
+        Arrays.sort(personajes);
+        for (Personaje personaje : personajes) {
+            contenidoFichero = contenidoFichero.concat(personaje.toString() + "\n" + "-".repeat(30) + "\n");
+        }
+        System.out.println("Elige un nombre para el fichero en el que se va a guardar la party:");
+        System.out.print("Nombre Fichero: ");
+        nombreFichero = scan.nextLine();
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("./" + nombreFichero + ".party"));
+            bw.write(contenidoFichero);
+            bw.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
 

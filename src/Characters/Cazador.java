@@ -258,14 +258,6 @@ public class Cazador extends Personaje {
         return  super.getCSV() + ":"  + -1 + ":" + getAlianza() + ":" + getEsJugador() + ":" + getCompañeroAnimal().getNombre() + ":" + getCompañeroAnimal().getRaza();
     }
 
-    /**
-     * Devuelve el nombre del Atributo especial del Cazador
-     * @return ""
-     */
-    public static String getAtributoEspecial(){
-        return "";
-    }
-
     // endregion
 
     // region Overrides

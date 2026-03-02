@@ -185,7 +185,7 @@ public class Guerrero extends Personaje {
      * Devuelve el nombre del Atributo especial del Guerreo
      * @return "Furia"
      */
-    public static String getAtributoEspecial(){
+    public String getAtributoEspecial(){
         return "Furia";
     }
 
@@ -219,7 +219,7 @@ public class Guerrero extends Personaje {
      * @return Cadena de texto con la información del Guerrero
      */
     public String toString() {
-        return ("Clase: Guerrero\n" + super.toString() + "\n" + "¿Furioso? " + getFuria());
+        return (super.toString());
     }
     // endregion
 }
