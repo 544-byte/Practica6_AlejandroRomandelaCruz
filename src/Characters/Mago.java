@@ -234,6 +234,14 @@ public class Mago extends Personaje {
         return  super.getCSV() + ":" + getMagia() + ":" + getAlianza() + ":" + getEsJugador();
     }
 
+    public void setAtributoEspecial(double atributo){
+        setMagia(atributo);
+    }
+
+    public double getAtributo(){
+        return getMagia();
+    }
+
     // endregion
 
     // region Overrides

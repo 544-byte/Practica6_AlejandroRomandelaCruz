@@ -4,6 +4,7 @@ package Characters;
 import GameMap.*;
 import Misc.Misc;
 
+import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
@@ -411,6 +412,29 @@ public abstract class Personaje implements Comparable<Personaje> {
         return clase.toLowerCase().equals(this.getClass().getSimpleName().toLowerCase());
     }
 
+    /**
+     * metodo del ejercicio 4
+     * Comprueba si un personaje tiene el mismo nobmre que el de la ficha y si eso es correcto, vuelca todos los atributos de la ficha en el personaje.
+     * @param ficha la ficha que se va a usar para actualizar el personaje
+     * @throws Exception Excepción de importarPersonaje
+     */
+    public void updateCharacter(File ficha) throws Exception {
+        if (!Misc.importarPersonaje(ficha).getCSV().split(":")[2].equals(this.getNombre())) return;
+        Personaje p = Misc.importarPersonaje(ficha);
+        if (this.equals(Misc.importarPersonaje(ficha))){
+            this.setRaza(p.getRaza());
+            this.setNivel(p.getNivel());
+            this.setAtributos(p.getPv(),p.getAtq(),p.getArm(),p.getRes(),p.getVel());
+            if (!getAtributoEspecial().equals("")){
+                this.setAtributoEspecial(this.getAtributo());
+            }
+            this.setAlianza(p.getAlianza());
+            if (p.getEsJugador()){
+                this.setEsJugador();
+            }
+        }
+    }
+
     //region Setters
 
     /**
@@ -629,6 +653,10 @@ public abstract class Personaje implements Comparable<Personaje> {
         setAlianza(0);
     }
 
+    public void setAtributoEspecial(double atributo){
+
+    }
+
 
     //endregion
 
@@ -739,6 +767,10 @@ public abstract class Personaje implements Comparable<Personaje> {
      */
     public String getAccionEspecial() {
         return "Acción especial";
+    }
+
+    public double getAtributo(){
+        return -1;
     }
 
     /**

@@ -47,6 +47,7 @@ public class Main {
         Personaje clerigo = new Clerigo(1,"Clerigo",1,100,15,10,10,10,10,0,false);
         Personaje enemigo = new Monstruo(3,"Isabel la pequeña gigante (en ve de 1,50 mide 1,65)",1,1,15,0,10,10,6,false);
 
+
         GameLogger.guardarParty(new Personaje[]{ guerrero, mago, ladron, cazador, paladin, clerigo, enemigo });
 
 /*

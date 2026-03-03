@@ -110,6 +110,14 @@ public abstract class Creyente extends Personaje {
         this.fe = fe;
     }
 
+    public void setAtributoEspecial(double atributo){
+        setFe(atributo);
+    }
+
+    public double getAtributo(){
+        return getFe();
+    }
+
     /**
      * Metodo que devuelve un string con los valores separados por ":" para usarlo luego y guardarlo en un .csv tanto para importar como para exportar.
      * @return String con los atributos comúnes entre todos los personajes separados por ":"
