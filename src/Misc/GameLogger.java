@@ -60,6 +60,13 @@ public class GameLogger {
     }
 
 
+    public static void subirNivelGanador(File combate,ArrayList<Personaje> personajes){
+
+    }
+
+
+
+
     /**
      * Guarda el log actual Temporal
      */
