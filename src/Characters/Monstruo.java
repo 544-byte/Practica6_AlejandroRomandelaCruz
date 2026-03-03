@@ -112,6 +112,21 @@ public class Monstruo extends Personaje {
      * @return Nombre de la raza ("Bestia", "No-Muerto" o "Gigante")
      */
     public String getRazaName() {
+        switch (getRaza()) {
+            case 1 -> {
+                return "Bestia";
+            }
+            case 2 -> {
+                return "No-Muerto";
+            }
+            case 3 -> {
+                return "Gigante";
+            }
+        }
+        return "";
+    }
+
+    public String getRazaName(int raza) {
         switch (raza) {
             case 1 -> {
                 return "Bestia";
@@ -186,7 +201,7 @@ public class Monstruo extends Personaje {
      * @return Cadena de texto con la información del Monstruo
      */
     public String toString() {
-        return ("Clase: Monstruo\n" + "Raza: " + getRazaName() + "\n" + super.toString());
+        return (super.toString());
     }
     // endregion
 }

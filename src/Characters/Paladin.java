@@ -161,7 +161,7 @@ public class Paladin extends Creyente {
      * @return Cadena de texto con la información del Paladín
      */
     public String toString() {
-        return ("Clase: Paladin\n" + super.toString());
+        return (super.toString());
     }
     // endregion
 }

@@ -134,7 +134,7 @@ public class Ladron extends Personaje {
      * @return Cadena de texto con la información del Ladrón
      */
     public String toString() {
-        return ("Clase: Ladron\n" + super.toString());
+        return (super.toString());
     }
     // endregion
 }

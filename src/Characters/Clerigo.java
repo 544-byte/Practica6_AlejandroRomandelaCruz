@@ -164,7 +164,7 @@ public class Clerigo extends Creyente {
      * @return Cadena con información del Clérigo
      */
     public String toString() {
-        return ("Clase: Clerigo\n" + super.toString());
+        return (super.toString());
     }
     // endregion
 }
