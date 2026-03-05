@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -59,11 +60,33 @@ public class GameLogger {
         }
     }
 
-
+    /**
+     * metodo del ejercicio 8
+     * @param combate el combate del cual se va a sacar el ganador
+     * @param personajes Lista de personajes entre los cuales se va a comprobar cual es el ganador.
+     */
     public static void subirNivelGanador(File combate,ArrayList<Personaje> personajes){
-
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(combate));
+            String linea;
+            String lineaGanador = "";
+            while ((linea = br.readLine()) != null){
+                lineaGanador = linea;
+            }
+            for (Personaje personaje : personajes) {
+                if (lineaGanador.contains(" - " + personaje.getNombre() + " ha ganado.")) {
+                    personaje.subirNivel();
+                }
+            }
+            br.close();
+        } catch (IOException e) {
+            System.err.println(e);
+        }
     }
 
+    public static void subirNivelGanador(File combate,Personaje [] personajes){
+        subirNivelGanador(combate,new ArrayList<>(List.of(personajes)));
+    }
 
 
 

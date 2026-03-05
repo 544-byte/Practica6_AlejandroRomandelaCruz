@@ -177,7 +177,6 @@ public class Guerrero extends Personaje {
      * @return String con los atributos comúnes entre todos los personajes separados por ":"
      */
     public String getCSV() {
-        System.out.println(this.getFuria());
         return  super.getCSV() + ":" + this.getFuria() + ":" + getAlianza() + ":" + getEsJugador();
     }
 
