@@ -1,8 +1,7 @@
 package Misc;
 
 /**
- * todo poner alert(en absolutamente todo.)
- * todo método "anyDead?" se explica por si solo
+ * Practica 6 Terminada :)
  */
 
 import Characters.*;
