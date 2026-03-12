@@ -112,7 +112,33 @@ public class GameLogger {
         throw new RuntimeException();
     }
 
-
+    /**
+     * Metodo del ejercicio 6
+     *
+     * @param archivos un array de archivos en los cuales se va a comprobar la existencia de una clase duplicada
+     * @return true si hay una clase que se repite.
+     */
+    public static boolean duplicatedClassIn(File [] archivos){
+        try{
+            ArrayList<String> Clases = new ArrayList<>();
+            for( File f : archivos){
+                BufferedReader br = new BufferedReader(new FileReader(f));
+                String l="";
+                while ((l = br.readLine()) != null){
+                    if (Clases.contains(l.split(",")[0])){
+                        br.close();
+                        return true;
+                    }
+                    Clases.add(l.split(",")[0]);
+                }
+                br.close();
+            }
+            return false;
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+        throw new RuntimeException();
+    }
 
 
     public static void subirNivelGanador(File combate,Personaje [] personajes){
