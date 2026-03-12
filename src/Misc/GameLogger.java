@@ -4,6 +4,7 @@ import Characters.Guerrero;
 import Characters.Monstruo;
 import Characters.Personaje;
 
+import javax.annotation.processing.FilerException;
 import javax.swing.plaf.basic.BasicDirectoryModel;
 import java.io.*;
 import java.lang.reflect.Array;
@@ -83,6 +84,36 @@ public class GameLogger {
             System.err.println(e);
         }
     }
+
+    /**
+     * Metodo del ejercicio 5
+     *
+     * @param name nombre del personaje a buscar
+     * @param archivos array con los archivos en los cuales se va a buscar el personaje.
+     * @return true si existe un personaje con ese nombre en los archivos
+     */
+    public static boolean personajeExistsIn(String name,File [] archivos){
+        try{
+            for( File f : archivos){
+                BufferedReader br = new BufferedReader(new FileReader(f));
+                String l="";
+                while ((l = br.readLine()) != null){
+                    if (l.split(",")[2].equals(name)){
+                        br.close();
+                        return true;
+                    }
+                }
+                br.close();
+            }
+            return false;
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+        throw new RuntimeException();
+    }
+
+
+
 
     public static void subirNivelGanador(File combate,Personaje [] personajes){
         subirNivelGanador(combate,new ArrayList<>(List.of(personajes)));
