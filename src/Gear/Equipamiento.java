@@ -1,32 +1,36 @@
 package Gear;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class Equipamiento {
-    private String nombre;
+    private static HashSet<String> rarezas = new HashSet<>(Set.of("Comun","Raro","Epico","Legendario"));
+    private String nombre, rareza, tipo;
     //Estadisticas: Fu-Ve-Ma-Fe-Ar-RM-V
-    // Fuerza, Velocidad, Magia, Fe, Armadura, Resistencia Mágica, Vida
-    private HashMap<String, Double> estadisticas;
-    private int rareza, valor;
+    private HashMap<String, Integer> estadisticas;
+    private int valor;
 
     //region Constructores
     public Equipamiento(){
-        nombre = "";
+        nombre = rareza = tipo = "";
         estadisticas = new HashMap<>();
-        rareza = valor = -1;
+        valor = -1;
     }
 
-    public Equipamiento(String nombre, HashMap<String, Double> estadisticas, int rareza, int valor){
+    public Equipamiento(String nombre, String rareza, String tipo, HashMap<String, Integer> estadisticas, int valor){
         setNombre(nombre);
-        setEstadisticas(estadisticas);
         setRareza(rareza);
+        setTipo(tipo);
+        setEstadisticas(estadisticas);
         setValor(valor);
     }
 
     public Equipamiento(Equipamiento e){
         setNombre(e.getNombre());
-        setEstadisticas(e.getEstadisticas());
         setRareza(e.getRareza());
+        setTipo(e.getTipo());
+        setEstadisticas(e.getEstadisticas());
         setValor(e.getValor());
     }
     //endregion
@@ -51,44 +55,32 @@ public abstract class Equipamiento {
         }
     }
 
-    public HashMap<String, Double> getEstadisticas() {
-        return estadisticas;
-    }
-
-    public void setEstadisticas(HashMap<String, Double> estadisticas) {
-        this.estadisticas = estadisticas;
-    }
-
-    public int getRareza() {
+    public String getRareza() {
         return rareza;
     }
 
-    public String getRarezaName() {
-        switch (getRareza()){
-            case 1 -> {return "común";}
-            case 2 -> {return "raro";}
-            case 3 -> {return "épico";}
-            case 4 -> {return "legendario";}
-            default -> {return "";}
-        }
-    }
-
-    public void setRareza(int rareza) {
-        if (rareza >= 1 && rareza <= 4) {
+    public void setRareza(String rareza) {
+        if (rarezas.contains(rareza)) {
             this.rareza = rareza;
         } else {
             System.err.println("ERROR, LA RAREZA " + rareza + " NO ES VALIDA");
         }
     }
 
-    public void setRareza(String rareza) {
-        switch (rareza){
-            case "común" -> setRareza(1);
-            case "raro" -> setRareza(2);
-            case "épico" -> setRareza(3);
-            case "legendario" -> setRareza(4);
-            default -> {}
-        }
+    public void setTipo(String tipo){
+        this.tipo = tipo;
+    }
+
+    public String getTipo(){
+        return tipo;
+    }
+
+    public HashMap<String, Integer> getEstadisticas() {
+        return estadisticas;
+    }
+
+    public void setEstadisticas(HashMap<String, Integer> estadisticas) {
+        this.estadisticas = estadisticas;
     }
 
     public int getValor() {
@@ -105,15 +97,23 @@ public abstract class Equipamiento {
 
     //endregion
 
+    //region Overrides
+    public abstract String toStringEx();
     public String toString() {
-        return super.toString();
+        return getNombre() + ":" +
+                "\nRareza: " + getRareza() +
+                "\nTipo: " + getTipo() +
+                toStringEx() +
+                "\nEstadisticas: " + getEstadisticas() +
+                "\nValor: " + getValor();
     }
 
     public boolean equals(Equipamiento e) {
-        if (getNombre().equals(e.getNombre()) && getRareza() == e.getRareza() && getValor() == e.getValor() && getEstadisticas() == e.getEstadisticas()){
-            return true;
-        } else {
-            return false;
-        }
+        return getNombre().equals(e.getNombre()) &&
+                getRareza().equals(e.getRareza()) &&
+                getTipo().equals(e.getTipo()) &&
+                getValor() == e.getValor() &&
+                getEstadisticas().equals(e.getEstadisticas());
     }
+    //endregion
 }
