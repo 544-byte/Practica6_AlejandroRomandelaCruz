@@ -2,12 +2,13 @@ package Characters;
 
 
 import GameMap.*;
+import Gear.Arma;
+import Gear.Armadura;
+import Gear.Artefacto;
 import Misc.Misc;
 
 import java.io.File;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Clase abstracta que representa un personaje del juego.<br>
@@ -34,6 +35,12 @@ public abstract class Personaje implements Comparable<Personaje> {
     private int turno;
     private boolean defiende;
 
+    // arma
+    private Arma arma;
+    //armadura
+    private HashMap<String, Armadura> armadura;
+    //Artefactos
+    private ArrayList<Artefacto> artefactos;
 
     // endregion
 
@@ -657,6 +664,102 @@ public abstract class Personaje implements Comparable<Personaje> {
 
     }
 
+    public void setArma(Arma arma) {
+        this.arma = arma;
+    }
+
+    public void setArmadura(HashMap<String, Armadura> armadura) {
+        this.armadura = new HashMap<>(armadura);
+    }
+
+    public void addArmadura(Armadura armadura) {
+        if (this.armadura.containsKey(armadura.getTipo())) {
+            Misc.alert(getNombre() + " ha intentado equiparse " + armadura.getNombre() + " pero no ha podido ya que tenía " + this.armadura.get(armadura.getTipo()) + " equipado.");
+        } else {
+            this.armadura.put(armadura.getTipo(), armadura);
+            Misc.happen(getNombre() + " se ha equipado " + armadura.getNombre());
+        }
+    }
+
+    public void setArtefactos(ArrayList<Artefacto> artefactos) {
+        this.artefactos = new ArrayList<>(artefactos);
+    }
+
+    public void addArtefacto(Artefacto artefacto) {
+        if (artefactos.size() <= 1) {
+            artefactos.add(artefacto);
+            Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
+        } else if (artefactos.size() >= 3){
+            Misc.alert(getNombre() + " ha intentado equiparse " + artefacto.getNombre() + " pero no ha podido ya que no tenía espacios libres.");
+        } else {
+            int nAnillos = 0;
+/*
+
+
+
+
+                VOY POR AQUI
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ */
+        }
+    }
+    /*
+    for (Artefacto a : artefactos) {
+        if (a.getTipo().equals("Amuleto")) {
+            if (artefacto.getTipo().equals("Amuleto")) {
+                Misc.alert(getNombre() + " no se puede equipar más de un amuleto.");
+            } else {
+                artefactos.add(artefacto);
+                Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
+            }
+        } else {
+            artefactos.add(artefacto);
+            Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
+        }
+    }
+     */
+    public Arma removeArma(Arma arma){
+        if (this.arma.equals(arma)){
+            Arma armaRemovida = new Arma(this.arma);
+            this.arma = null;
+            return armaRemovida;
+        } else {
+            return null;
+        }
+    }
+
+    public Armadura removeArmadura(Armadura armadura){
+        if (this.armadura.containsValue(armadura)){
+            return this.armadura.remove(armadura.getTipo());
+        } else {
+            return null;
+        }
+    }
+
+    public Artefacto removeArtefacto(Artefacto artefacto){
+        if (this.artefactos.contains(artefacto)){
+            this.artefactos.remove(artefacto);
+            return artefacto;
+        } else {
+            return null;
+        }
+    }
 
     //endregion
 
