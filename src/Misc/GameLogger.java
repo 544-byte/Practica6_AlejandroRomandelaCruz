@@ -29,12 +29,14 @@ public class GameLogger {
     /**
      * es el metodo del ejercicio 1
      *
-     * @param ficha la ficha del personaje
+     * @param personaje el personaje del cual se va a sacar la ficha
      * @throws Exception Checkea si la clase del personaje es correcta
      * @since practica6
      */
-    public static void soutCharFile(File ficha)throws Exception{
-        System.out.println(Misc.importarPersonaje(ficha).toString());
+    public static void saveCharFile(Personaje personaje)throws Exception{
+        BufferedWriter bw = new BufferedWriter(new FileWriter(SAVES + personaje.getNombre()));
+        bw.write(personaje.getCSV());
+        bw.close();
     }
 
     /**

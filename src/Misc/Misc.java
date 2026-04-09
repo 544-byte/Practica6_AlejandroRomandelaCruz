@@ -201,15 +201,6 @@ public class Misc {
 
     public static Personaje importarPersonaje(File charCSV) throws Exception{
         String [] csv = fileToCSV(charCSV);
-        switch (csv[0]){
-            case "Guerrero" -> {return new Guerrero (csv);}
-            case "Mago" -> {return new Mago (csv);}
-            case "Ladron" -> {return new Ladron (csv);}
-            case "Cazador" -> {return new Cazador(csv);}
-            case "Paladin" -> {return new Paladin (csv);}
-            case "Clerigo" -> {return new Clerigo (csv);}
-            case "Monstruo" -> {return new Monstruo (csv);}
-            default -> throw new Exception("La clase del personaje introducida es incorrecta (" + csv[0] + ")");
-        }
+        return importarPersonaje(csv);
     }
 }
