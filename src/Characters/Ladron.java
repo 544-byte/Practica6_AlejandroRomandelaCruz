@@ -1,9 +1,13 @@
 package Characters;
 
+import Gear.Arma;
+import Gear.Armadura;
 import Misc.Misc;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Clase que representa a un Ladrón, subclase de {@link Personaje}.<br>
@@ -102,6 +106,32 @@ public class Ladron extends Personaje {
      */
     public String getCSV() {
         return   super.getCSV() + ":" + -1 + ":" + getAlianza() + ":" + getEsJugador();
+    }
+
+    /**
+     * Metodo que controla el equipamiento de armas de el ladron con sus respectivas restricciones
+     * @param arma el arma a equipar.
+     */
+    public void setArma(Arma arma) {
+        ArrayList<String> whitelist = new ArrayList<>(Set.of("Espada","Daga"));
+        if (whitelist.contains(arma.getTipo())) {
+            super.setArma(arma);
+        } else {
+            Misc.alert(getNombre() + " es un Ladron, por lo que no se puede equipar un " + arma.getTipo());
+        }
+    }
+
+    /**
+     * Metodo que controla el equipamiento de armas de el ladron con sus respectivas restricciones
+     * @param armadura la armadura a equipar.
+     */
+    public void addArmadura(Armadura armadura) {
+        ArrayList<String> whitelist = new ArrayList<>(Set.of("Tela","Cuero"));
+        if (whitelist.contains(armadura.getMaterial())){
+            super.addArmadura(armadura);
+        } else {
+            Misc.alert( getNombre() + " es un Ladron, por lo que no se puede equipar una pieza de armadura que no sea de Tela o Cuero.");
+        }
     }
 
     // endregion

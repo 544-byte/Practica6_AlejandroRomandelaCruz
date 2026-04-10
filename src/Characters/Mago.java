@@ -1,9 +1,13 @@
 package Characters;
 
+import Gear.Arma;
+import Gear.Armadura;
 import Misc.Misc;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Clase que representa a un Mago, subclase de {@link Personaje}.<br>
@@ -240,6 +244,31 @@ public class Mago extends Personaje {
 
     public double getAtributo(){
         return getMagia();
+    }
+
+    /**
+     * Metodo que controla el equipamiento de armas de el mago con sus respectivas restricciones
+     * @param arma el arma a equipar.
+     */
+    public void setArma(Arma arma) {
+        ArrayList<String> whitelist = new ArrayList<>(Set.of("Cetro","Baston"));
+        if (whitelist.contains(arma.getTipo())) {
+            super.setArma(arma);
+        } else {
+            Misc.alert(getNombre() + " es un Mago, por lo que no se puede equipar un " + arma.getTipo());
+        }
+    }
+
+    /**
+     * Metodo que controla el equipamiento de armas de el mago con sus respectivas restricciones
+     * @param armadura la armadura a equipar.
+     */
+    public void addArmadura(Armadura armadura) {
+        if (armadura.getMaterial().equals("Tela")){
+            super.addArmadura(armadura);
+        } else {
+            Misc.alert( getNombre() + " es un Mago, por lo que no se puede equipar una pieza de armadura que no sea de Tela.");
+        }
     }
 
     // endregion

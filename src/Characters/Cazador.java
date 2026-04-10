@@ -1,6 +1,12 @@
 package Characters;
 
+import Gear.Arma;
+import Gear.Armadura;
+import Gear.Artefacto;
 import Misc.Misc;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Clase que representa a un Cazador, subclase de {@link Personaje}.
@@ -111,6 +117,34 @@ public class Cazador extends Personaje {
                 this.raza = raza;
             } else {
                 System.err.println("Error en setRaza: Introduce una raza válida\nInput: " + raza);
+            }
+        }
+
+        /**
+         * Metodo que controla el equipamiento de armas de el CompañeroAnimal con sus respectivas restricciones
+         * @param arma el arma a equipar.
+         */
+        public void setArma(Arma arma) {
+            Misc.alert(getNombre() + " es un Animal, por lo que no se puede equipar un " + arma.getTipo());
+        }
+
+        /**
+         * Metodo que controla el equipamiento de armadura de el CompañeroAnimal con sus respectivas restricciones
+         * @param armadura la armadura a equipar.
+         */
+        public void addArmadura(Armadura armadura) {
+            Misc.alert( getNombre() + " es un Animal, por lo que no se puede equipar una pieza de armadura");
+        }
+
+        /**
+         * Metodo que controla el quipamiento de artefacto de el CompañeroAnimal con sus respectivas restricciones
+         * @param artefacto el artefacto a equipar
+         */
+        public void addArtefacto(Artefacto artefacto) {
+            if (getArtefactos().size() >= 1) {
+                Misc.alert("No tiene espacios de artefacto disponibles");
+            } else {
+                super.addArtefacto(artefacto);
             }
         }
 
@@ -256,6 +290,32 @@ public class Cazador extends Personaje {
      */
     public String getCSV() {
         return  super.getCSV() + ":"  + -1 + ":" + getAlianza() + ":" + getEsJugador() + ":" + getCompañeroAnimal().getNombre() + ":" + getCompañeroAnimal().getRaza();
+    }
+
+    /**
+     * Metodo que controla el equipamiento de armas de el cazador con sus respectivas restricciones
+     * @param arma el arma a equipar.
+     */
+    public void setArma(Arma arma) {
+        ArrayList<String> whitelist = new ArrayList<>(Set.of("Espada","Hacha","Daga","Arco"));
+        if (whitelist.contains(arma.getTipo())) {
+            super.setArma(arma);
+        } else {
+            Misc.alert(getNombre() + " es un Ladron, por lo que no se puede equipar un " + arma.getTipo());
+        }
+    }
+
+    /**
+     * Metodo que controla el equipamiento de armas de el cazador con sus respectivas restricciones
+     * @param armadura la armadura a equipar.
+     */
+    public void addArmadura(Armadura armadura) {
+        ArrayList<String> whitelist = new ArrayList<>(Set.of("Cuero"));
+        if (whitelist.contains(armadura.getMaterial())){
+            super.addArmadura(armadura);
+        } else {
+            Misc.alert( getNombre() + " es un Ladron, por lo que no se puede equipar una pieza de armadura que no sea de Cuero.");
+        }
     }
 
     // endregion

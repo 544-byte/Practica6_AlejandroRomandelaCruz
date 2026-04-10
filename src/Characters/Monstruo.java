@@ -1,7 +1,13 @@
 package Characters;
 
+import Gear.Arma;
+import Gear.Armadura;
+import Gear.Artefacto;
 import Misc.Misc;
+
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Clase que representa a un Monstruo, subclase de {@link Personaje}.<br>
@@ -169,6 +175,69 @@ public class Monstruo extends Personaje {
      */
     public String getCSV() {
         return  super.getCSV() + ":" + -1 + ":" + getAlianza() + ":" + getEsJugador();
+    }
+
+    /**
+     * Metodo que controla el equipamiento de armas de el Monstruo con sus respectivas restricciones
+     * @param arma el arma a equipar.
+     */
+    public void setArma(Arma arma) {
+        switch (getRaza()) {
+            case 1 -> { //Bestia
+                Misc.alert(getNombre() + " es un Bestia, por lo que no se puede equipar un " + arma.getTipo());
+            }
+            case 2 -> { //No-Muerto
+                super.setArma(arma);
+            }
+            case 3 -> { //Gigante
+                Misc.alert(getNombre() + " es tan grande que no existen armas de su tamaño ");
+            }
+        }
+    }
+
+    /**
+     * Metodo que controla el equipamiento de armas de el monstruo con sus respectivas restricciones
+     * @param armadura la armadura a equipar.
+     */
+    public void addArmadura(Armadura armadura) {
+        switch (getRaza()) {
+            case 1 -> { //Bestia
+                Misc.alert( getNombre() + " es una Bestia, por lo que no se puede equipar una pieza de armadura");
+            }
+            case 2 -> { //No-Muerto
+                Misc.alert(getNombre() + " es un No-Muerto por lo que no puede equiparse armadura");
+            }
+            case 3 -> { //Gigante
+                if (armadura.getMaterial().equals("Cuero")){
+                    super.addArmadura(armadura);
+                } else {
+                    Misc.alert( getNombre() + " es un Monstruo, por lo que no se puede equipar una pieza de armadura que no sea de Cuero.");
+                }
+            }
+        }
+    }
+
+    public void addArtefacto(Artefacto artefacto) {
+        switch (getRaza()) {
+            case 1 -> { //Bestia
+                if (getArtefactos().size() >= 1) {
+                    Misc.alert( getNombre() + " es una Bestia, por lo que no se puede equipar un artefacto");
+                } else {
+                    super.addArtefacto(artefacto);
+                }
+            }
+            case 2 -> { //No-Muerto
+                super.addArtefacto(artefacto);
+            }
+            case 3 -> { //Gigante
+                Misc.alert(getNombre() + " es tan grande que no existen artefactos de su tamaño");
+            }
+        }
+        if (getArtefactos().size() >= 1) {
+
+        } else {
+            super.addArtefacto(artefacto);
+        }
     }
 
     // endregion
