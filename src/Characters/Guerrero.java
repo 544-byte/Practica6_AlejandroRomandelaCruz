@@ -1,9 +1,14 @@
 package Characters;
 
+import Gear.Arma;
+import Gear.Armadura;
+import Gear.Artefacto;
 import Misc.Misc;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Clase que representa a un Guerrero, subclase de {@link Personaje}.<br>
@@ -13,7 +18,7 @@ import java.util.Scanner;
  */
 public class Guerrero extends Personaje {
     private boolean furia;
-
+    private Arma arma2 = null;
     // region Constructores
     /**
      * Constructor por defecto del Guerrero.
@@ -186,6 +191,30 @@ public class Guerrero extends Personaje {
      */
     public String getAtributoEspecial(){
         return "Furia";
+    }
+
+    public void setArma(Arma arma) {
+        ArrayList<String> blacklist = new ArrayList<>(Set.of("Cetro","Arco","Baston"));
+        if (!blacklist.contains(arma.getTipo())) {
+            if (getArma().getEmpuñadura() == 1 && arma.getEmpuñadura() == 1 && this.arma2 == null) {
+                this.arma2 = new Arma(arma);
+                Misc.happen(getNombre() + " se ha equipado " + arma.getNombre());
+            } else {
+                super.setArma(arma);
+            }
+        } else {
+            Misc.alert(getNombre() + " es un guerrero, por lo que no se puede equipar un " + arma.getTipo());
+        }
+
+    }
+
+    public void addArmadura(Armadura armadura) {
+        if (armadura.getMaterial().equals("Metal")){
+            super.addArmadura(armadura);
+        } else {
+            Misc.alert( getNombre() + " es un guerrero, por lo que no se puede equipar una pieza de armadura que no sea de Metal.");
+        }
+        super.addArmadura(armadura);
     }
 
     // endregion

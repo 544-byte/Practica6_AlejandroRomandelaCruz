@@ -36,7 +36,7 @@ public abstract class Personaje implements Comparable<Personaje> {
     private boolean defiende;
 
     // arma
-    private Arma arma;
+    private Arma arma = null;
     //armadura
     private HashMap<String, Armadura> armadura;
     //Artefactos
@@ -664,12 +664,21 @@ public abstract class Personaje implements Comparable<Personaje> {
 
     }
 
-    public void setArma(Arma arma) {
-        this.arma = arma;
-    }
-
     public void setArmadura(HashMap<String, Armadura> armadura) {
         this.armadura = new HashMap<>(armadura);
+    }
+
+    public void setArtefactos(ArrayList<Artefacto> artefactos) {
+        this.artefactos = new ArrayList<>(artefactos);
+    }
+
+    public void setArma(Arma arma) {
+        if (this.arma == null) {
+            this.arma = arma;
+            Misc.happen(getNombre() + " se ha equipado " + arma.getNombre());
+        } else {
+            Misc.alert(getNombre() + " ha intentado equiparse " + arma.getNombre() + " pero no ha podido porque ya tiene equipado " + this.arma.getNombre());
+        }
     }
 
     public void addArmadura(Armadura armadura) {
@@ -681,10 +690,6 @@ public abstract class Personaje implements Comparable<Personaje> {
         }
     }
 
-    public void setArtefactos(ArrayList<Artefacto> artefactos) {
-        this.artefactos = new ArrayList<>(artefactos);
-    }
-
     public void addArtefacto(Artefacto artefacto) {
         if (artefactos.size() <= 1) {
             artefactos.add(artefacto);
@@ -692,48 +697,22 @@ public abstract class Personaje implements Comparable<Personaje> {
         } else if (artefactos.size() >= 3){
             Misc.alert(getNombre() + " ha intentado equiparse " + artefacto.getNombre() + " pero no ha podido ya que no tenía espacios libres.");
         } else {
-            int nAnillos = 0;
-/*
-
-
-
-
-                VOY POR AQUI
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- */
-        }
-    }
-    /*
-    for (Artefacto a : artefactos) {
-        if (a.getTipo().equals("Amuleto")) {
-            if (artefacto.getTipo().equals("Amuleto")) {
-                Misc.alert(getNombre() + " no se puede equipar más de un amuleto.");
-            } else {
-                artefactos.add(artefacto);
-                Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
+            for (Artefacto a : artefactos) {
+                if (a.getTipo().equals("Amuleto")) {
+                    if (artefacto.getTipo().equals("Amuleto")) {
+                        Misc.alert(getNombre() + " no se puede equipar más de un amuleto.");
+                    } else {
+                        artefactos.add(artefacto);
+                        Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
+                    }
+                } else {
+                    artefactos.add(artefacto);
+                    Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
+                }
             }
-        } else {
-            artefactos.add(artefacto);
-            Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
         }
     }
-     */
+
     public Arma removeArma(Arma arma){
         if (this.arma.equals(arma)){
             Arma armaRemovida = new Arma(this.arma);
@@ -940,6 +919,18 @@ public abstract class Personaje implements Comparable<Personaje> {
     public String getAtributoEspecial(){
         return "";
     };
+
+    public ArrayList<Artefacto> getArtefactos() {
+        return artefactos;
+    }
+
+    public HashMap<String, Armadura> getArmadura() {
+        return armadura;
+    }
+
+    public Arma getArma() {
+        return arma;
+    }
 
     //endregion
 
