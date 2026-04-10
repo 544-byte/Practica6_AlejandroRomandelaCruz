@@ -193,6 +193,10 @@ public class Guerrero extends Personaje {
         return "Furia";
     }
 
+    /**
+     * Metodo que controla el equipamiento de armas de el guerrero con sus respectivas restricciones
+     * @param arma el arma a equipar.
+     */
     public void setArma(Arma arma) {
         ArrayList<String> blacklist = new ArrayList<>(Set.of("Cetro","Arco","Baston"));
         if (!blacklist.contains(arma.getTipo())) {
@@ -208,13 +212,16 @@ public class Guerrero extends Personaje {
 
     }
 
+    /**
+     * Metodo que controla el equipamiento de armas de el guerrero con sus respectivas restricciones
+     * @param armadura la armadura a equipar.
+     */
     public void addArmadura(Armadura armadura) {
         if (armadura.getMaterial().equals("Metal")){
             super.addArmadura(armadura);
         } else {
             Misc.alert( getNombre() + " es un guerrero, por lo que no se puede equipar una pieza de armadura que no sea de Metal.");
         }
-        super.addArmadura(armadura);
     }
 
     // endregion

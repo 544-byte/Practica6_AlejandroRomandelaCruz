@@ -38,7 +38,7 @@ public abstract class Personaje implements Comparable<Personaje> {
     // arma
     private Arma arma = null;
     //armadura
-    private HashMap<String, Armadura> armadura;
+    private ArrayList<Armadura> armadura;
     //Artefactos
     private ArrayList<Artefacto> artefactos;
 
@@ -664,8 +664,8 @@ public abstract class Personaje implements Comparable<Personaje> {
 
     }
 
-    public void setArmadura(HashMap<String, Armadura> armadura) {
-        this.armadura = new HashMap<>(armadura);
+    public void setArmadura(ArrayList<Armadura> armadura) {
+        this.armadura = new ArrayList<>(armadura);
     }
 
     public void setArtefactos(ArrayList<Artefacto> artefactos) {
@@ -682,10 +682,14 @@ public abstract class Personaje implements Comparable<Personaje> {
     }
 
     public void addArmadura(Armadura armadura) {
-        if (this.armadura.containsKey(armadura.getTipo())) {
-            Misc.alert(getNombre() + " ha intentado equiparse " + armadura.getNombre() + " pero no ha podido ya que tenía " + this.armadura.get(armadura.getTipo()) + " equipado.");
+        ArrayList<String> piezasArmadura = new ArrayList<>();
+        for (Armadura a : this.armadura){
+            piezasArmadura.add(a.getTipo());
+        }
+        if (piezasArmadura.contains(armadura.getTipo())) {
+            Misc.alert(getNombre() + " ha intentado equiparse " + armadura.getNombre() + " pero no ha podido ya que tiene " + armadura.getTipo() + " equipado.");
         } else {
-            this.armadura.put(armadura.getTipo(), armadura);
+            this.armadura.add(armadura);
             Misc.happen(getNombre() + " se ha equipado " + armadura.getNombre());
         }
     }
@@ -724,8 +728,9 @@ public abstract class Personaje implements Comparable<Personaje> {
     }
 
     public Armadura removeArmadura(Armadura armadura){
-        if (this.armadura.containsValue(armadura)){
-            return this.armadura.remove(armadura.getTipo());
+        if (this.armadura.contains(armadura)){
+            this.armadura.remove(armadura);
+            return armadura;
         } else {
             return null;
         }
@@ -924,7 +929,7 @@ public abstract class Personaje implements Comparable<Personaje> {
         return artefactos;
     }
 
-    public HashMap<String, Armadura> getArmadura() {
+    public ArrayList<Armadura> getArmadura() {
         return armadura;
     }
 
