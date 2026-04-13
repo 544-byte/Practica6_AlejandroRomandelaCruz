@@ -5,6 +5,8 @@ import Characters.*;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Clase abstracta que contiene métodos utilitarios para mostrar texto con formatos decorativos en la consola.
@@ -184,6 +186,10 @@ public class Misc {
             }
         }
         throw new Exception("El archivo no existe o no se puede leer.");
+    }
+
+    public static void ordenarPorNivel(ArrayList<Personaje> array){
+        array.sort(Comparator.comparingInt(Personaje::getNivel).reversed());
     }
 
     public static Personaje importarPersonaje(String [] csv) throws Exception{

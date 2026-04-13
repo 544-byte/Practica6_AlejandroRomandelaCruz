@@ -2,6 +2,7 @@ package Characters;
 
 import Gear.Arma;
 import Gear.Armadura;
+import Gear.Equipamiento;
 import Misc.Misc;
 
 import java.util.ArrayList;
@@ -201,8 +202,12 @@ public class Mago extends Personaje {
      * @return Puntos de magia
      */
     public double getMagia() {
-        return magia;
-    }
+        double mag = magia;
+        mag += getArma().recuperaEstadistica("Ma");
+        for (Equipamiento e : getArtefactos()){
+            mag += e.recuperaEstadistica("Ma");
+        }
+        return mag;    }
 
     /**
      * Establece los puntos de magia del Mago.

@@ -1,5 +1,6 @@
 package Characters;
 
+import Gear.Equipamiento;
 import Misc.Misc;
 import java.util.Random;
 
@@ -98,7 +99,12 @@ public abstract class Creyente extends Personaje {
      * @return Valor de fe
      */
     public double getFe() {
-        return fe;
+        double fee = fe;
+        fee += getArma().recuperaEstadistica("Fe");
+        for (Equipamiento e : getArtefactos()){
+            fee += e.recuperaEstadistica("Fe");
+        }
+        return fee;
     }
 
     /**

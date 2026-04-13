@@ -5,6 +5,7 @@ import GameMap.*;
 import Gear.Arma;
 import Gear.Armadura;
 import Gear.Artefacto;
+import Gear.Equipamiento;
 import Misc.Misc;
 
 import java.io.File;
@@ -41,6 +42,7 @@ public abstract class Personaje implements Comparable<Personaje> {
     private ArrayList<Armadura> armadura;
     //Artefactos
     private ArrayList<Artefacto> artefactos;
+    private ArrayList<Equipamiento> objetos = new ArrayList<>();
 
     // endregion
 
@@ -745,6 +747,10 @@ public abstract class Personaje implements Comparable<Personaje> {
         }
     }
 
+    public void añadirEquipamiento(Equipamiento e){
+        objetos.add(e);
+    }
+
     //endregion
 
     //region Getters
@@ -808,7 +814,14 @@ public abstract class Personaje implements Comparable<Personaje> {
      * @return Vida del personaje
      */
     public double getPv() {
-        return pv;
+        double vida = pv;
+        for (Equipamiento e : armadura){
+            vida += e.recuperaEstadistica("V");
+        }
+        for (Equipamiento e : artefactos){
+            vida += e.recuperaEstadistica("V");
+        }
+        return vida;
     }
 
     /**
@@ -817,7 +830,12 @@ public abstract class Personaje implements Comparable<Personaje> {
      * @return Ataque del personaje
      */
     public double getAtq() {
-        return atq;
+        double ataque = atq;
+        ataque += arma.recuperaEstadistica("Fu");
+        for (Equipamiento e : artefactos){
+            ataque += e.recuperaEstadistica("Fu");
+        }
+        return ataque;
     }
 
     /**
@@ -826,7 +844,14 @@ public abstract class Personaje implements Comparable<Personaje> {
      * @return Armadura del personaje
      */
     public double getArm() {
-        return arm;
+        double armadur = arm;
+        for (Equipamiento e : armadura){
+            armadur += e.recuperaEstadistica("Ar");
+        }
+        for (Equipamiento e : artefactos){
+            armadur += e.recuperaEstadistica("Ar");
+        }
+        return armadur;
     }
 
     /**
@@ -835,7 +860,14 @@ public abstract class Personaje implements Comparable<Personaje> {
      * @return Resistencia del personaje
      */
     public double getRes() {
-        return res;
+        double resmag = res;
+        for (Equipamiento e : armadura){
+            resmag += e.recuperaEstadistica("RM");
+        }
+        for (Equipamiento e : artefactos){
+            resmag += e.recuperaEstadistica("RM");
+        }
+        return resmag;
     }
 
     /**
@@ -844,7 +876,12 @@ public abstract class Personaje implements Comparable<Personaje> {
      * @return Velocidad del personaje
      */
     public double getVel() {
-        return vel;
+        double velocidad = vel;
+        velocidad += arma.recuperaEstadistica("Ve");
+        for (Equipamiento e : artefactos){
+            velocidad += e.recuperaEstadistica("Ve");
+        }
+        return velocidad;
     }
 
     /**

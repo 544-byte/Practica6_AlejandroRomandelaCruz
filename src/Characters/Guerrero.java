@@ -3,6 +3,7 @@ package Characters;
 import Gear.Arma;
 import Gear.Armadura;
 import Gear.Artefacto;
+import Gear.Equipamiento;
 import Misc.Misc;
 
 import java.util.ArrayList;
@@ -222,6 +223,12 @@ public class Guerrero extends Personaje {
         } else {
             Misc.alert( getNombre() + " es un guerrero, por lo que no se puede equipar una pieza de armadura que no sea de Metal.");
         }
+    }
+
+    public double getAtq(){
+        double ataque = super.getAtq();
+        ataque += arma2.recuperaEstadistica("Fu");
+        return ataque;
     }
 
     // endregion
