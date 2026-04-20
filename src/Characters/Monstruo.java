@@ -181,25 +181,26 @@ public class Monstruo extends Personaje {
      * Metodo que controla el equipamiento de armas de el Monstruo con sus respectivas restricciones
      * @param arma el arma a equipar.
      */
-    public void setArma(Arma arma) {
+    public boolean setArma(Arma arma) {
         switch (getRaza()) {
             case 1 -> { //Bestia
                 Misc.alert(getNombre() + " es un Bestia, por lo que no se puede equipar un " + arma.getTipo());
             }
             case 2 -> { //No-Muerto
-                super.setArma(arma);
+                return super.setArma(arma);
             }
             case 3 -> { //Gigante
                 Misc.alert(getNombre() + " es tan grande que no existen armas de su tamaño ");
             }
         }
+        return false;
     }
 
     /**
      * Metodo que controla el equipamiento de armas de el monstruo con sus respectivas restricciones
      * @param armadura la armadura a equipar.
      */
-    public void addArmadura(Armadura armadura) {
+    public boolean addArmadura(Armadura armadura) {
         switch (getRaza()) {
             case 1 -> { //Bestia
                 Misc.alert( getNombre() + " es una Bestia, por lo que no se puede equipar una pieza de armadura");
@@ -209,35 +210,32 @@ public class Monstruo extends Personaje {
             }
             case 3 -> { //Gigante
                 if (armadura.getMaterial().equals("Cuero")){
-                    super.addArmadura(armadura);
+                    return super.addArmadura(armadura);
                 } else {
                     Misc.alert( getNombre() + " es un Monstruo, por lo que no se puede equipar una pieza de armadura que no sea de Cuero.");
                 }
             }
         }
+        return false;
     }
 
-    public void addArtefacto(Artefacto artefacto) {
+    public boolean addArtefacto(Artefacto artefacto) {
         switch (getRaza()) {
             case 1 -> { //Bestia
-                if (getArtefactos().size() >= 1) {
+                if (!getArtefactos().isEmpty()) {
                     Misc.alert( getNombre() + " es una Bestia, por lo que no se puede equipar un artefacto");
                 } else {
-                    super.addArtefacto(artefacto);
+                    return super.addArtefacto(artefacto);
                 }
             }
             case 2 -> { //No-Muerto
-                super.addArtefacto(artefacto);
+                return super.addArtefacto(artefacto);
             }
             case 3 -> { //Gigante
                 Misc.alert(getNombre() + " es tan grande que no existen artefactos de su tamaño");
             }
         }
-        if (getArtefactos().size() >= 1) {
-
-        } else {
-            super.addArtefacto(artefacto);
-        }
+        return false;
     }
 
     // endregion

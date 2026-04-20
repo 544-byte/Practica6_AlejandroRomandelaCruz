@@ -30,6 +30,10 @@ public class Artefacto extends Equipamiento{
             System.err.println("TIPO DE AMULETO NO VALIDO: " + tipo);
         }
     }
+
+    public static HashSet<String> getTipos(){
+        return tipos;
+    }
     //endregion
 
     //region Overrides

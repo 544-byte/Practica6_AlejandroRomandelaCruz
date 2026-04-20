@@ -124,27 +124,31 @@ public class Cazador extends Personaje {
          * Metodo que controla el equipamiento de armas de el CompañeroAnimal con sus respectivas restricciones
          * @param arma el arma a equipar.
          */
-        public void setArma(Arma arma) {
+        public boolean setArma(Arma arma) {
             Misc.alert(getNombre() + " es un Animal, por lo que no se puede equipar un " + arma.getTipo());
+            return false;
         }
 
         /**
          * Metodo que controla el equipamiento de armadura de el CompañeroAnimal con sus respectivas restricciones
          * @param armadura la armadura a equipar.
          */
-        public void addArmadura(Armadura armadura) {
+        public boolean addArmadura(Armadura armadura) {
             Misc.alert( getNombre() + " es un Animal, por lo que no se puede equipar una pieza de armadura");
+            return false;
         }
 
         /**
          * Metodo que controla el quipamiento de artefacto de el CompañeroAnimal con sus respectivas restricciones
          * @param artefacto el artefacto a equipar
          */
-        public void addArtefacto(Artefacto artefacto) {
+        public boolean addArtefacto(Artefacto artefacto) {
             if (getArtefactos().size() >= 1) {
-                Misc.alert("No tiene espacios de artefacto disponibles");
+                Misc.alert(getNombre() + " no tiene espacios de artefacto disponibles");
+                return false;
             } else {
                 super.addArtefacto(artefacto);
+                return true;
             }
         }
 
@@ -296,12 +300,13 @@ public class Cazador extends Personaje {
      * Metodo que controla el equipamiento de armas de el cazador con sus respectivas restricciones
      * @param arma el arma a equipar.
      */
-    public void setArma(Arma arma) {
+    public boolean setArma(Arma arma) {
         ArrayList<String> whitelist = new ArrayList<>(Set.of("Espada","Hacha","Daga","Arco"));
         if (whitelist.contains(arma.getTipo())) {
-            super.setArma(arma);
+            return super.setArma(arma);
         } else {
             Misc.alert(getNombre() + " es un Ladron, por lo que no se puede equipar un " + arma.getTipo());
+            return false;
         }
     }
 
@@ -309,15 +314,23 @@ public class Cazador extends Personaje {
      * Metodo que controla el equipamiento de armas de el cazador con sus respectivas restricciones
      * @param armadura la armadura a equipar.
      */
-    public void addArmadura(Armadura armadura) {
+    public boolean addArmadura(Armadura armadura) {
         ArrayList<String> whitelist = new ArrayList<>(Set.of("Cuero"));
         if (whitelist.contains(armadura.getMaterial())){
-            super.addArmadura(armadura);
+            return super.addArmadura(armadura);
         } else {
             Misc.alert( getNombre() + " es un Ladron, por lo que no se puede equipar una pieza de armadura que no sea de Cuero.");
+            return false;
         }
     }
 
+    public boolean addArtefacto(Artefacto artefacto){
+        if (!super.addArtefacto(artefacto)){
+            if (artefacto.getTipo().equals("Amuleto")) return compañeroAnimal.addArtefacto(artefacto);
+        }
+        return true;
+    }
+    
     // endregion
 
     // region Overrides

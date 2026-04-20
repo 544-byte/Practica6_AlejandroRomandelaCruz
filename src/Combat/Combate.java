@@ -32,19 +32,41 @@ public class Combate {
      * @param enemigos Personajes enemigos
      */
     public static void combatir(ArrayList<Personaje> jugadores, ArrayList<Personaje> enemigos) {
-        for (Personaje p : jugadores){
-            p.setEsJugador();
-        }
         Misc.ordenarPorNivel(jugadores);
         Misc.ordenarPorNivel(enemigos);
-        ArrayList<Personaje> primero;
-        ArrayList<Personaje> segundo;
-        if (jugadores.getFirst().getVel() >= enemigos.getFirst().getVel()) {
-            primero = jugadores;
-            segundo = enemigos;
+        int nEnemigos = enemigos.size();
+        while (!jugadores.isEmpty() || !enemigos.isEmpty()) {
+            Personaje eliminado = bucleJugable(jugadores.getFirst(),enemigos.getFirst());
+            jugadores.remove(eliminado);
+            enemigos.remove(eliminado);
+        }
+        if (jugadores.isEmpty()) {
+            imprimirGanador(enemigos.getFirst());
+        }
+        else {
+            imprimirGanador(jugadores.getFirst());
+            int i;
+            for (i = 0; i < nEnemigos; i++){
+                Equipamiento e;
+                int j = i;
+                if ((e = otorgarPremio(jugadores.get(i))) != null)
+                    while ((e = otorgarPremio(jugadores.get(j),e)) != null)
+                        j++;
+            }
+        }
+
+    }
+
+    public static Personaje bucleJugable(Personaje jugador, Personaje enemigo){
+        jugador.setEsJugador();
+        Personaje primero;
+        Personaje segundo;
+        if (jugador.getVel() >= enemigo.getVel()) {
+            primero = jugador;
+            segundo = enemigo;
         } else {
-            primero = enemigos;
-            segundo = jugadores;
+            primero = enemigo;
+            segundo = jugador;
         }
         do {
             primero.realizarTurno(segundo);
@@ -53,15 +75,26 @@ public class Combate {
                 segundo.realizarTurno(primero);
             }
         } while (!primero.estaMuerto() && !segundo.estaMuerto());
-        if (segundo.estaMuerto()) imprimirGanador(primero);
-        else imprimirGanador(segundo);
+        if (segundo.estaMuerto()) {
+            Misc.happen(segundo.getNombre() + " ha muerto a manos de " + primero.getNombre());
+            return segundo;
+        }
+        else {
+            Misc.happen(primero.getNombre() + " ha muerto a manos de " + segundo.getNombre());
+            return primero;
+        }
     }
 
-    public static void otorgarPremio(Personaje personaje){
+    public static Equipamiento otorgarPremio(Personaje personaje){
         Random r = new Random();
         int i = r.nextInt(0,tesoros.size());
-        Misc.happen(personaje.getNombre() + " ha conseguido " + tesoros.get(i).getNombre());
-        personaje.añadirEquipamiento(tesoros.remove(i));
+        return otorgarPremio(personaje,tesoros.get(i));
+    }
+
+    public static Equipamiento otorgarPremio(Personaje personaje, Equipamiento e){
+        Misc.happen(personaje.getNombre() + " ha conseguido " + e.getNombre());
+        tesoros.remove(e);
+        return personaje.añadirEquipamiento(e);
     }
 
     /**
@@ -70,7 +103,7 @@ public class Combate {
      * @param ganador Personaje que ha ganado el combate
      */
     public static void imprimirGanador(Personaje ganador) {
-        Misc.happen(ganador.getNombre() + " ha ganado.");
+        Misc.happen("Ha ganado el equipo de " + ganador.getNombre() + ".");
     }
 
     /**

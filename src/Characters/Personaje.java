@@ -42,7 +42,6 @@ public abstract class Personaje implements Comparable<Personaje> {
     private ArrayList<Armadura> armadura;
     //Artefactos
     private ArrayList<Artefacto> artefactos;
-    private ArrayList<Equipamiento> objetos = new ArrayList<>();
 
     // endregion
 
@@ -662,6 +661,11 @@ public abstract class Personaje implements Comparable<Personaje> {
         setAlianza(0);
     }
 
+    public void setEsJugador(boolean b) {
+        esJugador = b;
+        setAlianza(0);
+    }
+
     public void setAtributoEspecial(double atributo){
 
     }
@@ -674,49 +678,73 @@ public abstract class Personaje implements Comparable<Personaje> {
         this.artefactos = new ArrayList<>(artefactos);
     }
 
-    public void setArma(Arma arma) {
+    public boolean setArma(Arma arma) {
         if (this.arma == null) {
             this.arma = arma;
             Misc.happen(getNombre() + " se ha equipado " + arma.getNombre());
+            return true;
         } else {
             Misc.alert(getNombre() + " ha intentado equiparse " + arma.getNombre() + " pero no ha podido porque ya tiene equipado " + this.arma.getNombre());
+            return false;
         }
     }
 
-    public void addArmadura(Armadura armadura) {
+    public boolean addArmadura(Armadura armadura) {
         ArrayList<String> piezasArmadura = new ArrayList<>();
         for (Armadura a : this.armadura){
             piezasArmadura.add(a.getTipo());
         }
         if (piezasArmadura.contains(armadura.getTipo())) {
             Misc.alert(getNombre() + " ha intentado equiparse " + armadura.getNombre() + " pero no ha podido ya que tiene " + armadura.getTipo() + " equipado.");
+            return false;
         } else {
             this.armadura.add(armadura);
             Misc.happen(getNombre() + " se ha equipado " + armadura.getNombre());
+            return true;
         }
     }
 
-    public void addArtefacto(Artefacto artefacto) {
+    public boolean addArtefacto(Artefacto artefacto) {
         if (artefactos.size() <= 1) {
             artefactos.add(artefacto);
             Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
+            return true;
         } else if (artefactos.size() >= 3){
             Misc.alert(getNombre() + " ha intentado equiparse " + artefacto.getNombre() + " pero no ha podido ya que no tenía espacios libres.");
+            return false;
         } else {
             for (Artefacto a : artefactos) {
                 if (a.getTipo().equals("Amuleto")) {
                     if (artefacto.getTipo().equals("Amuleto")) {
                         Misc.alert(getNombre() + " no se puede equipar más de un amuleto.");
+                        return false;
                     } else {
                         artefactos.add(artefacto);
                         Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
+                        return true;
                     }
                 } else {
                     artefactos.add(artefacto);
                     Misc.happen(getNombre() + " se ha equipado " + artefacto.getNombre());
+                    return true;
                 }
             }
+            return false;
         }
+    }
+
+    public Equipamiento añadirEquipamiento(Equipamiento e) {
+        if (Arma.getTipos().contains(e.getTipo())){
+            if (setArma((Arma) e)) return null;
+            else return e;
+        } else if (Armadura.getTipos().contains(e.getTipo())){
+            if (addArmadura((Armadura)e)) return null;
+            else return e;
+        } else if (Artefacto.getTipos().contains(e)){
+            if (addArtefacto((Artefacto)e)) return null;
+            else return e;
+        }
+        return e;
     }
 
     public Arma removeArma(Arma arma){
@@ -747,9 +775,7 @@ public abstract class Personaje implements Comparable<Personaje> {
         }
     }
 
-    public void añadirEquipamiento(Equipamiento e){
-        objetos.add(e);
-    }
+
 
     //endregion
 

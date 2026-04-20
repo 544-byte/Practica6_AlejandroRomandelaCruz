@@ -139,12 +139,13 @@ public class Paladin extends Creyente {
      * Metodo que controla el equipamiento de armas de el Paladin con sus respectivas restricciones
      * @param arma el arma a equipar.
      */
-    public void setArma(Arma arma) {
+    public boolean setArma(Arma arma) {
         ArrayList<String> blacklist = new ArrayList<>(Set.of("Arco","Baston"));
         if (!blacklist.contains(arma.getTipo())) {
-            super.setArma(arma);
+            return super.setArma(arma);
         } else {
             Misc.alert(getNombre() + " es un Paladin, por lo que no se puede equipar un " + arma.getTipo());
+            return false;
         }
     }
 
@@ -152,11 +153,12 @@ public class Paladin extends Creyente {
      * Metodo que controla el equipamiento de armas de el Paladin con sus respectivas restricciones
      * @param armadura la armadura a equipar.
      */
-    public void addArmadura(Armadura armadura) {
+    public boolean addArmadura(Armadura armadura) {
         if (armadura.getMaterial().equals("Metal")){
-            super.addArmadura(armadura);
+            return super.addArmadura(armadura);
         } else {
             Misc.alert( getNombre() + " es un Paladin, por lo que no se puede equipar una pieza de armadura que no sea de Metal.");
+            return false;
         }
     }
 

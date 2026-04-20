@@ -48,6 +48,10 @@ public class Armadura extends Equipamiento{
             System.err.println("TIPO DE ARMADURA NO VALIDO: " + tipo);
         }
     }
+
+    public static HashSet<String> getTipos(){
+        return tipos;
+    }
     //endregion
 
     //region Overrides

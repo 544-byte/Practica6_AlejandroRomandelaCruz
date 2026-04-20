@@ -51,6 +51,13 @@ public class Arma extends Equipamiento{
             System.err.println("TIPO DE ARMA NO VALIDO: " + tipo);
         }
     }
+
+    public static HashSet<String> getTipos(){
+        HashSet<String> tipos = new HashSet<>(armasUnaMano);
+        tipos.addAll(armasDosManos);
+        return tipos;
+    }
+
     //endregion
 
     //region Overrides

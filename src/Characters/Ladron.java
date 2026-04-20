@@ -112,12 +112,13 @@ public class Ladron extends Personaje {
      * Metodo que controla el equipamiento de armas de el ladron con sus respectivas restricciones
      * @param arma el arma a equipar.
      */
-    public void setArma(Arma arma) {
+    public boolean setArma(Arma arma) {
         ArrayList<String> whitelist = new ArrayList<>(Set.of("Espada","Daga"));
         if (whitelist.contains(arma.getTipo())) {
-            super.setArma(arma);
+            return super.setArma(arma);
         } else {
             Misc.alert(getNombre() + " es un Ladron, por lo que no se puede equipar un " + arma.getTipo());
+            return false;
         }
     }
 
@@ -125,12 +126,13 @@ public class Ladron extends Personaje {
      * Metodo que controla el equipamiento de armas de el ladron con sus respectivas restricciones
      * @param armadura la armadura a equipar.
      */
-    public void addArmadura(Armadura armadura) {
+    public boolean addArmadura(Armadura armadura) {
         ArrayList<String> whitelist = new ArrayList<>(Set.of("Tela","Cuero"));
         if (whitelist.contains(armadura.getMaterial())){
-            super.addArmadura(armadura);
+            return super.addArmadura(armadura);
         } else {
             Misc.alert( getNombre() + " es un Ladron, por lo que no se puede equipar una pieza de armadura que no sea de Tela o Cuero.");
+            return false;
         }
     }
 

@@ -144,12 +144,13 @@ public class Clerigo extends Creyente {
      * Metodo que controla el equipamiento de armas de el Clerigo con sus respectivas restricciones
      * @param arma el arma a equipar.
      */
-    public void setArma(Arma arma) {
+    public boolean setArma(Arma arma) {
         ArrayList<String> whitelist = new ArrayList<>(Set.of("Baston"));
         if (whitelist.contains(arma.getTipo())) {
-            super.setArma(arma);
+            return super.setArma(arma);
         } else {
             Misc.alert(getNombre() + " es un Clerigo, por lo que no se puede equipar un " + arma.getTipo());
+            return false;
         }
     }
 
@@ -157,11 +158,12 @@ public class Clerigo extends Creyente {
      * Metodo que controla el equipamiento de armas de el clerigo con sus respectivas restricciones
      * @param armadura la armadura a equipar.
      */
-    public void addArmadura(Armadura armadura) {
+    public boolean addArmadura(Armadura armadura) {
         if (armadura.getMaterial().equals("Tela")){
-            super.addArmadura(armadura);
+            return super.addArmadura(armadura);
         } else {
             Misc.alert( getNombre() + " es un Clerigo, por lo que no se puede equipar una pieza de armadura que no sea de Tela.");
+            return false;
         }
     }
 
