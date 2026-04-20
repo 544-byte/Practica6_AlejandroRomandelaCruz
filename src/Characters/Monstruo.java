@@ -28,6 +28,20 @@ public class Monstruo extends Personaje {
     }
 
     /**
+     * Constructor basico del Monstruo.
+     * asigna todos los valores a 10 y luego incrementa subiendo de nivel segúng el nivel recibido
+     * @param raza Raza del Monstruo
+     * @param nombre Nombre del Monstruo
+     * @param nivel Nivel inicial
+     */
+    public Monstruo(int raza, String nombre, int nivel) {
+        super(raza, nombre, nivel, 10, 10, 10, 10, 10, -1, false);
+        int i;
+        for (i = 0; i < nivel;i++)
+            this.subirNivel();
+    }
+
+    /**
      * Constructor completo del Monstruo.
      * @param raza Raza del Monstruo
      * @param nombre Nombre del Monstruo
