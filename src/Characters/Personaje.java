@@ -39,9 +39,9 @@ public abstract class Personaje implements Comparable<Personaje> {
     // arma
     private Arma arma = null;
     //armadura
-    private ArrayList<Armadura> armadura;
+    private ArrayList<Armadura> armadura = new ArrayList<>();
     //Artefactos
-    private ArrayList<Artefacto> artefactos;
+    private ArrayList<Artefacto> artefactos = new ArrayList<>();
 
     // endregion
 
@@ -857,7 +857,9 @@ public abstract class Personaje implements Comparable<Personaje> {
      */
     public double getAtq() {
         double ataque = atq;
-        ataque += arma.recuperaEstadistica("Fu");
+        if (arma != null) {
+            ataque += arma.recuperaEstadistica("Fu");
+        }
         for (Equipamiento e : artefactos){
             ataque += e.recuperaEstadistica("Fu");
         }
@@ -903,9 +905,11 @@ public abstract class Personaje implements Comparable<Personaje> {
      */
     public double getVel() {
         double velocidad = vel;
-        velocidad += arma.recuperaEstadistica("Ve");
-        for (Equipamiento e : artefactos){
-            velocidad += e.recuperaEstadistica("Ve");
+        if (arma != null) {
+            velocidad += arma.recuperaEstadistica("Ve");
+            for (Equipamiento e : artefactos) {
+                velocidad += e.recuperaEstadistica("Ve");
+            }
         }
         return velocidad;
     }

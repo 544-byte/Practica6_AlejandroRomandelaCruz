@@ -34,11 +34,12 @@ public class Monstruo extends Personaje {
      * @param nombre Nombre del Monstruo
      * @param nivel Nivel inicial
      */
-    public Monstruo(int raza, String nombre, int nivel) {
-        super(raza, nombre, nivel, 10, 10, 10, 10, 10, -1, false);
+    public Monstruo(String raza, String nombre, int nivel) {
+        super(getRazaInt(raza), nombre, 1, 10, 10, 10, 10, 10, -1, false);
         int i;
         for (i = 0; i < nivel;i++)
             this.subirNivel();
+        setNivel(nivel);
     }
 
     /**
@@ -159,6 +160,21 @@ public class Monstruo extends Personaje {
             }
         }
         return "";
+    }
+
+    public static int getRazaInt(String raza){
+        switch (raza) {
+            case "Bestia" -> {
+                return 1;
+            }
+            case "No-Muerto" -> {
+                return 2;
+            }
+            case "Gigante" -> {
+                return 3;
+            }
+        }
+        return -1;
     }
 
     /**
