@@ -12,6 +12,10 @@ import Misc.*;
 import Combat.Combate;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Set;
 
 
 /**
@@ -37,29 +41,37 @@ public class Main {
      * @param args Argumentos de línea de comandos (no utilizados).
      */
     public static void main(String[] args) throws Exception {
+
+        Personaje guerrero = new Guerrero(2,"Iván",1,10,10,10,10,10,false,0,false);
+        Mago mago = new Mago(2,"alejandrito el mago con varita",1,10,10,10,10,10,10,0,true);
+        Personaje ladron = new Ladron(1,"Ladron",1,10,10,10,10,10,0,true);
+        Personaje cazador = new Cazador(2,"alejandrito",1,10,10,10,10,10,0,true,"Toby",3);
+        Personaje paladin = new Paladin(3,"Alejandro",1,10,10,10,10,10,10,0,false);
+        Personaje clerigo = new Clerigo(1,"Clerigo",1,10,10,10,10,10,10,0,false);
+        Personaje enemigo = new Monstruo(3,"Isabel la pequeña gigante (en ve de 1,50 mide 1,65)",1,10,10,10,10,10,6,false);
+
+        ArrayList<Personaje> aliados = new ArrayList<>(Arrays.asList(guerrero,mago,ladron,cazador,paladin,clerigo));
+
+        for (Personaje p : aliados){
+            Random r = new Random();
+            int i;
+            for (i=0;i < r.nextInt(80,100);i++){
+                p.subirNivel();
+            }
+        }
 /*
-        Personaje guerrero = new Guerrero(2,"Iván",1,100,15,10,10,10,false,0,false);
-        Mago mago = new Mago(2,"alejandrito el mago con varita",1,100,15,10,10,10,10,0,true);
-        Personaje ladron = new Ladron(1,"Ladron",1,100,15,10,10,10,0,true);
-        Personaje cazador = new Cazador(2,"alejandrito",1,100,15,10,10,10,0,true,"Toby",3);
-        Personaje paladin = new Paladin(3,"Alejandro",1,100,15,10,10,10,10,0,false);
-        Personaje clerigo = new Clerigo(1,"Clerigo",1,100,15,10,10,10,10,0,false);
-        Personaje enemigo = new Monstruo(3,"Isabel la pequeña gigante (en ve de 1,50 mide 1,65)",1,1,15,0,10,10,6,false);
-
-        GameLogger.subirNivelGanador(new File("GameLogs/02-03-26_19.07.42/GameLog.log"),new Personaje[]{ guerrero, mago, ladron, cazador, paladin, clerigo, enemigo });
-        GameLogger.guardarParty(new Personaje[]{ guerrero, mago, ladron, cazador, paladin, clerigo, enemigo });
-
-
         Personaje p = Misc.importarPersonaje("Mago:2:alejandrito el mago con varita:1:100.0:15.0:10.0:10.0:10.0:10.0:1:true".split(":"));
         Personaje enemigo = Misc.importarPersonaje(new File("./Prueba.csv"));
 
         Combate.combatir(p,ladron);
         GameLogger.guardarLog();
+        GameLogger.subirNivelGanador(new File("GameLogs/02-03-26_19.07.42/GameLog.log"),new Personaje[]{ guerrero, mago, ladron, cazador, paladin, clerigo, enemigo });
+        GameLogger.guardarParty(new Personaje[]{ guerrero, mago, ladron, cazador, paladin, clerigo, enemigo });
 
- */
+*/
 
         Mazmorra m = new Mazmorra(new File("Ficheros/Mazmorras/hogarDelHacedor.csv"));
-        System.out.println(m.toString());
-        System.out.println(m.combateAleatorio().toString());
+
+        Combate.combatir(aliados,new ArrayList<Personaje>(m.getMonstruos()));
     }
 }

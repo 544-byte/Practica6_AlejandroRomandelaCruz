@@ -4,10 +4,7 @@ import Gear.Arma;
 import Gear.Armadura;
 import Misc.Misc;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Clase que representa a un Ladrón, subclase de {@link Personaje}.<br>
@@ -113,7 +110,7 @@ public class Ladron extends Personaje {
      * @param arma el arma a equipar.
      */
     public boolean setArma(Arma arma) {
-        ArrayList<String> whitelist = new ArrayList<>(Set.of("Espada","Daga"));
+        ArrayList<String> whitelist = new ArrayList<>(Arrays.asList("Espada","Daga"));
         if (whitelist.contains(arma.getTipo())) {
             return super.setArma(arma);
         } else {
@@ -127,7 +124,7 @@ public class Ladron extends Personaje {
      * @param armadura la armadura a equipar.
      */
     public boolean addArmadura(Armadura armadura) {
-        ArrayList<String> whitelist = new ArrayList<>(Set.of("Tela","Cuero"));
+        ArrayList<String> whitelist = new ArrayList<>(Arrays.asList("Tela","Cuero"));
         if (whitelist.contains(armadura.getMaterial())){
             return super.addArmadura(armadura);
         } else {

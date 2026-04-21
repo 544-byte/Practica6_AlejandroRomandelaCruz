@@ -4,10 +4,7 @@ import Gear.Arma;
 import Gear.Armadura;
 import Misc.Misc;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Clase que representa a un Clérigo, subclase de {@link Creyente}.
@@ -145,7 +142,7 @@ public class Clerigo extends Creyente {
      * @param arma el arma a equipar.
      */
     public boolean setArma(Arma arma) {
-        ArrayList<String> whitelist = new ArrayList<>(Set.of("Baston"));
+        ArrayList<String> whitelist = new ArrayList<>(Arrays.asList("Baston"));
         if (whitelist.contains(arma.getTipo())) {
             return super.setArma(arma);
         } else {

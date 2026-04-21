@@ -100,7 +100,9 @@ public abstract class Creyente extends Personaje {
      */
     public double getFe() {
         double fee = fe;
-        fee += getArma().recuperaEstadistica("Fe");
+        if (getArma() != null) {
+            fee += getArma().recuperaEstadistica("Fe");
+        }
         for (Equipamiento e : getArtefactos()){
             fee += e.recuperaEstadistica("Fe");
         }

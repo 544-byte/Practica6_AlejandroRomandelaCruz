@@ -6,10 +6,7 @@ import Gear.Artefacto;
 import Gear.Equipamiento;
 import Misc.Misc;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Clase que representa a un Guerrero, subclase de {@link Personaje}.<br>
@@ -199,7 +196,7 @@ public class Guerrero extends Personaje {
      * @param arma el arma a equipar.
      */
     public boolean setArma(Arma arma) {
-        ArrayList<String> blacklist = new ArrayList<>(Set.of("Cetro","Arco","Baston"));
+        ArrayList<String> blacklist = new ArrayList<>(Arrays.asList("Cetro","Arco","Baston"));
         if (!blacklist.contains(arma.getTipo())) {
             if (getArma().getEmpuñadura() == 1 && arma.getEmpuñadura() == 1 && this.arma2 == null) {
                 this.arma2 = new Arma(arma);
@@ -230,7 +227,9 @@ public class Guerrero extends Personaje {
 
     public double getAtq(){
         double ataque = super.getAtq();
-        ataque += arma2.recuperaEstadistica("Fu");
+        if (arma2 != null) {
+            ataque += arma2.recuperaEstadistica("Fu");
+        }
         return ataque;
     }
 

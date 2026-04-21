@@ -1,11 +1,12 @@
 package Gear;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Equipamiento {
-    private static HashSet<String> rarezas = new HashSet<>(Set.of("Comun","Raro","Epico","Legendario"));
+    private static HashSet<String> rarezas = new HashSet<>(Arrays.asList("Comun","Raro","Epico","Legendario"));
     private String nombre, rareza, tipo;
     //Estadisticas: Fu-Ve-Ma-Fe-Ar-RM-V
     private HashMap<String, Integer> estadisticas;

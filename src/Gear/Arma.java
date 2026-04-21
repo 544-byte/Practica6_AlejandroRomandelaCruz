@@ -1,14 +1,15 @@
 package Gear;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 // Solo puede tener estadísticas Fu,Ve,Ma,Fe
 public class Arma extends Equipamiento{
-    private static HashSet<String> armasUnaMano = new HashSet<>(Set.of("Espada","Maza","Hacha","Cetro","Daga"));
-    private static HashSet<String> armasDosManos = new HashSet<>(Set.of("Espadon","Martillo","Arco","Baston"));
+    private static HashSet<String> armasUnaMano = new HashSet<>(Arrays.asList("Espada","Maza","Hacha","Cetro","Daga"));
+    private static HashSet<String> armasDosManos = new HashSet<>(Arrays.asList("Espadon","Martillo","Arco","Baston"));
     private int empuñadura;
 
     //region Constructores

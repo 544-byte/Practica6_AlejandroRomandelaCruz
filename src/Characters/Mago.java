@@ -5,10 +5,7 @@ import Gear.Armadura;
 import Gear.Equipamiento;
 import Misc.Misc;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Clase que representa a un Mago, subclase de {@link Personaje}.<br>
@@ -203,7 +200,9 @@ public class Mago extends Personaje {
      */
     public double getMagia() {
         double mag = magia;
-        mag += getArma().recuperaEstadistica("Ma");
+        if (getArma() != null) {
+            mag += getArma().recuperaEstadistica("Ma");
+        }
         for (Equipamiento e : getArtefactos()){
             mag += e.recuperaEstadistica("Ma");
         }
@@ -256,7 +255,7 @@ public class Mago extends Personaje {
      * @param arma el arma a equipar.
      */
     public boolean setArma(Arma arma) {
-        ArrayList<String> whitelist = new ArrayList<>(Set.of("Cetro","Baston"));
+        ArrayList<String> whitelist = new ArrayList<>(Arrays.asList("Cetro","Baston"));
         if (whitelist.contains(arma.getTipo())) {
             return super.setArma(arma);
         } else {

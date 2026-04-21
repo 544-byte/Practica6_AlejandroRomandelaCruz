@@ -1,11 +1,12 @@
 package Gear;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Artefacto extends Equipamiento{
-    private static HashSet<String> tipos = new HashSet<>(Set.of("Anillo","Amuleto"));
+    private static HashSet<String> tipos = new HashSet<>(Arrays.asList("Anillo","Amuleto"));
 
     //region Constructores
     public Artefacto(){

@@ -22,7 +22,7 @@ import java.util.*;
  */
 public class Combate {
     private static ArrayList<Equipamiento> tesoros = recuperarEquipamiento();
-    private static final ArrayList<File> EQUIPAMIENTO_FILES = new ArrayList<>(Set.of(new File("/Ficheros/Tesoros/armadura.csv"),new File("/Ficheros/Tesoros/armas.csv"),new File("/Ficheros/Tesoros/artefactos.csv")));
+
     /**
      * Inicia un combate entre un jugador y un enemigo.<br>
      * El orden de los turnos se determina por la velocidad de los personajes.
@@ -136,6 +136,10 @@ public class Combate {
      */
     public static ArrayList<Equipamiento> recuperarEquipamiento(){
         ArrayList<Equipamiento> eqpmnt = new ArrayList<>();
+        ArrayList<File> EQUIPAMIENTO_FILES = new ArrayList<>();
+            EQUIPAMIENTO_FILES.add(new File("Ficheros/Tesoros/armadura.csv"));
+            EQUIPAMIENTO_FILES.add(new File("Ficheros/Tesoros/armas.csv"));
+            EQUIPAMIENTO_FILES.add(new File("Ficheros/Tesoros/artefactos.csv"));
         try {
             int i = 0;
             for (File f : EQUIPAMIENTO_FILES) {
@@ -144,35 +148,49 @@ public class Combate {
                 br.readLine();
                 while ((l = br.readLine()) != null){
                     ArrayList<String> linea;
-                    if (l.split("\"")[1].contains(",")){
-                        linea = new ArrayList<>(Set.of(l.split("\"")));
-                        linea.remove(0);
-                        String resto = linea.getLast();
-                        linea.removeLast();
-                        linea.addAll(Set.of(resto.split("\"")));
-                    } else {
-                        linea = new ArrayList<>(Set.of(l.split(",")));
-                    }
+                        if (l.split("\"").length > 1 && l.split("\"")[1].contains(",")){
+                            linea = new ArrayList<>(Arrays.asList(l.split("\"")));
+                            linea.remove(0);
+                            String resto = linea.getLast();
+                            linea.removeLast();
+                            resto = resto.substring(1);
+                            linea.addAll(Arrays.asList(resto.split(",")));
+                        } else {
+                            linea = new ArrayList<>(Arrays.asList(l.split(",")));
+                        }
                     switch (i) { // LO PODRIA HACER MUCHO MEJOR Y MODULARIZADO PERO COMO NO SE SI ME DA TIEMPO DE MOMENTO SE QUEDA ASI, SI SIGUE ASI ES PORQUE O SE ME HA OLVIDADO O NO HE PODIDO
                         case 0 -> {
-                            ArrayList<String> estats = new ArrayList<>(Set.of(linea.get(4).split("-")));
+                            ArrayList<String> estats = new ArrayList<>();
+                            for (String s : linea.get(4).split("-")){
+                                estats.add(s);
+                            }
                             HashMap<String,Integer> stats = new HashMap<>();
-                            stats.put("Ar",Integer.parseInt(estats.get(0)));
-                            stats.put("RM",Integer.parseInt(estats.get(1)));
-                            stats.put("V",Integer.parseInt(estats.get(2)));
+                            if (estats.size() == 3) {
+                                stats.put("Ar", Integer.parseInt(estats.get(0)));
+                                stats.put("RM", Integer.parseInt(estats.get(1)));
+                                stats.put("V", Integer.parseInt(estats.get(2)));
+                            }
                             eqpmnt.add(new Armadura(linea.get(0),linea.get(1),linea.get(2),linea.get(3),stats,Integer.parseInt(linea.get(5))));
                         }
                         case 1 -> {
-                            ArrayList<String> estats = new ArrayList<>(Set.of(linea.get(3).split("-")));
+                            ArrayList<String> estats = new ArrayList<>();
+                            for (String s : linea.get(3).split("-")){
+                                estats.add(s);
+                            }
                             HashMap<String,Integer> stats = new HashMap<>();
-                            stats.put("Fu",Integer.parseInt(estats.get(0)));
-                            stats.put("Ve",Integer.parseInt(estats.get(1)));
-                            stats.put("Ma",Integer.parseInt(estats.get(2)));
-                            stats.put("Fe",Integer.parseInt(estats.get(3)));
+                            if (estats.size() == 4) {
+                                stats.put("Fu", Integer.parseInt(estats.get(0)));
+                                stats.put("Ve", Integer.parseInt(estats.get(1)));
+                                stats.put("Ma", Integer.parseInt(estats.get(2)));
+                                stats.put("Fe", Integer.parseInt(estats.get(3)));
+                            }
                             eqpmnt.add(new Arma(linea.get(0),linea.get(1),linea.get(2),stats,Integer.parseInt(linea.get(4))));
                         }
                         case 2 -> {
-                            ArrayList<String> estats = new ArrayList<>(Set.of(linea.get(3).split("-")));
+                            ArrayList<String> estats = new ArrayList<>();
+                            for (String s : linea.get(3).split("-")){
+                                estats.add(s);
+                            }
                             HashMap<String,Integer> stats = new HashMap<>();
                             stats.put("Fu",Integer.parseInt(estats.get(0)));
                             stats.put("Ve",Integer.parseInt(estats.get(1)));
@@ -184,9 +202,9 @@ public class Combate {
                             eqpmnt.add(new Artefacto(linea.get(0),linea.get(1),linea.get(2),stats,Integer.parseInt(linea.get(4))));
                         }
                     }
-                    i++;
                 }
                 br.close();
+                i++;
             }
         } catch (IOException e) {
             System.err.println(e);

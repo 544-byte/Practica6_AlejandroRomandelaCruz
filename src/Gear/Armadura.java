@@ -1,13 +1,14 @@
 package Gear;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 // Solo puede tener estadísticas Ar,RM,V
 public class Armadura extends Equipamiento{
-    private static HashSet<String> tipos = new HashSet<>(Set.of("Yelmo","Pechera","Hombreras","Guanteletes","Grebas","Botas"));
-    private static HashSet<String> materiales = new HashSet<>(Set.of("Tela","Cuero","Metal"));
+    private static HashSet<String> tipos = new HashSet<>(Arrays.asList("Yelmo","Pechera","Hombreras","Guanteletes","Grebas","Botas"));
+    private static HashSet<String> materiales = new HashSet<>(Arrays.asList("Tela","Cuero","Metal"));
     private String material;
 
     //region Constructores

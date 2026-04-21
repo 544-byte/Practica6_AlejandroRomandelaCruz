@@ -6,6 +6,7 @@ import Gear.Artefacto;
 import Misc.Misc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -301,7 +302,7 @@ public class Cazador extends Personaje {
      * @param arma el arma a equipar.
      */
     public boolean setArma(Arma arma) {
-        ArrayList<String> whitelist = new ArrayList<>(Set.of("Espada","Hacha","Daga","Arco"));
+        ArrayList<String> whitelist = new ArrayList<>(Arrays.asList("Espada","Hacha","Daga","Arco"));
         if (whitelist.contains(arma.getTipo())) {
             return super.setArma(arma);
         } else {
@@ -315,7 +316,7 @@ public class Cazador extends Personaje {
      * @param armadura la armadura a equipar.
      */
     public boolean addArmadura(Armadura armadura) {
-        ArrayList<String> whitelist = new ArrayList<>(Set.of("Cuero"));
+        ArrayList<String> whitelist = new ArrayList<>(Arrays.asList("Cuero"));
         if (whitelist.contains(armadura.getMaterial())){
             return super.addArmadura(armadura);
         } else {

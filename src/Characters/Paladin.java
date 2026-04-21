@@ -4,10 +4,7 @@ import Gear.Arma;
 import Gear.Armadura;
 import Misc.Misc;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Clase que representa a un Paladín, una subclase de {@link Creyente}.<br>
@@ -140,7 +137,7 @@ public class Paladin extends Creyente {
      * @param arma el arma a equipar.
      */
     public boolean setArma(Arma arma) {
-        ArrayList<String> blacklist = new ArrayList<>(Set.of("Arco","Baston"));
+        ArrayList<String> blacklist = new ArrayList<>(Arrays.asList("Arco","Baston"));
         if (!blacklist.contains(arma.getTipo())) {
             return super.setArma(arma);
         } else {
