@@ -1,9 +1,6 @@
 package Gear;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Equipamiento {
     private static HashSet<String> rarezas = new HashSet<>(Arrays.asList("Comun","Raro","Epico","Legendario"));
@@ -49,10 +46,39 @@ public abstract class Equipamiento {
     }
 
     public void setNombre(String nombre) {
+        ArrayList<String> blacklist = new ArrayList<>(Arrays.asList("del","el","la","de"));
         if (nombre.length() <= 20) {
             this.nombre = nombre;
         } else {
-            System.err.println("ERROR EN EL SETTER, EL NOMBRE " + nombre + " ES DEMASIADO LARGO");
+            String nn = nombre.substring(0, 20).trim();
+            if (nombre.charAt(20) == ' '){
+            } else {
+                ArrayList<String> aux = new ArrayList<>(Arrays.asList(nn.toString().split(" ")));
+                aux.removeLast();
+                nn = "";
+                for (String s : aux){
+                    nn += s;
+                    nn += " ";
+                }
+                nn = nn.trim();
+                if (nn.contains(",")){
+                    nn = nn.split(",")[0];
+                }
+            }
+            ArrayList<String> aux = new ArrayList<>(Arrays.asList(nn.split(" ")));
+            if (!Collections.disjoint(aux,blacklist)) {
+                while (!Collections.disjoint(new ArrayList<>(Arrays.asList(aux.getLast())),blacklist)) {
+                    aux.removeLast();
+                }
+                nn = "";
+                for (String s : aux){
+                    nn += s;
+                    nn += " ";
+                }
+                nn = nn.trim();
+            }
+            setNombre(nn);
+            System.err.println("ERROR EN EL SETTER, EL NOMBRE " + nombre + " ES DEMASIADO LARGO, SE VA A SUSTITUIR POR " + nn );
         }
     }
 
@@ -92,7 +118,7 @@ public abstract class Equipamiento {
         if (valor >= 1) {
             this.valor = valor;
         } else {
-            System.err.println("ERROR, EL VALOR " + valor + " NO ES VALIDO");
+            System.err.println("ERROR, EL VALOR " + valor + " NO ES VALIDO.");
         }
     }
 

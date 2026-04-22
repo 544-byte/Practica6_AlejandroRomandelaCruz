@@ -8,7 +8,7 @@ import java.util.Set;
 
 // Solo puede tener estadísticas Fu,Ve,Ma,Fe
 public class Arma extends Equipamiento{
-    private static HashSet<String> armasUnaMano = new HashSet<>(Arrays.asList("Espada","Maza","Hacha","Cetro","Daga"));
+    private static HashSet<String> armasUnaMano = new HashSet<>(Arrays.asList("Espada","Maza","Hacha","Cetro","Daga","Mangual"));
     private static HashSet<String> armasDosManos = new HashSet<>(Arrays.asList("Espadon","Martillo","Arco","Baston"));
     private int empuñadura;
 

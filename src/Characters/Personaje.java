@@ -182,7 +182,11 @@ public abstract class Personaje implements Comparable<Personaje> {
             case 5 -> {
                 System.out.println("\t· 1- Observar enemigo\n" + "\t· 2- Observarte\n" + "\t· 3- Ver aliados");
                 System.out.print("Opción: ");
-                opt = scan.nextInt();
+                try {opt = scan.nextInt();}
+                catch (InputMismatchException e) {
+                    System.out.println(e);
+                    realizarTurnoJugador(enemigo);
+                }
                 switch (opt) {
                     case 1 -> {
                         Misc.happen(this.getNombre() + " observa a " + enemigo.getNombre());

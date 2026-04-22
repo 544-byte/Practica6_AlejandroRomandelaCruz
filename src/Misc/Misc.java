@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /**
  * Clase abstracta que contiene métodos utilitarios para mostrar texto con formatos decorativos en la consola.
@@ -216,6 +218,15 @@ public class Misc {
             case "Clerigo" -> {return new Clerigo (csv);}
             case "Monstruo" -> {return new Monstruo (csv);}
             default -> throw new Exception("La clase del personaje introducida es incorrecta (" + csv[0] + ")");
+        }
+    }
+
+    public static int leerOpt(){
+        Scanner scan = new Scanner(System.in);
+        try {return scan.nextInt();}
+        catch (InputMismatchException e) {
+            System.out.println(e);
+            return 0;
         }
     }
 }
