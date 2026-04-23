@@ -86,13 +86,13 @@ public class Clerigo extends Creyente {
         Scanner scan = new Scanner(System.in);
         System.out.println(Misc.opcionesJugador("" + "Escoge una plegaria:\n" + "1- Sanación\n" + "2- Rezo sagrado\n" + "3- Cólera Divina\n" + "4- Info\n" + "5- Cambio de opinión\n"));
         System.out.print("Opción: ");
-        int opt = scan.nextInt();
+        int opt = Misc.leerOpt();
         switch (opt) {
             case 1 -> {
                 System.out.println("Selecciona un aliado:");
                 System.out.println(this.getAliados());
                 System.out.print("Opción: ");
-                opt = scan.nextInt();
+                opt = Misc.leerOpt();
                 Misc.happen(this.getNombre() + " sana a " + aliados[opt - 1].getNombre() + " con " + getFe() * 0.7 + " puntos de vida");
                 aliados[opt - 1].setPv(aliados[opt - 1].getPv() + getFe() * 0.7);
             }

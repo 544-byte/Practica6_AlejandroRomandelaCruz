@@ -89,7 +89,7 @@ public class Paladin extends Creyente {
         Scanner scan = new Scanner(System.in);
         System.out.println(Misc.opcionesJugador("" + "Escoge una plegaria:\n" + "1- Imbuir arma\n" + "2- Baluarte de fe\n" + "3- Fogonazo sagrado\n" + "4- Info\n" + "5- Cambio de opinión\n"));
         System.out.print("Opción: ");
-        int opt = scan.nextInt();
+        int opt = Misc.leerOpt();
         switch (opt) {
             case 1 -> {
                 Misc.happen(this.getNombre() + " imbuye su arma aumentando su ataque " + getFe()*0.8 + " puntos.");

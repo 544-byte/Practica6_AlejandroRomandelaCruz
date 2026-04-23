@@ -104,7 +104,7 @@ public class Mago extends Personaje {
         Scanner scan = new Scanner(System.in);
         System.out.println(Misc.opcionesJugador("" + "Escoge un conjuro:\n" + "1- Bola de fuego\n" + "2- Escudo arcano\n" + "3- Céfiro\n" + "4- Presteza mental\n" + "5- Info\n" + "6- Cambio de opinión\n"));
         System.out.print("Opción: ");
-        int opt = scan.nextInt();
+        int opt = Misc.leerOpt();
         switch (opt) {
             case 1 -> {
                 Misc.happen(this.getNombre() + " lanza una bola de fuego sobre " + enemigo.getNombre());
@@ -113,7 +113,7 @@ public class Mago extends Personaje {
             case 2 -> {
                 System.out.println("Invocas un hechizo arcano, ¿pero a quien proteges?\n" + "\t· 1-Protegerte\n" + "\t· 2-Proteger aliado");
                 System.out.print("Proteges a: ");
-                opt = scan.nextInt();
+                opt = Misc.leerOpt();
                 switch (opt) {
                     case 1 -> {
                         Misc.happen(this.getNombre() +" aplica un escudo arcano sobre si mismo.");
@@ -123,7 +123,7 @@ public class Mago extends Personaje {
                         System.out.println("Selecciona un aliado:");
                         System.out.println(this.getAliados());
                         System.out.print("Opción: ");
-                        opt = scan.nextInt();
+                        opt = Misc.leerOpt();
                         Misc.happen( this.getNombre()+ " aplica un escudo arcano a su aliado " + aliados[opt - 1].getNombre());
                         escudoArcano(aliados[opt - 1]);
                     }
@@ -137,7 +137,7 @@ public class Mago extends Personaje {
             case 4 -> {
                 System.out.println("¿A quién quieres aplicar con Presteza mental? \n" + "\t· 1-Aplicarte Presteza mental\n" + "\t· 2-Aplicar Presteza mental a un aliado");
                 System.out.print("Aplicar a: ");
-                opt = scan.nextInt();
+                opt = Misc.leerOpt();
                 switch (opt) {
                     case 1 -> {
                         Misc.happen( this.getNombre()+ " se aplica presteza mental aumentando su agilidad en " + this.getMagia() + " puntos." );
@@ -147,7 +147,7 @@ public class Mago extends Personaje {
                         System.out.println("Selecciona un aliado:");
                         System.out.println(this.getAliados());
                         System.out.print("Opción: ");
-                        opt = scan.nextInt();
+                        opt = Misc.leerOpt();
                         Misc.happen( this.getNombre()+ " aplica presteza mental a su aliado " + aliados[opt - 1].getNombre() + " aumentando su agilidad en " + this.getMagia() + " puntos.");
                         aliados[opt - 1].setVel(aliados[opt - 1].getVel() + this.getMagia());
                     }
