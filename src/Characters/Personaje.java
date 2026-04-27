@@ -502,8 +502,10 @@ public abstract class Personaje implements Comparable<Personaje> {
         aumentarAtributo(atr,prcnt,cantidad);
     }
 
-
-
+    /**
+     * Setter para la raza
+     * @param raza la raza a la cual pertenece el personaje.
+     */
     public void setRaza(int raza) {
         if (raza >=1 && raza <=5){
             this.raza = raza;
@@ -1040,6 +1042,12 @@ public abstract class Personaje implements Comparable<Personaje> {
         return toString;
     }
 
+    /**
+     * sobreescritura de compare to para comparar los personajes segun el nivel poniendo primero el que tiene mas velocidad
+     * @param personaje the object to be compared.
+     * @return sinceramente no me acuerdo bien como funcionaba esto
+     */
+    @Override
     public int compareTo(Personaje personaje){
         return Double.compare(personaje.getVel(),this.getVel());
     }

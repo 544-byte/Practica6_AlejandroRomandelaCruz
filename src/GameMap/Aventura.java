@@ -9,8 +9,17 @@ import Misc.Misc;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Clase que representa una Aventura en la cual tienen lugar 10 combates con monstruos
+ * de la mazmorra pasada por parámetros, cuando termina el combate se guarda un log.
+ */
 public class Aventura {
 
+    /**
+     * El metodo en el que se ejecuta tdo
+     * @param party La party de personajes que van a luchar
+     * @param mazmorra La mazmorra en la que se aventuran
+     */
     public static void empezarAventura(ArrayList<Personaje> party,Mazmorra mazmorra){
         int i;
         for (i = 0; i < 10 && !party.isEmpty(); i++){

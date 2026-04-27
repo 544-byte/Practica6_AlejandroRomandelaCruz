@@ -30,12 +30,13 @@ public class Combate {
     private static ArrayList<Equipamiento> tesoros = recuperarEquipamiento();
 
     /**
-     * Inicia un combate entre un jugador y un enemigo.<br>
-     * El orden de los turnos se determina por la velocidad de los personajes.
-     * El combate continúa hasta que uno de los dos muere.
+     * Inicia un combate entre un grupo de jugadores y enemigos.<br>
+     * Los personajes se ordenan por nivel y se enfrentan en duelos individuales
+     * hasta que uno de los dos equipos es eliminado por completo.
+     * Al finalizar, si el jugador gana, se reparten tesoros entre los supervivientes.
      *
-     * @param jugadores Personajes controlados por el jugador
-     * @param enemigos Personajes enemigos
+     * @param jugadores lista de personajes controlados por el usuario
+     * @param enemigos lista de personajes enemigos
      */
     public static void combatir(ArrayList<Personaje> jugadores, ArrayList<Personaje> enemigos) {
         Misc.ordenarPorNivel(jugadores);
@@ -70,6 +71,12 @@ public class Combate {
 
     }
 
+    /**
+     * gestiona el duelo 1 contra 1 entre un jugador y un enemigo
+     * @param jugador personaje del bando del jugador
+     * @param enemigo personaje del bando enemigo
+     * @return el personaje que ha sido derrotado (ha muerto)
+     */
     public static Personaje bucleJugable(Personaje jugador, Personaje enemigo){
         jugador.setEsJugador();
         Personaje primero;
@@ -98,12 +105,23 @@ public class Combate {
         }
     }
 
+    /**
+     * selecciona un equipamiento aleatorio de la lista de tesoros y trata de dárselo a un personaje
+     * @param personaje personaje que recibirá el premio
+     * @return el equipamiento si no pudo ser equipado, null si tuvo éxito
+     */
     public static Equipamiento otorgarPremio(Personaje personaje){
         Random r = new Random();
         int i = r.nextInt(0,tesoros.size());
         return otorgarPremio(personaje,tesoros.get(i));
     }
 
+    /**
+     * intenta equipar un objeto específico a un personaje y lo elimina de la lista global de tesoros si lo logra
+     * @param personaje personaje que recibirá el objeto
+     * @param e equipamiento a entregar
+     * @return el equipamiento e si no se pudo equipar, null si se equipó correctamente
+     */
     public static Equipamiento otorgarPremio(Personaje personaje, Equipamiento e){
         if (personaje.añadirEquipamiento(e) != null){
             Misc.info(personaje.getNombre() + " no se ha podido equipar " + e.getNombre());
@@ -126,8 +144,8 @@ public class Combate {
     /**
      * Intenta activar una trampa sobre un personaje.
      * <p>
-     * Existe una probabilidad del 5% de que el personaje caiga en una trampa.
-     * Si se activa, se genera una trampa aleatoria y se aplica al personaje.
+     * Existe una probabilidad del 60% de que el personaje caiga en una trampa.
+     * Si se activa, se genera una trampa aleatoria (Pinchos, Brea o Serpientes) y se aplica al personaje.
      * </p>
      *
      * @param afectado Personaje que puede verse afectado por la trampa
@@ -168,16 +186,16 @@ public class Combate {
                 }
                 while ((l = br.readLine()) != null){
                     ArrayList<String> linea;
-                        if (l.split("\"").length > 1 && l.split("\"")[1].contains(",")){
-                            linea = new ArrayList<>(Arrays.asList(l.split("\"")));
-                            linea.remove(0);
-                            String resto = linea.getLast();
-                            linea.removeLast();
-                            resto = resto.substring(1);
-                            linea.addAll(Arrays.asList(resto.split(",")));
-                        } else {
-                            linea = new ArrayList<>(Arrays.asList(l.split(",")));
-                        }
+                    if (l.split("\"").length > 1 && l.split("\"")[1].contains(",")){
+                        linea = new ArrayList<>(Arrays.asList(l.split("\"")));
+                        linea.remove(0);
+                        String resto = linea.getLast();
+                        linea.removeLast();
+                        resto = resto.substring(1);
+                        linea.addAll(Arrays.asList(resto.split(",")));
+                    } else {
+                        linea = new ArrayList<>(Arrays.asList(l.split(",")));
+                    }
                     ArrayList<Integer> estats = new ArrayList<>();
                     for (String s : linea.get(i).split("-")){
                         estats.add(Integer.parseInt(s));

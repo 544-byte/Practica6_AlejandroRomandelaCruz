@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Random;
 
-
 public class Mazmorra {
     private String nombre;
     private HashSet<Monstruo> monstruos;
@@ -22,12 +21,19 @@ public class Mazmorra {
 
     //region Constructores
 
+    /**
+     * constructor por defecto de la mazmorra
+     */
     public Mazmorra(){
         nombre = "";
         monstruos = new HashSet<>();
         nivel = -1;
     }
 
+    /**
+     * constructor que crea una mazmorra a partir de un fichero de texto
+     * @param f archivo de texto que contiene los datos de la mazmorra y sus monstruos
+     */
     public Mazmorra(File f){
         HashSet<Monstruo> monstruos = new HashSet<>();
         try {
@@ -47,6 +53,10 @@ public class Mazmorra {
         setMonstruos(monstruos);
     }
 
+    /**
+     * constructor de copia de la mazmorra
+     * @param m objeto Mazmorra a copiar
+     */
     public Mazmorra(Mazmorra m){
         setNombre(m.getNombre());
         setMonstruos(m.getMonstruos());
@@ -57,6 +67,10 @@ public class Mazmorra {
 
     //region Métodos de objeto
 
+    /**
+     * selecciona un monstruo al azar del conjunto de monstruos de la mazmorra para iniciar un combate
+     * @return una copia de un monstruo aleatorio de la lista
+     */
     public Monstruo combateAleatorio(){
         Random r = new Random();
         return new Monstruo((Monstruo)monstruos.toArray()[r.nextInt(0,monstruos.size())]);
@@ -65,31 +79,60 @@ public class Mazmorra {
     //endregion
 
     //region Setter&Getters
+
+    /**
+     * getter del nombre de la mazmorra
+     * @return nombre de la mazmorra
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * setter del nombre de la mazmorra
+     * @param nombre cadena con el nuevo nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     * getter del conjunto de monstruos que habitan la mazmorra
+     * @return HashSet con los monstruos
+     */
     public HashSet<Monstruo> getMonstruos() {
         return monstruos;
     }
 
+    /**
+     * setter del conjunto de monstruos de la mazmorra
+     * @param monstruos nuevo HashSet de monstruos
+     */
     public void setMonstruos(HashSet<Monstruo> monstruos) {
         this.monstruos = monstruos;
     }
 
+    /**
+     * añade un monstruo a la mazmorra si su nivel está dentro del rango permitido (+-3 niveles)
+     * @param m monstruo a intentar añadir
+     */
     public void addMonstruo(Monstruo m){
         if (m.getNivel() >= getNivel()-3 && m.getNivel() <= getNivel()+3)
-        monstruos.add(m);
+            monstruos.add(m);
     }
 
+    /**
+     * getter del nivel de dificultad de la mazmorra
+     * @return nivel de la mazmorra
+     */
     public int getNivel() {
         return nivel;
     }
 
+    /**
+     * setter del nivel de dificultad de la mazmorra
+     * @param nivel nuevo nivel entero
+     */
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
@@ -98,17 +141,20 @@ public class Mazmorra {
 
     //region Overrides
 
+    /**
+     * sobreescritura del metodo toString
+     * @return un String con toda la información de la mazmorra conteniendo este su nombre, nivel y los detalles de cada uno de sus monstruos
+     */
     @Override
     public String toString() {
         String l = getNombre() +
-                    "\n Nivel: " + getNivel();
+                "\n Nivel: " + getNivel();
         for (Monstruo m : monstruos) {
             l+="\n────────────────────○────────────────────\n";
             l+=m.toString();
         }
         return Misc.estadisticasJugador(l);
     }
-
 
     //endregion
 }
