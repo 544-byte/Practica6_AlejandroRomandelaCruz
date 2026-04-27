@@ -81,6 +81,10 @@ public class Monstruo extends Personaje {
         }
     }
 
+    public Monstruo(Monstruo m) {
+        super(m);
+        setRaza(m.getRaza());
+    }
 
     // endregion
 

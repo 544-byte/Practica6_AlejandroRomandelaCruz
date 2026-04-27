@@ -59,7 +59,7 @@ public class Mazmorra {
 
     public Monstruo combateAleatorio(){
         Random r = new Random();
-        return (Monstruo)monstruos.toArray()[r.nextInt(0,monstruos.size())];
+        return new Monstruo((Monstruo)monstruos.toArray()[r.nextInt(0,monstruos.size())]);
     }
 
     //endregion

@@ -224,11 +224,9 @@ public abstract class Personaje implements Comparable<Personaje> {
             if (enemigo.getPv() - (atq - enemigo.getArm()) <= 0) {
                 atacar(enemigo, dañoMagico);
                 Misc.happen(nombre + " ha inflingido " + enemigo.defender(this.getAtq(), dañoMagico) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida acabando por completo con su existencia.");
-
             } else {
                 atacar(enemigo, dañoMagico);
                 Misc.happen(nombre + " ha inflingido " + enemigo.defender(this.getAtq(), dañoMagico) + " puntos de daño a " + enemigo.getNombre() + " dejándolo con " + enemigo.getPv() + " puntos de vida.");
-
             }
         }
         if (enemigo.getDefiende()) {
