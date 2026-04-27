@@ -198,10 +198,12 @@ public class Guerrero extends Personaje {
     public boolean setArma(Arma arma) {
         ArrayList<String> blacklist = new ArrayList<>(Arrays.asList("Cetro","Arco","Baston"));
         if (!blacklist.contains(arma.getTipo())) {
-            if (getArma().getEmpuñadura() == 1 && arma.getEmpuñadura() == 1 && this.arma2 == null) {
-                this.arma2 = new Arma(arma);
-                Misc.happen(getNombre() + " se ha equipado " + arma.getNombre());
-                return true;
+            if (getArma() != null){
+                if (getArma().getEmpuñadura() == 1 && arma.getEmpuñadura() == 1 && this.arma2 == null) {
+                    this.arma2 = new Arma(arma);
+                    Misc.happen(getNombre() + " se ha equipado " + arma.getNombre());
+                    return true;
+                }
             } else {
                 return super.setArma(arma);
             }
@@ -209,7 +211,7 @@ public class Guerrero extends Personaje {
             Misc.alert(getNombre() + " es un guerrero, por lo que no se puede equipar un " + arma.getTipo());
             return false;
         }
-
+        return false;
     }
 
     /**

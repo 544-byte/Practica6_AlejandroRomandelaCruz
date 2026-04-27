@@ -41,10 +41,14 @@ public class Combate {
         Misc.ordenarPorNivel(jugadores);
         Misc.ordenarPorNivel(enemigos);
         int nEnemigos = enemigos.size();
-        while (!jugadores.isEmpty() || !enemigos.isEmpty()) {
+        while (!jugadores.isEmpty() && !enemigos.isEmpty()) {
             Personaje eliminado = bucleJugable(jugadores.getFirst(),enemigos.getFirst());
-            jugadores.remove(eliminado);
-            enemigos.remove(eliminado);
+            if (jugadores.contains(eliminado)) {
+                jugadores.remove(eliminado);
+            }
+            else {
+                enemigos.remove(eliminado);
+            }
         }
         if (jugadores.isEmpty()) {
             imprimirGanador(enemigos.getFirst());
@@ -55,9 +59,12 @@ public class Combate {
             for (i = 0; i < nEnemigos; i++){
                 Equipamiento e;
                 int j = i;
-                if ((e = otorgarPremio(jugadores.get(i))) != null)
-                    while ((e = otorgarPremio(jugadores.get(j),e)) != null)
+                if ((e = otorgarPremio(jugadores.get(i))) != null) {
+                    while ((e = otorgarPremio(jugadores.get(j), e)) != null && j+1 < jugadores.size()){
                         j++;
+                    }
+
+                }
             }
         }
 
@@ -98,9 +105,13 @@ public class Combate {
     }
 
     public static Equipamiento otorgarPremio(Personaje personaje, Equipamiento e){
-        Misc.happen(personaje.getNombre() + " ha conseguido " + e.getNombre());
-        tesoros.remove(e);
-        return personaje.añadirEquipamiento(e);
+        if (personaje.añadirEquipamiento(e) != null){
+            Misc.info(personaje.getNombre() + " no se ha podido equipar " + e.getNombre());
+            return e;
+        } else {
+            tesoros.remove(e);
+            return null;
+        }
     }
 
     /**

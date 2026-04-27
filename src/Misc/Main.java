@@ -55,10 +55,12 @@ public class Main {
         for (Personaje p : aliados){
             Random r = new Random();
             int i;
-            for (i=0;i < r.nextInt(80,100);i++){
+            for (i=0;i < r.nextInt(98,100);i++){
                 p.subirNivel();
             }
         }
+
+
 /*
         Personaje p = Misc.importarPersonaje("Mago:2:alejandrito el mago con varita:1:100.0:15.0:10.0:10.0:10.0:10.0:1:true".split(":"));
         Personaje enemigo = Misc.importarPersonaje(new File("./Prueba.csv"));
@@ -72,6 +74,6 @@ public class Main {
 
         Mazmorra m = new Mazmorra(new File("Ficheros/Mazmorras/hogarDelHacedor.csv"));
 
-        Combate.combatir(aliados,new ArrayList<Personaje>(m.getMonstruos()));
+        Aventura.empezarAventura(aliados,m);
     }
 }
